@@ -1,0 +1,7 @@
+<script src="js/loginController.js"></script>
+<div ng-controller="loginController" ng-hide="isHidden">
+    <div>Welcome! Please log in</div>
+    <p>Username <input class="form-control" type="text" maxlength="25" ng-model="username" ng-change="tryDisableSubmit()" /></p>
+    <p>Password <input class="form-control" type="password" maxlength="25" ng-model="password" ng-change="tryDisableSubmit()" /></p>
+    <input class="btn btn-primary" type="button" value="Submit" ng-disabled="isSubmitDisabled" ng-click="submitCredentials()" />
+</div>
