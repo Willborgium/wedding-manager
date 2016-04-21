@@ -4,18 +4,18 @@
 	weddingManager.config(function($routeProvider){
 	   $routeProvider
 	   .when('/error', {
-		   templateUrl : 'templates/error.html'
+		   templateUrl : 'views/error/error.html'
 	   })
 	   .when('/', {
-	       templateUrl : 'templates/login.html',
+	       templateUrl : 'views/login/login.html',
 	       controller : 'loginController'
 	   })
 	   .when('/home', {
-	       templateUrl : 'templates/home.html',
+	       templateUrl : 'views/home/home.html',
 	       controller : 'homeController'
 	   })
 	   .otherwise({
-		   redirectTo : "/error"
+		   redirectTo : '/error'
 	   });
 	});
 

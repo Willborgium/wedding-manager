@@ -1,7 +1,6 @@
 (function(){
     angular.module('weddingManager')
-    .controller('loginController', function($scope, companyFactory){
-        $scope.isHidden = false;
+    .controller('loginController', function($scope, $location, loginService, companyService){
         $scope.username = "";
         $scope.password = "";
         $scope.companyId = "";
@@ -10,11 +9,10 @@
         $scope.isSubmitDisabled = true;
         
         function initialize(){
-            companyFactory.getCompanies()
-            .then(function(response){
-                $scope.companies = response.data;
+            companyService.refreshCompanies(function(companies){
+                $scope.companies = companies;
             }, function(error){
-                // goto error
+                $location.path('/error');
             });
         }
         
@@ -28,23 +26,18 @@
             if($scope.company != null &&
                $scope.username.length > 0 &&
                $scope.password.length > 0){
-               $scope.isHidden = true;
+                   loginService.login({
+                       username : $scope.username,
+                       password : $scope.password,
+                       companyId : $scope.company.Id
+                   }, function(userId){
+                       $location.path('/home');                       
+                   });
             }
         }
         
         $scope.onCompanyChanged = function(){
-            if($scope.companyId == ""){
-                $scope.company = null;
-            } else {
-                var length = $scope.companies.length;
-                for(var companyIndex = 0; companyIndex < length; companyIndex++){
-                    var company = $scope.companies[companyIndex];
-                    if(company.Id == $scope.companyId){
-                        $scope.company = company;
-                        break; 
-                    }
-                }
-            }
+            $scope.company = companyService.getCompany($scope.companyId);
             $scope.onLoginCredentialsChanged();
         }
         
