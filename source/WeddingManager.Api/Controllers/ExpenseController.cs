@@ -9,6 +9,20 @@ namespace WeddingManager.Api.Controllers
     [RoutePrefix("api/expenses")]
     public class ExpenseController : ControllerBase
     {
+        [HttpOptions]
+        [Route("")]
+        public async Task<IHttpActionResult> Options()
+        {
+            return Ok();
+        }
+
+        [HttpOptions]
+        [Route("{companyId}")]
+        public async Task<IHttpActionResult> Options(int companyId)
+        {
+            return Ok();
+        }
+
         [HttpPost]
         [Route("{companyId}")]
         public async Task<IHttpActionResult> CreateExpense(int companyId, [FromBody]ExpenseDto expenseDto)

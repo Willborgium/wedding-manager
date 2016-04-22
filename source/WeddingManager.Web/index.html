@@ -14,13 +14,12 @@
         <nav class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/">{{AppTitle}}</a>
+                <div class="navbar-brand">{{AppTitle}}</div>
             </div>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
-                <li><a href="#about"><i class="fa fa-shield"></i> About</a></li>
-                <li><a href="#contact"><i class="fa fa-comment"></i> Contact</a></li>
+                <li><a ng-click="navigateHome()"><i class="fa fa-home"></i>Home</a></li>
+                <li><a ng-click="logOut()"><i class="fa fa-home"></i>Log Out</a></li>
             </ul>
         </div>
         </nav>
@@ -39,11 +38,26 @@
 <script src="js/external/bootstrap.min.js"></script>
 <script src="js/external/angular.min.js"></script>
 <script src="js/external/angular-route.js"></script>
-<script src="js/app.js"></script>
+
+<script src="js/config.js"></script>
+<script src="js/services/appStateService.js"></script>
+
 <script src="js/factories/companyFactory.js"></script>
+<script src="js/factories/customerFactory.js"></script>
+<script src="js/factories/expenseFactory.js"></script>
+<script src="js/factories/serviceFactory.js"></script>
+
 <script src="js/services/companyService.js"></script>
+<script src="js/services/customerService.js"></script>
 <script src="js/services/loginService.js"></script>
+<script src="js/services/expenseService.js"></script>
+<script src="js/services/serviceService.js"></script>
+
+<script src="views/app/appController.js"></script>
 <script src="views/login/loginController.js"></script>
 <script src="views/home/homeController.js"></script>
+<script src="views/customer/customerController.js"></script>
+<script src="views/expense/expenseController.js"></script>
+<script src="views/service/serviceController.js"></script>
 </body>
 </html>

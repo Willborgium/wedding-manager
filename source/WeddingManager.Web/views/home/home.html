@@ -1,1 +1,26 @@
-<div>WOW</div>
+<div class="col-md-6">
+    <h1>Customers</h1>
+    <div class="form-group form-inline">
+        <label>Search</label>
+        <input class="form-control" type="text" maxlength="30" ng-model="customerFilter" />
+        <input class="form-control btn btn-success" type="button" value="New" ng-click="createCustomer()" />
+    </div>
+    <ul>
+        <li ng-repeat="customer in customers | filter:customerFilter">
+            <a ng-click="viewCustomer(customer)">{{customer.FirstName}} {{customer.LastName}}</a>
+        </li>
+    </ul>
+</div>
+<div class="col-md-6">
+    <h1>Expenses</h1>
+    <div class="form-group form-inline">
+        <label>Search</label>
+        <input class="form-control" type="text" maxlength="30" ng-model="expenseFilter" />
+    <input class="form-control btn btn-success" type="button" value="New" ng-click="createExpense()" />
+    </div>
+    <ul>
+        <li ng-repeat="expense in expenses | filter:expenseFilter">
+            <a ng-click="viewExpense(expense)">({{expense.Id}}) {{expense.Description}}</a>
+        </li>
+    </ul>
+</div>

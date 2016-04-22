@@ -2,13 +2,12 @@
     angular.module('weddingManager')
     .service('companyService', function(companyFactory){
         var service = {};
-        
-        service.companies = [];
+        var _companies = [];
         
         service.refreshCompanies = function(onSuccess, onError){
             companyFactory.retrieveCompanies(function(companies){
-                service.companies = companies;
-                onSuccess(service.companies);
+                _companies = companies;
+                onSuccess(_companies);
             }, onError);
         }
         
@@ -16,14 +15,14 @@
             if(companyIdString == ""){
                 return null;
             } else {
-                var length = service.companies.length;
+                var length = _companies.length;
                 for(var companyIndex = 0; companyIndex < length; companyIndex++){
-                    var company = service.companies[companyIndex];
+                    var company = _companies[companyIndex];
                     if(company.Id == companyIdString){
                         return company;
                     }
                 }
-            }            
+            }
         }
         
         return service;

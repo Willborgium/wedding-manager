@@ -9,6 +9,20 @@ namespace WeddingManager.Api.Controllers
     [RoutePrefix("api/customers")]
     public class CustomerController : ControllerBase
     {
+        [HttpOptions]
+        [Route("")]
+        public async Task<IHttpActionResult> Options()
+        {
+            return Ok();
+        }
+
+        [HttpOptions]
+        [Route("{companyId}")]
+        public async Task<IHttpActionResult> Options(int companyId)
+        {
+            return Ok();
+        }
+
         [HttpPost]
         [Route("{companyId}")]
         public async Task<IHttpActionResult> CreateCustomer(int companyId, [FromBody]CustomerDto customerDto)

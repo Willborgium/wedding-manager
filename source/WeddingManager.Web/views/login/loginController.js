@@ -9,6 +9,7 @@
         $scope.isSubmitDisabled = true;
         
         function initialize(){
+            $scope.AppTitle = "Welcome!";
             companyService.refreshCompanies(function(companies){
                 $scope.companies = companies;
             }, function(error){
@@ -29,7 +30,7 @@
                    loginService.login({
                        username : $scope.username,
                        password : $scope.password,
-                       companyId : $scope.company.Id
+                       company : $scope.company
                    }, function(userId){
                        $location.path('/home');                       
                    });

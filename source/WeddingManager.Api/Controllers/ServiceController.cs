@@ -9,6 +9,20 @@ namespace WeddingManager.Api.Controllers
     [RoutePrefix("api/services")]
     public class ServiceController : ControllerBase
     {
+        [HttpOptions]
+        [Route("")]
+        public async Task<IHttpActionResult> Options()
+        {
+            return Ok();
+        }
+
+        [HttpOptions]
+        [Route("{companyId}")]
+        public async Task<IHttpActionResult> Options(int companyId)
+        {
+            return Ok();
+        }
+
         [HttpPost]
         [Route("{customerId}")]
         public async Task<IHttpActionResult> CreateService(int customerId, [FromBody]ServiceDto serviceDto)
