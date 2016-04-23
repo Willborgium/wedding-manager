@@ -52,6 +52,17 @@
             $location.path('service');
         }
         
+        $scope.createService = function(){
+            serviceService.createService($scope.customer.Id, function(service){
+                $scope.viewService(service);                                
+            });
+        }
+        
+        $scope.return = function(){
+            appStateService.setCustomer(null);
+            $location.path('home');            
+        }
+        
         initialize();     
     });
 })();

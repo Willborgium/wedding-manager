@@ -5,7 +5,7 @@
         $scope.isSaveDisabled = true;
         
         function initialize(){
-            $scope.expense = appStateService.getExpense();            
+            $scope.expense = appStateService.getExpense();
         }
         
         function isDirty(){
@@ -38,6 +38,11 @@
             }, function(){
                 $location.path('error');
             });
+        }
+        
+        $scope.return = function(){
+            appStateService.setExpense(null);
+            $location.path('home');
         }
         
         initialize();     

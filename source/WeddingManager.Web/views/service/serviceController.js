@@ -5,8 +5,7 @@
         $scope.isSaveDisabled = true;
         
         function initialize(){
-            $scope.service = appStateService.getService(); 
-            console.dir($scope.service);           
+            $scope.service = appStateService.getService();
         }
         
         function isDirty(){
@@ -39,6 +38,11 @@
             }, function(){
                 $location.path('error');
             });
+        }
+        
+        $scope.return = function(){
+            appStateService.setService(null);
+            $location.path('customer');
         }
         
         initialize();     

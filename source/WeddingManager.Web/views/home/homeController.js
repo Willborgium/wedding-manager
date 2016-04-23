@@ -1,24 +1,21 @@
 (function(){
     angular.module('weddingManager')
     .controller('homeController', function($scope, $location, appStateService, customerService, expenseService){
+        $scope.company = null;
         $scope.expenseFilter = "";
         $scope.customerFilter = "";
         $scope.customers = [];
         $scope.expenses = [];
-        var _company = null;
         
         function initialize(){
-            _company = appStateService.getCompany();
-            if(!_company){
-                $location.path('error');
-            }
-            $scope.$parent.AppTitle = _company.Name;
-            customerService.refreshCustomers(_company.Id, function(customers){
+            $scope.company = appStateService.getCompany();
+            $scope.$parent.AppTitle = $scope.company.Name;
+            customerService.refreshCustomers($scope.company.Id, function(customers){
                 $scope.customers = customers;
             }, function(error){
                 $location.path('error');
             });
-            expenseService.refreshExpenses(_company.Id, function(expenses){
+            expenseService.refreshExpenses($scope.company.Id, function(expenses){
                 $scope.expenses = expenses;
             }, function(error){
                 $location.path('error');
@@ -36,13 +33,13 @@
         }
         
         $scope.createExpense = function(){
-            expenseService.createExpense(_company.Id, function(expense){
+            expenseService.createExpense($scope.company.Id, function(expense){
                 $scope.viewExpense(expense);
             })
         }
         
         $scope.createCustomer = function(){
-            customerService.createCustomer(_company.Id, function(customer){
+            customerService.createCustomer($scope.company.Id, function(customer){
                 $scope.viewCustomer(customer);
             })
         }
