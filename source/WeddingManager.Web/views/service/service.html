@@ -1,4 +1,4 @@
-<div>    
+<div class="col-md-4">    
     <div class="form-group form-inline">
         <input class="btn btn-primary" type="button" value="Back" ng-click="return()" /> 
     </div>
@@ -29,7 +29,7 @@
         <input class="btn btn-success" type="submit" value="Save" ng-click="updateService()" ng-disabled="isSaveDisabled" />
     </div>
 </div>
-<div>  
+<div class="col-md-4">  
     <h1>Invoices ({{invoices.length}})</h1>
     <div class="form-group form-inline">
         <label>Search</label>
@@ -39,6 +39,19 @@
     <ul>
         <li ng-repeat="invoice in invoices | filter:invoiceFilter">
             <a ng-click="viewInvoice(invoice)">({{invoice.Id}}) {{invoice.Description}}</a>
+        </li>
+    </ul>
+</div>
+<div class="col-md-4">
+    <h1>Payments ({{payments.length}})</h1>
+    <div class="form-group form-inline">
+        <label>Search</label>
+        <input class="form-control" type="text" maxlength="32" ng-model="paymentFilter" />
+        <input class="btn btn-success" type="submit" value="New" ng-click="createPayment()" />
+    </div>
+    <ul>
+        <li ng-repeat="payment in payments | filter:paymentFilter">
+            <a ng-click="viewPayment(payment)">({{payment.Id}}) {{payment.Amount}}  {{payment.Notes}}</a>
         </li>
     </ul>
 </div>

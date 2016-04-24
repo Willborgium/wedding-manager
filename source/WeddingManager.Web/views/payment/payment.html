@@ -1,0 +1,30 @@
+<div>    
+    <div class="form-group form-inline">
+        <input class="btn btn-primary" type="button" value="Back" ng-click="return()" /> 
+    </div>
+    <div class="form-group form-inline">
+        <label>Payment ID</label>
+        <div class="form-control" disabled>{{payment.Id}}</div>
+    </div>
+    <div class="form-group form-inline">
+        <label>Amount</label>
+        <input class="form-control" type="number" step="0.01" min="0" ng-model="payment.Amount" ng-change="onFieldChanged()"/>
+    </div>
+    <div class="form-group form-inline">
+        <label>Method</label>
+        <select class="form-control" ng-model="payment.Method" ng-change="onFieldChanged()"
+        ng-options="method.Id as method.Name for method in methods"></select>
+    </div>
+    <div class="form-group form-inline">
+        <label>Date Received</label>
+        <input class="form-control" type="date" ng-model="payment.DateReceived" ng-change="onFieldChanged()"/>
+    </div>
+    <div class="form-group form-inline">
+        <label>Notes</label>
+        <input class="form-control" type="text" ng-model="payment.Notes" ng-change="onFieldChanged()"/>
+    </div>
+    <div class="form-group">
+        <input class="btn btn-danger" type="submit" value="Delete" ng-click="deletePayment()" />
+        <input class="btn btn-success" type="submit" value="Save" ng-click="updatePayment()" ng-disabled="isSaveDisabled" />
+    </div>
+</div>

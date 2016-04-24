@@ -7,6 +7,7 @@
         var _expense = null;
         var _service = null;
         var _invoice = null;
+        var _payment = null;
         
         function copy(target){
             return JSON.parse(JSON.stringify(target));
@@ -80,6 +81,19 @@
         
         service.setInvoice = function(invoice){
             _invoice = copy(invoice);
+        }        
+        
+        service.getPayment = function(){
+            if(!_payment){
+                $location.path('error');
+            }
+            var output = copy(_payment);
+            output.DateReceived = getDate(output.DateReceived);
+            return output;
+        }   
+        
+        service.setPayment = function(payment){
+            _payment = copy(payment);
         }
         
         return service;

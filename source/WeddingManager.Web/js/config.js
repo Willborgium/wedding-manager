@@ -29,6 +29,10 @@
 	       templateUrl : 'views/invoice/invoice.html',
 	       controller : 'invoiceController'
 	   })
+	   .when('/payment', {
+	       templateUrl : 'views/payment/payment.html',
+	       controller : 'paymentController'
+	   })
 	   .otherwise({
 		   redirectTo : '/error'
 	   });

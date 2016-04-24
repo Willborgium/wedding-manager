@@ -1,9 +1,11 @@
 (function(){
     angular.module('weddingManager')
-    .controller('serviceController', function($scope, $location, appStateService, serviceService, invoiceService){
+    .controller('serviceController', function($scope, $location, appStateService, serviceService, invoiceService, paymentService){
         $scope.service = null;
         $scope.invoiceFilter = "";
+        $scope.paymentFilter = "";
         $scope.invoices = [];
+        $scope.payments = [];
         $scope.isSaveDisabled = true;
         
         function initialize(){
@@ -12,6 +14,11 @@
                 $scope.invoices = invoices;
             }, function(){
                 $location.path('error');
+            });
+            paymentService.refreshPayments($scope.service.Id, function(payments){
+                $scope.payments = payments;
+            }, function(){
+               $location.path('error'); 
             });
         }
         
@@ -52,16 +59,27 @@
             $location.path('customer');
         }
         
-        $scope.viewInvoice = function(invoice){
-            appStateService.setInvoice(invoice);
-            $location.path('invoice');
-        }
-        
         $scope.createInvoice = function(){
             invoiceService.createInvoice($scope.service.Id, function(invoice){
                appStateService.setInvoice(invoice);
                $location.path('invoice'); 
             });
+        }
+        
+        $scope.viewPayment = function(payment){
+            appStateService.setPayment(payment);
+            $location.path('payment');
+        }
+        
+        $scope.createPayment = function(){
+            paymentService.createPayment($scope.service.Id, function(payment){
+               $scope.viewPayment(payment); 
+            });
+        }
+        
+        $scope.viewInvoice = function(invoice){
+            appStateService.setInvoice(invoice);
+            $location.path('invoice');
         }
         
         initialize();     

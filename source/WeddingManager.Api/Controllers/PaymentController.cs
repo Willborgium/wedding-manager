@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using WeddingManager.Api.Models;
@@ -27,9 +28,16 @@ namespace WeddingManager.Api.Controllers
         [Route("{serviceId}")]
         public async Task<IHttpActionResult> CreatePayment(int serviceId, [FromBody]PaymentDto payment)
         {
-            var paymentId = PaymentService.CreatePayment(serviceId, payment.ToPayment());
+            try
+            {
+                var paymentId = PaymentService.CreatePayment(serviceId, payment.ToPayment());
 
-            return Ok(paymentId);
+                return Ok(paymentId);
+            }
+            catch(Exception err)
+            {
+                return InternalServerError(err);
+            }
         }
 
         [HttpGet]
