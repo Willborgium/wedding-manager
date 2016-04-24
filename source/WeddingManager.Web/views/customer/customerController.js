@@ -40,11 +40,15 @@
         }
         
         $scope.deleteCustomer = function(){
-            customerService.deleteCustomer($scope.customer.Id, function(){
-                $location.path('home');
-            }, function(){
-                $location.path('error');
-            });
+            $('#myModal')
+            .on('hidden.bs.modal', function(){
+                customerService.deleteCustomer($scope.customer.Id, function(){
+                    $location.path('home');
+                }, function(){
+                    $location.path('error');
+                });
+            })
+            .modal('hide');
         }
         
         $scope.viewService = function(service){

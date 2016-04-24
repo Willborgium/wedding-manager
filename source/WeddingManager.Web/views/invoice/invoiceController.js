@@ -33,11 +33,15 @@
         }
         
         $scope.deleteInvoice = function(){
-            invoiceService.deleteInvoice($scope.invoice.Id, function(){
-                $location.path('service');
-            }, function(){
-                $location.path('error');
-            });
+            $('#myModal')
+            .on('hidden.bs.modal', function(){
+                invoiceService.deleteInvoice($scope.invoice.Id, function(){
+                    $location.path('service');
+                }, function(){
+                    $location.path('error');
+                });
+            })
+            .modal('hide');
         }
         
         $scope.return = function(){

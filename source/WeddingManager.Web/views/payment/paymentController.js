@@ -37,11 +37,15 @@
         }
         
         $scope.deletePayment = function(){
-            paymentService.deletePayment($scope.payment.Id, function(){
-                $location.path('service');
-            }, function(){
-                $location.path('error');
-            });
+            $('#myModal')
+            .on('hidden.bs.modal', function(){
+                paymentService.deletePayment($scope.payment.Id, function(){
+                    $location.path('service');
+                }, function(){
+                    $location.path('error');
+                });
+            })
+            .modal('hide');
         }
         
         $scope.return = function(){

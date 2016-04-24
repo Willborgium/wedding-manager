@@ -33,11 +33,15 @@
         }
         
         $scope.deleteExpense = function(){
-            expenseService.deleteExpense($scope.expense.Id, function(){
-                $location.path('home');
-            }, function(){
-                $location.path('error');
-            });
+            $('#myModal')
+            .on('hidden.bs.modal', function(){
+                expenseService.deleteExpense($scope.expense.Id, function(){
+                    $location.path('home');
+                }, function(){
+                    $location.path('error');
+                });
+            })
+            .modal('hide');
         }
         
         $scope.return = function(){

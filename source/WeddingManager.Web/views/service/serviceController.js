@@ -47,11 +47,15 @@
         }
         
         $scope.deleteService = function(){
-            serviceService.deleteService($scope.service.Id, function(){
-                $location.path('customer');
-            }, function(){
-                $location.path('error');
-            });
+            $('#myModal')
+            .on('hidden.bs.modal', function(){
+                serviceService.deleteService($scope.service.Id, function(){
+                    $location.path('customer');
+                }, function(){
+                    $location.path('error');
+                });
+            })
+            .modal('hide');
         }
         
         $scope.return = function(){
