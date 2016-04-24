@@ -29,3 +29,16 @@
         <input class="btn btn-success" type="submit" value="Save" ng-click="updateService()" ng-disabled="isSaveDisabled" />
     </div>
 </div>
+<div>  
+    <h1>Invoices ({{invoices.length}})</h1>
+    <div class="form-group form-inline">
+        <label>Search</label>
+        <input class="form-control" type="text" maxlength="32" ng-model="invoiceFilter" />
+        <input class="btn btn-success" type="submit" value="New" ng-click="createInvoice()" />
+    </div>
+    <ul>
+        <li ng-repeat="invoice in invoices | filter:invoiceFilter">
+            <a ng-click="viewInvoice(invoice)">({{invoice.Id}}) {{invoice.Description}}</a>
+        </li>
+    </ul>
+</div>

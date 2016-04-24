@@ -1,0 +1,29 @@
+<div>    
+    <div class="form-group form-inline">
+        <input class="btn btn-primary" type="button" value="Back" ng-click="return()" /> 
+    </div>
+    <div class="form-group form-inline">
+        <label>Invoice ID</label>
+        <div class="form-control" disabled>{{invoice.Id}}</div>
+    </div>
+    <div class="form-group form-inline">
+        <label>Description</label>
+        <input class="form-control" type="text" maxlength="128" ng-model="invoice.Description" ng-change="onFieldChanged()"/>
+    </div>
+    <div class="form-group form-inline">
+        <label>Amount</label>
+        <input class="form-control" type="number" step="0.01" min="0" ng-model="invoice.Amount" ng-change="onFieldChanged()"/>
+    </div>
+    <div class="form-group form-inline">
+        <label>Created Date</label>
+        <input class="form-control" type="date" ng-model="invoice.CreatedDate" disabled/>
+    </div>
+    <div class="form-group form-inline">
+        <label>Due Date</label>
+        <input class="form-control" type="date" ng-model="invoice.DueDate" ng-change="onFieldChanged()"/>
+    </div>
+    <div class="form-group">
+        <input class="btn btn-danger" type="submit" value="Delete" ng-click="deleteInvoice()" />
+        <input class="btn btn-success" type="submit" value="Save" ng-click="updateInvoice()" ng-disabled="isSaveDisabled" />
+    </div>
+</div>

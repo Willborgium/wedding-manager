@@ -1,11 +1,18 @@
 (function(){
     angular.module('weddingManager')
-    .controller('serviceController', function($scope, $location, appStateService, serviceService){
+    .controller('serviceController', function($scope, $location, appStateService, serviceService, invoiceService){
         $scope.service = null;
+        $scope.invoiceFilter = "";
+        $scope.invoices = [];
         $scope.isSaveDisabled = true;
         
         function initialize(){
             $scope.service = appStateService.getService();
+            invoiceService.refreshInvoices($scope.service.Id, function(invoices){
+                $scope.invoices = invoices;
+            }, function(){
+                $location.path('error');
+            });
         }
         
         function isDirty(){
@@ -43,6 +50,18 @@
         $scope.return = function(){
             appStateService.setService(null);
             $location.path('customer');
+        }
+        
+        $scope.viewInvoice = function(invoice){
+            appStateService.setInvoice(invoice);
+            $location.path('invoice');
+        }
+        
+        $scope.createInvoice = function(){
+            invoiceService.createInvoice($scope.service.Id, function(invoice){
+               appStateService.setInvoice(invoice);
+               $location.path('invoice'); 
+            });
         }
         
         initialize();     

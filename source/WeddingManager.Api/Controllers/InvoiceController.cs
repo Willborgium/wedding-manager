@@ -9,6 +9,20 @@ namespace WeddingManager.Api.Controllers
     [RoutePrefix("api/invoices")]
     public class InvoiceController : ControllerBase
     {
+        [HttpOptions]
+        [Route("")]
+        public async Task<IHttpActionResult> Options()
+        {
+            return Ok();
+        }
+
+        [HttpOptions]
+        [Route("{companyId}")]
+        public async Task<IHttpActionResult> Options(int companyId)
+        {
+            return Ok();
+        }
+
         [HttpPost]
         [Route("{serviceId}")]
         public async Task<IHttpActionResult> CreateInvoices(int serviceId, [FromBody]InvoiceDto invoiceDto)

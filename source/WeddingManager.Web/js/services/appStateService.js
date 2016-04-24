@@ -6,9 +6,14 @@
         var _customer = null;
         var _expense = null;
         var _service = null;
+        var _invoice = null;
         
         function copy(target){
             return JSON.parse(JSON.stringify(target));
+        }
+        
+        function getDate(date){
+            return date ? new Date(date) : null;
         }
         
         service.clearState = function(){
@@ -54,17 +59,27 @@
                 $location.path('error');
             }
             var output = copy(_service);
-            output.StartTime = new Date(output.StartTime);
-            if(output.EndTime){
-                output.EndTime = new Date(output.EndTime);
-            } else {
-                output.EndTime = null;
-            }
+            output.StartTime = getDate(output.StartTime);
+            output.EndTime = getDate(output.EndTime);
             return output;
         }   
         
         service.setService = function(service){
             _service = copy(service);
+        }        
+        
+        service.getInvoice = function(){
+            if(!_invoice){
+                $location.path('error');
+            }
+            var output = copy(_invoice);
+            output.CreatedDate = getDate(output.CreatedDate);
+            output.DueDate = getDate(output.DueDate);
+            return output;
+        }   
+        
+        service.setInvoice = function(invoice){
+            _invoice = copy(invoice);
         }
         
         return service;
