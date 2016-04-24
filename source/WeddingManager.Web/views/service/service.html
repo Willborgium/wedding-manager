@@ -1,26 +1,26 @@
-<div class="col-md-4">    
-    <div class="form-group form-inline">
-        <input class="btn btn-primary" type="button" value="Back" ng-click="return()" /> 
-    </div>
-    <div class="form-group form-inline">
+<input class="btn btn-primary" type="button" value="Back" ng-click="return()" />
+<h1>{{service.Description}}</h1>
+<div class="col-md-4">
+    <h2>Basic Info</h2>
+    <div class="form-group">
         <label>Service ID</label>
         <div class="form-control" disabled>{{service.Id}}</div>
     </div>
-    <div class="form-group form-inline">
+    <div class="form-group">
         <label>Description</label>
         <input class="form-control" type="text" maxlength="128" ng-model="service.Description" ng-change="onFieldChanged()"/>
     </div>
-    <div class="form-group form-inline">
+    <div class="form-group">
         <label>Location</label>
         <input class="form-control" type="text" maxlength="128" ng-model="service.Location" ng-change="onFieldChanged()"/>
     </div>
-    <div class="form-group form-inline">
-        <label>Start</label>
+    <div class="form-group">
+        <label>Start Date/Time</label>
         <input class="form-control" type="date" ng-model="service.StartTime" ng-change="onFieldChanged()"/>
         <input class="form-control" type="time" ng-model="service.StartTime" ng-change="onFieldChanged()"/>
     </div>
-    <div class="form-group form-inline">
-        <label>End</label>
+    <div class="form-group">
+        <label>End Date/Time</label>
         <input class="form-control" type="date" ng-model="service.EndTime" ng-change="onFieldChanged()"/>
         <input class="form-control" type="time" ng-model="service.EndTime" ng-change="onFieldChanged()"/>
     </div>
@@ -30,28 +30,48 @@
     </div>
 </div>
 <div class="col-md-4">  
-    <h1>Invoices ({{invoices.length}})</h1>
+    <h2>Invoices ({{invoices.length}})</h2>
     <div class="form-group form-inline">
         <label>Search</label>
         <input class="form-control" type="text" maxlength="32" ng-model="invoiceFilter" />
-        <input class="btn btn-success" type="submit" value="New" ng-click="createInvoice()" />
+        <span class="btn btn-success glyphicon glyphicon-plus" type="submit" ng-click="createInvoice()" />
     </div>
-    <ul>
-        <li ng-repeat="invoice in invoices | filter:invoiceFilter">
-            <a ng-click="viewInvoice(invoice)">({{invoice.Id}}) {{invoice.Description}}</a>
-        </li>
-    </ul>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="invoice in invoices | filter:invoiceFilter" ng-click="viewInvoice(invoice)">
+                <td>{{invoice.Id}}</td>
+                <td>{{invoice.Description}}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 <div class="col-md-4">
-    <h1>Payments ({{payments.length}})</h1>
+    <h2>Payments ({{payments.length}})</h2>
     <div class="form-group form-inline">
         <label>Search</label>
         <input class="form-control" type="text" maxlength="32" ng-model="paymentFilter" />
-        <input class="btn btn-success" type="submit" value="New" ng-click="createPayment()" />
+        <span class="btn btn-success glyphicon glyphicon-plus" type="submit" ng-click="createPayment()" />
     </div>
-    <ul>
-        <li ng-repeat="payment in payments | filter:paymentFilter">
-            <a ng-click="viewPayment(payment)">({{payment.Id}}) {{payment.Amount}}  {{payment.Notes}}</a>
-        </li>
-    </ul>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Amount</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="payment in payments | filter:paymentFilter" ng-click="viewPayment(payment)">
+                <td>{{payment.Id}}</td>
+                <td>{{payment.Amount | currency}}</td>
+                <td>{{payment.Notes}}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>

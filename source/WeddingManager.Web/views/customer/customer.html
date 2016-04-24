@@ -1,21 +1,20 @@
+<input class="btn btn-primary" type="button" value="Back" ng-click="return()" /> 
 <h1>{{customer.FirstName}} {{customer.LastName}}</h1>
-<div class="col-md-4">
-    <div class="form-group form-inline">
-        <input class="btn btn-primary" type="button" value="Back" ng-click="return()" /> 
-    </div>
-    <div class="form-group form-inline">
+<div class="col-md-6">
+    <h2>Basic Info</h2>
+    <div class="form-group">
         <label>Customer ID</label>
         <div class="form-control" disabled>{{customer.Id}}</div>
     </div>
-    <div class="form-group form-inline">
+    <div class="form-group">
         <label>First Name</label>
         <input class="form-control" type="text" maxlength="32" ng-model="customer.FirstName" ng-change="onFieldChanged()"/>
     </div>
-    <div class="form-group form-inline">
+    <div class="form-group">
         <label>Last Name</label>
         <input class="form-control" type="text" maxlength="32" ng-model="customer.LastName" ng-change="onFieldChanged()"/>
     </div>
-    <div class="form-group form-inline">
+    <div class="form-group">
         <label>Phone Number</label>
         <input class="form-control" type="tel" maxlength="32" ng-model="customer.PhoneNumber" ng-change="onFieldChanged()"/>
     </div>
@@ -24,16 +23,25 @@
         <input class="btn btn-success" type="submit" value="Save" ng-click="updateCustomer()" ng-disabled="isSaveDisabled" />
     </div>
 </div>
-<div class="col-md-4">
-    <h1>Services ({{services.length}})</h1>
+<div class="col-md-6">
+    <h2>Services ({{services.length}})</h2>
     <div class="form-group form-inline">
         <label>Search</label>
         <input class="form-control" type="text" maxlength="32" ng-model="serviceFilter" />
-        <input class="btn btn-success" type="submit" value="New" ng-click="createService()" />
+        <span class="btn btn-success glyphicon glyphicon-plus" type="submit" ng-click="createService()" />
     </div>
-    <ul>
-        <li ng-repeat="service in services | filter:serviceFilter">
-            <a ng-click="viewService(service)">({{service.Id}}) {{service.Description}}</a>
-        </li>
-    </ul>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="service in services | filter:serviceFilter" ng-click="viewService(service)">
+                <td>{{service.Id}}</td>
+                <td>{{service.Description}}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
