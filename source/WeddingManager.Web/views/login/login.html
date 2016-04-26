@@ -1,18 +1,35 @@
-<div class="col-md-12" ng-controller="loginController">
-    <div class="form-group">
-        <label>Company</label>
-        <select class="form-control" ng-model="companyId" ng-change="onCompanyChanged()">
-            <option></option>
-            <option ng-repeat="company in companies" value="{{company.Id}}">{{company.Name}}</option>
-        </select>
+<div class="col-md-2"></div>
+<div class="col-md-8" ng-controller="loginController">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Welcome! Please sign in.</h3>
+        </div>
+        <div class="panel-body">
+            <div class="input-group">
+                <label class="input-group-addon">Company</label>
+                <select class="form-control" ng-model="companyId" ng-change="onCompanyChanged()">
+                    <option></option>
+                    <option ng-repeat="company in companies" value="{{company.Id}}">{{company.Name}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="input-group">
+                <label class="input-group-addon">Username</label>
+                <input class="form-control" type="text" maxlength="25" ng-model="username" ng-change="onLoginCredentialsChanged()" />
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="input-group">
+                <label class="input-group-addon">Password</label>
+                <input class="form-control" type="password" maxlength="25" ng-model="password" ng-change="onLoginCredentialsChanged()" />
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="btn-group btn-group-justified">
+                <div class="btn btn-primary" ng-disabled="isSubmitDisabled" ng-click="submitCredentials()">Submit</div>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label>Username</label>
-        <input class="form-control" type="text" maxlength="25" ng-model="username" ng-change="onLoginCredentialsChanged()" />
-    </div>
-    <div class="form-group">
-        <label>Password</label>
-        <input class="form-control" type="password" maxlength="25" ng-model="password" ng-change="onLoginCredentialsChanged()" />
-    </div>
-    <input class="btn btn-primary" type="submit" value="Submit" ng-disabled="isSubmitDisabled" ng-click="submitCredentials()" />
 </div>
+<div class="col-md-2"></div>

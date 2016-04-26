@@ -3,6 +3,7 @@
     .service('customerService', function(customerFactory, appStateService){
         var service = {};
         var _customers = [];
+        var _summary = {};
         
         service.createCustomer = function(companyId, onSuccess, onError){
             var customer = {
@@ -34,6 +35,13 @@
                 appStateService.setCustomer(null);
                 onSuccess();
             }, onError);
+        }
+        
+        service.refreshSummary = function(companyId, onSuccess, onError){
+            customerFactory.retrieveSummary(companyId, function(summary){
+                _summary = summary;
+                onSuccess(_summary);                
+            }, onError);            
         }
         
         return service;

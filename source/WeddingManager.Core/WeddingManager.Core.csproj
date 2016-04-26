@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Company.cs" />
+    <Compile Include="Data\CustomersSummary.cs" />
     <Compile Include="Data\Customer.cs" />
     <Compile Include="Data\Expense.cs" />
     <Compile Include="Data\Invoice.cs" />

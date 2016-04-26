@@ -6,6 +6,7 @@
         $scope.customerFilter = "";
         $scope.customers = [];
         $scope.expenses = [];
+        $scope.summary = {};
         
         function initialize(){
             $scope.company = appStateService.getCompany();
@@ -15,11 +16,16 @@
             }, function(error){
                 $location.path('error');
             });
+            customerService.refreshSummary($scope.company.Id, function(summary){
+                $scope.summary = summary;
+            }, function(error){
+                $location.path('error');
+            });
             expenseService.refreshExpenses($scope.company.Id, function(expenses){
                 $scope.expenses = expenses;
             }, function(error){
                 $location.path('error');
-            })
+            });
         }
         
         $scope.viewCustomer = function(customer){

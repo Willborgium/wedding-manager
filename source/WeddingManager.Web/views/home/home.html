@@ -4,6 +4,30 @@
             <h2>Customers <span class="badge">{{customers.length}}</span></h2>
         </div>
         <div class="panel-body">
+            <div class="alert alert-info">
+                <div class="container-fluid">
+                    <div class="col-md-6">
+                        <strong>Amount Received</strong>
+                    </div>
+                    <div class="col-md-6">
+                        {{summary.AmountReceivedYTD | currency}}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Amount Expected</strong>
+                    </div>
+                    <div class="col-md-6">
+                        {{summary.AmountExpectedYTD | currency}}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Upcoming</strong>
+                    </div>
+                    <div class="col-md-6">
+                        {{summary.UpcomingAppointmentCount}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
             <div class="input-group">
                 <label class="input-group-addon">Search</label>
                 <input class="form-control" type="text" maxlength="30" ng-model="customerFilter" />

@@ -12,5 +12,7 @@ namespace WeddingManager.Core.Services
         void UpdateCustomer(Customer customer);
 
         void DeleteCustomer(int customerId);
+
+        CustomersSummary GetSummary(int companyId);
     }
 }
