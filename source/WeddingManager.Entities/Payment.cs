@@ -20,6 +20,7 @@ namespace WeddingManager.Entities
         public int PaymentMethodId { get; set; }
         public System.DateTime DateReceived { get; set; }
         public string Notes { get; set; }
+        public Nullable<System.DateTime> DateSuppressed { get; set; }
     
         public virtual PaymentMethod PaymentMethod { get; set; }
         public virtual Service Service { get; set; }

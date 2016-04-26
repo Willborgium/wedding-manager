@@ -2,6 +2,7 @@
 (
 	[Id] INT NOT NULL IDENTITY,
 	[CompanyId] INT NOT NULL,
+	[DateSuppressed] DATE,
 	[FirstName] NVARCHAR(64) NOT NULL,
 	[LastName] NVARCHAR(64) NOT NULL,
 	[PhoneNumber] NVARCHAR(32) NOT NULL,

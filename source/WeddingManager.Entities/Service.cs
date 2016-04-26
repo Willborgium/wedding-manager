@@ -27,6 +27,7 @@ namespace WeddingManager.Entities
         public string Location { get; set; }
         public System.DateTime StartTime { get; set; }
         public Nullable<System.DateTime> EndTime { get; set; }
+        public Nullable<System.DateTime> DateSuppressed { get; set; }
     
         public virtual Customer Customer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

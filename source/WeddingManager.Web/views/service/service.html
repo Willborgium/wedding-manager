@@ -1,81 +1,113 @@
 <div class="col-md-12">
-    <div class="btn-group">
-        <div class="btn btn-primary glyphicon glyphicon-arrow-left" ng-click="return()" />
-        <div class="btn btn-danger glyphicon glyphicon-trash" data-toggle="modal" data-target="#myModal" />
-        <div class="btn btn-success glyphicon glyphicon-floppy-disk" ng-click="updateService()" ng-disabled="isSaveDisabled" />
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="btn-group btn-group-sm">
+                <div class="btn btn-primary glyphicon glyphicon-arrow-left" ng-click="return()" />
+                <div class="btn btn-danger glyphicon glyphicon-trash" data-toggle="modal" data-target="#myModal" />
+                <div class="btn btn-success glyphicon glyphicon-floppy-disk" ng-click="updateService()" ng-disabled="isSaveDisabled" />
+            </div>
+            <h2>{{service.Description}}</h2>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Basic Info</h4>
+                    </div>        
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Service ID</label>
+                            <div class="form-control" disabled>{{service.Id}}</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <input class="form-control" type="text" maxlength="128" ng-model="service.Description" ng-change="onFieldChanged()"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Location</label>
+                            <input class="form-control" type="text" maxlength="128" ng-model="service.Location" ng-change="onFieldChanged()"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Start Date/Time</label>
+                            <input class="form-control" type="date" ng-model="service.StartTime" ng-change="onFieldChanged()"/>
+                            <input class="form-control" type="time" ng-model="service.StartTime" ng-change="onFieldChanged()"/>
+                        </div>
+                        <div class="form-group">
+                            <label>End Date/Time</label>
+                            <input class="form-control" type="date" ng-model="service.EndTime" ng-change="onFieldChanged()"/>
+                            <input class="form-control" type="time" ng-model="service.EndTime" ng-change="onFieldChanged()"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Invoices <span class="badge">{{invoices.length}}</span></h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="input-group">
+                            <label class="input-group-addon">Search</label>
+                            <input class="form-control" type="text" maxlength="30" ng-model="invoiceFilter" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-success glyphicon glyphicon-plus" type="button" ng-click="createInvoice()" />
+                            </span>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="invoice in invoices | filter:invoiceFilter" ng-click="viewInvoice(invoice)">
+                                    <td>{{invoice.Id}}</td>
+                                    <td>{{invoice.Description}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Payments <span class="badge">{{payments.length}}</span></h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="input-group">
+                            <label class="input-group-addon">Search</label>
+                            <input class="form-control" type="text" maxlength="30" ng-model="paymentFilter" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-success glyphicon glyphicon-plus" type="button" ng-click="createPayment()" />
+                            </span>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Amount</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="payment in payments | filter:paymentFilter" ng-click="viewPayment(payment)">
+                                <td>{{payment.Id}}</td>
+                                <td>{{payment.Amount | currency}}</td>
+                                <td>{{payment.Notes}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <h1>{{service.Description}}</h1>
-</div>
-<div class="col-md-4">
-    <h2>Basic Info</h2>
-    <div class="form-group">
-        <label>Service ID</label>
-        <div class="form-control" disabled>{{service.Id}}</div>
-    </div>
-    <div class="form-group">
-        <label>Description</label>
-        <input class="form-control" type="text" maxlength="128" ng-model="service.Description" ng-change="onFieldChanged()"/>
-    </div>
-    <div class="form-group">
-        <label>Location</label>
-        <input class="form-control" type="text" maxlength="128" ng-model="service.Location" ng-change="onFieldChanged()"/>
-    </div>
-    <div class="form-group">
-        <label>Start Date/Time</label>
-        <input class="form-control" type="date" ng-model="service.StartTime" ng-change="onFieldChanged()"/>
-        <input class="form-control" type="time" ng-model="service.StartTime" ng-change="onFieldChanged()"/>
-    </div>
-    <div class="form-group">
-        <label>End Date/Time</label>
-        <input class="form-control" type="date" ng-model="service.EndTime" ng-change="onFieldChanged()"/>
-        <input class="form-control" type="time" ng-model="service.EndTime" ng-change="onFieldChanged()"/>
-    </div>
-</div>
-<div class="col-md-4">  
-    <h2>Invoices ({{invoices.length}})</h2>
-    <div class="form-group form-inline">
-        <label>Search</label>
-        <input class="form-control" type="text" maxlength="32" ng-model="invoiceFilter" />
-        <span class="btn btn-success glyphicon glyphicon-plus" type="submit" ng-click="createInvoice()" />
-    </div>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="invoice in invoices | filter:invoiceFilter" ng-click="viewInvoice(invoice)">
-                <td>{{invoice.Id}}</td>
-                <td>{{invoice.Description}}</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<div class="col-md-4">
-    <h2>Payments ({{payments.length}})</h2>
-    <div class="form-group form-inline">
-        <label>Search</label>
-        <input class="form-control" type="text" maxlength="32" ng-model="paymentFilter" />
-        <span class="btn btn-success glyphicon glyphicon-plus" type="submit" ng-click="createPayment()" />
-    </div>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Amount</th>
-                <th>Notes</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="payment in payments | filter:paymentFilter" ng-click="viewPayment(payment)">
-                <td>{{payment.Id}}</td>
-                <td>{{payment.Amount | currency}}</td>
-                <td>{{payment.Notes}}</td>
-            </tr>
-        </tbody>
-    </table>
 </div>
 <div class="modal fade" id="myModal" tabindex="-1">
   <div class="modal-dialog">

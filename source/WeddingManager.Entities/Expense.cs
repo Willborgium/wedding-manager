@@ -19,6 +19,7 @@ namespace WeddingManager.Entities
         public decimal Amount { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string Description { get; set; }
+        public Nullable<System.DateTime> DateSuppressed { get; set; }
     
         public virtual Company Company { get; set; }
     }

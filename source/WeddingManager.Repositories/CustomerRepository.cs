@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using WeddingManager.Core.Data;
 using WeddingManager.Core.Repositories;
@@ -12,9 +13,12 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
+                var dbCompany = entity.Companies.FirstOrDefault(c => c.Id == companyId &&
+                                                                   c.DateSuppressed == null);
+
                 var dbCustomer = new DB.Customer
                 {
-                    CompanyId = companyId,
+                    Company = dbCompany,
                     FirstName = customer.FirstName,
                     LastName = customer.LastName,
                     PhoneNumber = customer.PhoneNumber
@@ -34,7 +38,9 @@ namespace WeddingManager.Repositories
 
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbCustomers = entity.Customers.Where(c => c.CompanyId == companyId);
+                var dbCustomers = entity.Customers.Where(c => c.CompanyId == companyId &&
+                                                              c.DateSuppressed == null &&
+                                                              c.Company.DateSuppressed == null);
 
                 foreach(var dbCustomer in dbCustomers)
                 {
@@ -51,7 +57,9 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbCustomer = entity.Customers.FirstOrDefault(c => c.Id == customer.Id);
+                var dbCustomer = entity.Customers.FirstOrDefault(c => c.Id == customer.Id &&
+                                                                      c.DateSuppressed == null &&
+                                                                      c.Company.DateSuppressed == null);
 
                 if(dbCustomer != null)
                 {
@@ -70,9 +78,9 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbCustomer = entity.Customers.FirstOrDefault(c => c.Id == customerId);
-
-                // suppress record
+                var dbCustomer = entity.Customers.FirstOrDefault(c => c.Id == customerId &&
+                                                                      c.DateSuppressed == null);
+                dbCustomer.DateSuppressed = DateTime.Now;
 
                 entity.SaveChanges();
             }

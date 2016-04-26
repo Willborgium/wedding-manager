@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using WeddingManager.Core.Data;
 using WeddingManager.Core.Repositories;
@@ -12,9 +13,13 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
+                var dbCustomer = entity.Customers.FirstOrDefault(c => c.Id == customerId &&
+                                                                      c.DateSuppressed == null &&
+                                                                      c.Company.DateSuppressed == null);
+
                 var dbService = new DB.Service
                 {
-                    CustomerId = customerId,
+                    Customer = dbCustomer,
                     Description = service.Description,
                     Location = service.Location,
                     StartTime = service.StartTime,
@@ -35,9 +40,12 @@ namespace WeddingManager.Repositories
 
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var services = entity.Services.Where(s => s.CustomerId == customerId);
+                var dbServices = entity.Services.Where(s => s.CustomerId == customerId &&
+                                                            s.DateSuppressed == null &&
+                                                            s.Customer.DateSuppressed == null &&
+                                                            s.Customer.Company.DateSuppressed == null);
 
-                foreach (var dbService in services)
+                foreach (var dbService in dbServices)
                 {
                     output.Add(new Service(dbService.Id, dbService.Description, dbService.Location, dbService.StartTime, dbService.EndTime));
                 }
@@ -50,7 +58,10 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbService = entity.Services.FirstOrDefault(s => s.Id == service.Id);
+                var dbService = entity.Services.FirstOrDefault(s => s.Id == service.Id &&
+                                                                    s.DateSuppressed == null &&
+                                                                    s.Customer.DateSuppressed == null &&
+                                                                    s.Customer.Company.DateSuppressed == null);
 
                 if (dbService != null)
                 {
@@ -71,9 +82,12 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbService = entity.Services.FirstOrDefault(s => s.Id == serviceId);
+                var dbService = entity.Services.FirstOrDefault(s => s.Id == serviceId &&
+                                                                    s.DateSuppressed == null &&
+                                                                    s.Customer.DateSuppressed == null &&
+                                                                    s.Customer.Company.DateSuppressed == null);
 
-                // suppress record
+                dbService.DateSuppressed = DateTime.Now;
 
                 entity.SaveChanges();
             }

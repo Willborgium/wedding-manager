@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using WeddingManager.Core.Data;
 using WeddingManager.Core.Repositories;
@@ -12,9 +13,14 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
+                var dbService = entity.Services.FirstOrDefault(s => s.Id == serviceId &&
+                                                                    s.DateSuppressed == null &&
+                                                                    s.Customer.DateSuppressed == null &&
+                                                                    s.Customer.Company.DateSuppressed == null);
+
                 var dbPayment = new DB.Payment
                 {
-                    ServiceId = serviceId,
+                    Service = dbService,
                     Amount = payment.Amount,
                     PaymentMethodId = (int)payment.Method,
                     DateReceived = payment.DateReceived,
@@ -35,9 +41,13 @@ namespace WeddingManager.Repositories
 
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var payments = entity.Payments.Where(p => p.ServiceId == serviceId);
+                var dbPayments = entity.Payments.Where(p => p.ServiceId == serviceId &&
+                                                          p.DateSuppressed == null &&
+                                                          p.Service.DateSuppressed == null &&
+                                                          p.Service.Customer.DateSuppressed == null &&
+                                                          p.Service.Customer.Company.DateSuppressed == null);
 
-                foreach(var dbPayment in payments)
+                foreach(var dbPayment in dbPayments)
                 {
                     output.Add(new Payment(dbPayment.Id, dbPayment.Amount, (PaymentMethod)dbPayment.PaymentMethodId, dbPayment.DateReceived, dbPayment.Notes));
                 }
@@ -50,7 +60,11 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbPayment = entity.Payments.FirstOrDefault(p => p.Id == payment.Id);
+                var dbPayment = entity.Payments.FirstOrDefault(p => p.Id == payment.Id &&
+                                                                    p.DateSuppressed == null &&
+                                                                    p.Service.DateSuppressed == null &&
+                                                                    p.Service.Customer.DateSuppressed == null &&
+                                                                    p.Service.Customer.Company.DateSuppressed == null);
 
                 if(dbPayment != null)
                 {
@@ -71,9 +85,13 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbPayment = entity.Payments.FirstOrDefault(p => p.Id == paymentId);
+                var dbPayment = entity.Payments.FirstOrDefault(p => p.Id == paymentId &&
+                                                                    p.DateSuppressed == null &&
+                                                                    p.Service.DateSuppressed == null &&
+                                                                    p.Service.Customer.DateSuppressed == null &&
+                                                                    p.Service.Customer.Company.DateSuppressed == null);
 
-                // suppress record
+                dbPayment.DateSuppressed = DateTime.Now;
 
                 entity.SaveChanges();
             }

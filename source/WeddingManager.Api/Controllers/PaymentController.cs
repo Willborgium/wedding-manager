@@ -28,16 +28,9 @@ namespace WeddingManager.Api.Controllers
         [Route("{serviceId}")]
         public async Task<IHttpActionResult> CreatePayment(int serviceId, [FromBody]PaymentDto payment)
         {
-            try
-            {
-                var paymentId = PaymentService.CreatePayment(serviceId, payment.ToPayment());
+            var paymentId = PaymentService.CreatePayment(serviceId, payment.ToPayment());
 
-                return Ok(paymentId);
-            }
-            catch(Exception err)
-            {
-                return InternalServerError(err);
-            }
+            return Ok(paymentId);
         }
 
         [HttpGet]

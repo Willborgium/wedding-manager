@@ -2,6 +2,7 @@
 (
 	[Id] INT NOT NULL IDENTITY,
 	[CompanyId] INT NOT NULL,
+	[DateSuppressed] DATE,
 	[Amount] DECIMAL(8, 2) NOT NULL,
 	[CreatedDate] DATE NOT NULL,
 	[Description] NVARCHAR(512),

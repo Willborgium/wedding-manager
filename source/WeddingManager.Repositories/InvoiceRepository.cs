@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using WeddingManager.Core.Data;
 using WeddingManager.Core.Repositories;
@@ -12,9 +13,14 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
+                var dbService = entity.Services.FirstOrDefault(s => s.Id == serviceId &&
+                                                                  s.DateSuppressed == null &&
+                                                                  s.Customer.DateSuppressed == null &&
+                                                                  s.Customer.Company.DateSuppressed == null);
+
                 var dbInvoice = new DB.Invoice
                 {
-                    ServiceId = serviceId,
+                    Service = dbService,
                     Amount = invoice.Amount,
                     Description = invoice.Description,
                     CreatedDate = invoice.CreatedDate,
@@ -35,7 +41,11 @@ namespace WeddingManager.Repositories
 
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var invoices = entity.Invoices.Where(i => i.ServiceId == serviceId);
+                var invoices = entity.Invoices.Where(i => i.ServiceId == serviceId &&
+                                                          i.DateSuppressed == null &&
+                                                          i.Service.DateSuppressed == null &&
+                                                          i.Service.Customer.DateSuppressed == null &&
+                                                          i.Service.Customer.Company.DateSuppressed == null);
 
                 foreach(var invoice in invoices)
                 {
@@ -50,8 +60,12 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbInvoice = entity.Invoices.FirstOrDefault(i => i.Id == invoice.Id);
-
+                var dbInvoice = entity.Invoices.FirstOrDefault(i => i.Id == invoice.Id &&
+                                                                    i.DateSuppressed == null &&
+                                                                    i.Service.DateSuppressed == null &&
+                                                                    i.Service.Customer.DateSuppressed == null &&
+                                                                    i.Service.Customer.Company.DateSuppressed == null);
+                                                                     
                 if(dbInvoice != null)
                 {
                     dbInvoice.Amount = invoice.Amount;
@@ -71,9 +85,13 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbInvoice = entity.Invoices.FirstOrDefault(i => i.Id == invoiceId);
+                var dbInvoice = entity.Invoices.FirstOrDefault(i => i.Id == invoiceId &&
+                                                                    i.DateSuppressed == null &&
+                                                                    i.Service.DateSuppressed == null &&
+                                                                    i.Service.Customer.DateSuppressed == null &&
+                                                                    i.Service.Customer.Company.DateSuppressed == null);
 
-                // suppress record
+                dbInvoice.DateSuppressed = DateTime.Now;
 
                 entity.SaveChanges();
             }

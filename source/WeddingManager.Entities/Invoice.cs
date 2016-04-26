@@ -20,6 +20,7 @@ namespace WeddingManager.Entities
         public string Description { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public System.DateTime DueDate { get; set; }
+        public Nullable<System.DateTime> DateSuppressed { get; set; }
     
         public virtual Service Service { get; set; }
     }

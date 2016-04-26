@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using WeddingManager.Core.Data;
 using WeddingManager.Core.Repositories;
@@ -12,9 +13,12 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
+                var dbCompany = entity.Companies.FirstOrDefault(c => c.Id == companyId &&
+                                                                   c.DateSuppressed == null);
+
                 var dbExpense = new DB.Expense
                 {
-                    CompanyId = companyId,
+                    Company = dbCompany,
                     Amount = expense.Amount,
                     CreatedDate = expense.CreatedDate,
                     Description = expense.Description
@@ -34,7 +38,9 @@ namespace WeddingManager.Repositories
 
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbExpenses = entity.Expenses.Where(e => e.CompanyId == companyId);
+                var dbExpenses = entity.Expenses.Where(e => e.CompanyId == companyId &&
+                                                            e.DateSuppressed == null &&
+                                                            e.Company.DateSuppressed == null);
 
                 foreach(var dbExpense in dbExpenses)
                 {
@@ -49,7 +55,9 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbExpense = entity.Expenses.FirstOrDefault(e => e.Id == expense.Id);
+                var dbExpense = entity.Expenses.FirstOrDefault(e => e.Id == expense.Id &&
+                                                                    e.DateSuppressed == null &&
+                                                                    e.Company.DateSuppressed == null);
                 
                 if(dbExpense != null)
                 {
@@ -68,9 +76,11 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbExpense = entity.Expenses.FirstOrDefault(e => e.Id == expenseId);
+                var dbExpense = entity.Expenses.FirstOrDefault(e => e.Id == expenseId &&
+                                                                    e.DateSuppressed == null &&
+                                                                    e.Company.DateSuppressed == null);
 
-                // suppress the record...
+                dbExpense.DateSuppressed = DateTime.Now;
 
                 entity.SaveChanges();
             }

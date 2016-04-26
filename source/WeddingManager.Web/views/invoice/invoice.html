@@ -1,31 +1,35 @@
 <div class="col-md-12">    
-    <div class="btn-group">
-        <div class="btn btn-primary glyphicon glyphicon-arrow-left" value="Back" ng-click="return()" />
-        <div class="btn btn-danger glyphicon glyphicon-trash" data-toggle="modal" data-target="#myModal" />
-        <div class="btn btn-success glyphicon glyphicon-floppy-disk" ng-click="updateInvoice()" ng-disabled="isSaveDisabled" /> 
-    </div>
-    <h1>{{invoice.Description}}</h1>
-</div>
-<div class="col-md-12">
-    <div class="form-group">
-        <label>Invoice ID</label>
-        <div class="form-control" disabled>{{invoice.Id}}</div>
-    </div>
-    <div class="form-group">
-        <label>Created Date</label>
-        <input class="form-control" type="date" ng-model="invoice.CreatedDate" disabled/>
-    </div>
-    <div class="form-group">
-        <label>Description</label>
-        <input class="form-control" type="text" maxlength="128" ng-model="invoice.Description" ng-change="onFieldChanged()"/>
-    </div>
-    <div class="form-group">
-        <label>Amount</label>
-        <input class="form-control" type="number" step="0.01" min="0" ng-model="invoice.Amount" ng-change="onFieldChanged()"/>
-    </div>
-    <div class="form-group">
-        <label>Due Date</label>
-        <input class="form-control" type="date" ng-model="invoice.DueDate" ng-change="onFieldChanged()"/>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="btn-group btn-group-sm">
+                <div class="btn btn-primary glyphicon glyphicon-arrow-left" value="Back" ng-click="return()" />
+                <div class="btn btn-danger glyphicon glyphicon-trash" data-toggle="modal" data-target="#myModal" />
+                <div class="btn btn-success glyphicon glyphicon-floppy-disk" ng-click="updateInvoice()" ng-disabled="isSaveDisabled" /> 
+            </div>
+            <h2>{{invoice.Description}}</h2>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label>Invoice ID</label>
+                <div class="form-control" disabled>{{invoice.Id}}</div>
+            </div>
+            <div class="form-group">
+                <label>Created Date</label>
+                <input class="form-control" type="date" ng-model="invoice.CreatedDate" disabled/>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <input class="form-control" type="text" maxlength="128" ng-model="invoice.Description" ng-change="onFieldChanged()"/>
+            </div>
+            <div class="form-group">
+                <label>Amount</label>
+                <input class="form-control" type="number" step="0.01" min="0" ng-model="invoice.Amount" ng-change="onFieldChanged()"/>
+            </div>
+            <div class="form-group">
+                <label>Due Date</label>
+                <input class="form-control" type="date" ng-model="invoice.DueDate" ng-change="onFieldChanged()"/>
+            </div>
+        </div>
     </div>
 </div>
 <div class="modal fade" id="myModal" tabindex="-1">

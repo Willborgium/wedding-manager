@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using WeddingManager.Core.Data;
 using WeddingManager.Core.Repositories;
@@ -31,7 +32,9 @@ namespace WeddingManager.Repositories
 
             using (var entity = new DB.WeddingManagerEntities())
             {
-                foreach(var company in entity.Companies)
+                var companies = entity.Companies.Where(c => c.DateSuppressed == null);
+
+                foreach(var company in companies)
                 {
                     output.Add(new Company(company.Id, company.Name));
                 }
@@ -44,7 +47,8 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbCompany = entity.Companies.FirstOrDefault(c => c.Id == company.Id);
+                var dbCompany = entity.Companies.FirstOrDefault(c => c.DateSuppressed == null &&
+                                                                c.Id == company.Id);
 
                 if(dbCompany != null)
                 {
@@ -59,9 +63,10 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbCompany = entity.Companies.FirstOrDefault(c => c.Id == companyId);
+                var dbCompany = entity.Companies.FirstOrDefault(c => c.Id == companyId &&
+                                                                     c.DateSuppressed == null);
 
-                // suppress the record...
+                dbCompany.DateSuppressed = DateTime.Now;
 
                 entity.SaveChanges();
             }

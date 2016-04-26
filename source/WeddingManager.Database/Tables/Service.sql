@@ -2,6 +2,7 @@
 (
 	[Id] INT NOT NULL IDENTITY,
 	[CustomerId] INT NOT NULL,
+	[DateSuppressed] DATE,
 	[Description] NVARCHAR(512),
 	[Location] NVARCHAR(512),
 	[StartTime] DATETIME NOT NULL,

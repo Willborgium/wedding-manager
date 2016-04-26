@@ -2,6 +2,7 @@
 (
 	[Id] INT NOT NULL IDENTITY,
 	[ServiceId] INT NOT NULL,
+	[DateSuppressed] DATE,
 	[Amount] DECIMAL(8, 2) NOT NULL,
 	[Description] NVARCHAR(64),
 	[CreatedDate] DATE NOT NULL,
