@@ -32,11 +32,6 @@ namespace WeddingManager.Services
             _customerRepository.DeleteCustomer(customerId);
         }
 
-        public CustomersSummary GetSummary(int companyId)
-        {
-            return _customerRepository.RetrieveSummary(companyId);
-        }
-
         private readonly ICustomerRepository _customerRepository;
     }
 }

@@ -36,6 +36,10 @@ namespace WeddingManager.Api
             Hub.CreateResolverStatic<IPaymentRepository, PaymentRepository>();
 
             Hub.CreateResolverStatic<IPaymentService, PaymentService>();
+
+            Hub.CreateResolverStatic<ISummaryRepository, SummaryRepository>();
+
+            Hub.CreateResolverStatic<ISummaryService, SummaryService>();
         }
     }
 }

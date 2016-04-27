@@ -85,46 +85,5 @@ namespace WeddingManager.Repositories
                 entity.SaveChanges();
             }
         }
-
-        public CustomersSummary RetrieveSummary(int companyId)
-        {
-            var output = new CustomersSummary();
-
-            using (var entity = new DB.WeddingManagerEntities())
-            {
-                var expected = entity.Invoices.Where(i => i.DateSuppressed == null &&
-                                                     i.Service.DateSuppressed == null &&
-                                                     i.Service.Customer.DateSuppressed == null &&
-                                                     i.Service.Customer.Company.DateSuppressed == null &&
-                                                     i.Service.Customer.Company.Id == companyId)
-                                              .Sum(i => i.Amount);
-
-                var actual = entity.Payments.Where(p => p.DateSuppressed == null &&
-                                                   p.Service.DateSuppressed == null &&
-                                                   p.Service.Customer.DateSuppressed == null &&
-                                                   p.Service.Customer.Company.DateSuppressed == null &&
-                                                   p.Service.Customer.Company.Id == companyId)
-                                            .Sum(p => p.Amount);
-
-                var start = DateTime.Today;
-
-                var end = start.AddMonths(1);
-
-                var upcoming = entity.Services.Count(s => s.DateSuppressed == null &&
-                                                          s.Customer.DateSuppressed == null &&
-                                                          s.Customer.Company.DateSuppressed == null &&
-                                                          s.Customer.Company.Id == companyId &&
-                                                          s.StartTime >= start && s.StartTime <= end);
-
-                output.AmountExpectedYTD = expected;
-
-                output.AmountReceivedYTD = actual;
-
-                output.UpcomingAppointmentCount = upcoming;
-
-            }
-
-            return output;
-        }
     }
 }

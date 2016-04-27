@@ -37,13 +37,6 @@
             }, onError);
         }
         
-        service.refreshSummary = function(companyId, onSuccess, onError){
-            customerFactory.retrieveSummary(companyId, function(summary){
-                _summary = summary;
-                onSuccess(_summary);                
-            }, onError);            
-        }
-        
         return service;
     });
 })();

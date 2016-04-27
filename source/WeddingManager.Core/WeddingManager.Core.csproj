@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Company.cs" />
-    <Compile Include="Data\CustomersSummary.cs" />
+    <Compile Include="Data\CompanySummary.cs" />
     <Compile Include="Data\Customer.cs" />
     <Compile Include="Data\Expense.cs" />
     <Compile Include="Data\Invoice.cs" />
@@ -59,12 +59,14 @@
     <Compile Include="Repositories\IInvoiceRepository.cs" />
     <Compile Include="Repositories\IPaymentRepository.cs" />
     <Compile Include="Repositories\IServiceRepository.cs" />
+    <Compile Include="Repositories\ISummaryRepository.cs" />
     <Compile Include="Services\ICompanyService.cs" />
     <Compile Include="Services\ICustomerService.cs" />
     <Compile Include="Services\IExpenseService.cs" />
     <Compile Include="Services\IInvoiceService.cs" />
     <Compile Include="Services\IPaymentService.cs" />
     <Compile Include="Services\IServiceService.cs" />
+    <Compile Include="Services\ISummaryService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

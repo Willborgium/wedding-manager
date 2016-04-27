@@ -12,7 +12,5 @@ namespace WeddingManager.Core.Repositories
         void UpdateCustomer(Customer customer);
 
         void DeleteCustomer(int customerId);
-
-        CustomersSummary RetrieveSummary(int companyId);
     }
 }

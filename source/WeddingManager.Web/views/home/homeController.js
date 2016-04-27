@@ -1,12 +1,12 @@
 (function(){
     angular.module('weddingManager')
-    .controller('homeController', function($scope, $location, appStateService, customerService, expenseService){
+    .controller('homeController', function($scope, $location, appStateService, customerService, expenseService, summaryService){
         $scope.company = null;
         $scope.expenseFilter = "";
         $scope.customerFilter = "";
         $scope.customers = [];
         $scope.expenses = [];
-        $scope.summary = {};
+        $scope.companySummary = {};
         
         function initialize(){
             $scope.company = appStateService.getCompany();
@@ -16,8 +16,8 @@
             }, function(error){
                 $location.path('error');
             });
-            customerService.refreshSummary($scope.company.Id, function(summary){
-                $scope.summary = summary;
+            summaryService.refreshCompanySummary($scope.company.Id, function(companySummary){
+                $scope.companySummary = companySummary;
             }, function(error){
                 $location.path('error');
             });

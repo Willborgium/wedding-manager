@@ -58,16 +58,7 @@ namespace WeddingManager.Api.Controllers
 
             return Ok();
         }
-
-        [HttpGet]
-        [Route("summary/{companyId}")]
-        public async Task<IHttpActionResult> RetrieveSummary(int companyId)
-        {
-            var summary = CustomerService.GetSummary(companyId);
-
-            return Ok(summary);
-        }
-
+        
         protected ICustomerService CustomerService
         {
             get
