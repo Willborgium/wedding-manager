@@ -23,6 +23,7 @@
           <Property Name="FirstName" Type="nvarchar" MaxLength="64" Nullable="false" />
           <Property Name="LastName" Type="nvarchar" MaxLength="64" Nullable="false" />
           <Property Name="PhoneNumber" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="2048" Nullable="false" />
         </EntityType>
         <EntityType Name="Expense">
           <Key>
@@ -242,6 +243,7 @@
           <NavigationProperty Name="Company" Relationship="WeddingManagerModel.FK_Customer_CompanyId" FromRole="Customer" ToRole="Company" />
           <NavigationProperty Name="Services" Relationship="WeddingManagerModel.FK_Service_CustomerId" FromRole="Customer" ToRole="Service" />
           <Property Name="DateSuppressed" Type="DateTime" Precision="0" />
+          <Property Name="Notes" Type="String" Nullable="false" MaxLength="2048" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Expense">
           <Key>
@@ -395,6 +397,7 @@
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="WeddingManagerModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="DateSuppressed" ColumnName="DateSuppressed" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />

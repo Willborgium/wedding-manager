@@ -6,6 +6,7 @@
 	[FirstName] NVARCHAR(64) NOT NULL,
 	[LastName] NVARCHAR(64) NOT NULL,
 	[PhoneNumber] NVARCHAR(32) NOT NULL,
+	[Notes] NVARCHAR(2048) NOT NULL,
 	CONSTRAINT [PK_Customer]
 		PRIMARY KEY CLUSTERED ([Id]),
 	CONSTRAINT [FK_Customer_CompanyId]

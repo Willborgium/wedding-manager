@@ -21,7 +21,8 @@ namespace WeddingManager.Repositories
                     Company = dbCompany,
                     FirstName = customer.FirstName,
                     LastName = customer.LastName,
-                    PhoneNumber = customer.PhoneNumber
+                    PhoneNumber = customer.PhoneNumber,
+                    Notes = customer.Notes ?? string.Empty
                 };
 
                 entity.Customers.Add(dbCustomer);
@@ -44,10 +45,8 @@ namespace WeddingManager.Repositories
 
                 foreach(var dbCustomer in dbCustomers)
                 {
-                    output.Add(new Customer(dbCustomer.Id, dbCustomer.FirstName, dbCustomer.LastName, dbCustomer.PhoneNumber));
+                    output.Add(new Customer(dbCustomer.Id, dbCustomer.FirstName, dbCustomer.LastName, dbCustomer.PhoneNumber, dbCustomer.Notes));
                 }
-
-                entity.SaveChanges();
             }
 
             return output;
@@ -68,6 +67,8 @@ namespace WeddingManager.Repositories
                     dbCustomer.LastName = customer.LastName;
 
                     dbCustomer.PhoneNumber = customer.PhoneNumber;
+
+                    dbCustomer.Notes = customer.Notes;
                 }
 
                 entity.SaveChanges();

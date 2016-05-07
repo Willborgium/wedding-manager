@@ -17,6 +17,8 @@ namespace WeddingManager.Api.Models
             LastName = customer.LastName;
 
             PhoneNumber = customer.PhoneNumber;
+
+            Notes = customer.Notes;
         }
 
         public int Id { get; set; }
@@ -27,9 +29,11 @@ namespace WeddingManager.Api.Models
 
         public string PhoneNumber { get; set; }
 
+        public string Notes { get; set; }
+
         public Customer ToCustomer()
         {
-            return new Customer(Id, FirstName, LastName, PhoneNumber);
+            return new Customer(Id, FirstName, LastName, PhoneNumber, Notes);
         }
     }
 }

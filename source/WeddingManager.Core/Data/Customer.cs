@@ -4,7 +4,7 @@ namespace WeddingManager.Core.Data
 {
     public class Customer
     {
-        public Customer(int id, string firstName, string lastName, string phoneNumber)
+        public Customer(int id, string firstName, string lastName, string phoneNumber, string notes)
         {
             Id = id;
 
@@ -13,6 +13,8 @@ namespace WeddingManager.Core.Data
             LastName = lastName;
 
             PhoneNumber = phoneNumber;
+
+            Notes = notes;
 
             Connections = new List<Customer>();
 
@@ -26,6 +28,8 @@ namespace WeddingManager.Core.Data
         public string LastName { get; private set; }
 
         public string PhoneNumber { get; private set; }
+
+        public string Notes { get; private set; }
 
         public List<Customer> Connections { get; private set; }
 

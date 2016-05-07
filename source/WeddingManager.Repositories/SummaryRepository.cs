@@ -15,22 +15,32 @@ namespace WeddingManager.Repositories
 
             using (var entity = new DB.WeddingManagerEntities())
             {
-
-                var expected = entity.Invoices.Where(i => i.DateSuppressed == null &&
+                var invoices = entity.Invoices.Where(i => i.DateSuppressed == null &&
                                                      i.Service.DateSuppressed == null &&
                                                      i.Service.Customer.DateSuppressed == null &&
                                                      i.Service.Customer.Company.DateSuppressed == null &&
-                                                     i.Service.Customer.Company.Id == companyId)
-                                              .Sum(i => i.Amount);
+                                                     i.Service.Customer.Company.Id == companyId);
+                var expected = 0m;
+
+                if(invoices.Any())
+                {
+                    expected = invoices.Sum(i => i.Amount);
+                }                           
 
                 output.AmountExpectedYearToDate = expected;
 
-                var actual = entity.Payments.Where(p => p.DateSuppressed == null &&
-                                                   p.Service.DateSuppressed == null &&
-                                                   p.Service.Customer.DateSuppressed == null &&
-                                                   p.Service.Customer.Company.DateSuppressed == null &&
-                                                   p.Service.Customer.Company.Id == companyId)
-                                            .Sum(p => p.Amount);
+                var payments = entity.Payments.Where(p => p.DateSuppressed == null &&
+                                                     p.Service.DateSuppressed == null &&
+                                                     p.Service.Customer.DateSuppressed == null &&
+                                                     p.Service.Customer.Company.DateSuppressed == null &&
+                                                     p.Service.Customer.Company.Id == companyId);
+
+                var actual = 0m;
+
+                if (payments.Any())
+                {
+                    actual = payments.Sum(p => p.Amount);
+                }
 
                 output.AmountReceivedYearToDate = actual;
 

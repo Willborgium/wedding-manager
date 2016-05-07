@@ -36,7 +36,9 @@ namespace WeddingManager.Api.Controllers
         [Route("{companyId}")]
         public async Task<IHttpActionResult> RetrieveCustomers(int companyId)
         {
-            var customers = CustomerService.RetrieveCustomers(companyId).Select(c => new CustomerDto(c));
+            var customers = CustomerService.RetrieveCustomers(companyId);
+
+            var output = customers.Select(c => new CustomerDto(c)).ToList();
 
             return Ok(customers);
         }
