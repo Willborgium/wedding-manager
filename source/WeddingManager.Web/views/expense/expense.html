@@ -15,7 +15,7 @@
             </div>
             <div class="form-group">
                 <label>Created Date</label>
-                <div class="form-control" disabled>{{expense.CreatedDate | date:'MM/dd/yyyy'}}</div>
+                <input class="form-control" type="date" ng-model="expense.CreatedDate" ng-change="onFieldChanged()"/>
             </div>
             <div class="form-group">
                 <label>Description</label>

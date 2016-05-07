@@ -48,7 +48,9 @@
             if(!_expense){
                 $location.path('error');
             }
-            return copy(_expense);
+            var output = copy(_expense);
+            output.CreatedDate = getDate(output.CreatedDate);
+            return output;
         }
         
         service.setExpense = function(expense){
