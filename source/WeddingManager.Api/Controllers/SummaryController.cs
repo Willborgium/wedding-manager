@@ -17,6 +17,15 @@ namespace WeddingManager.Api.Controllers
             return Ok(new CompanySummaryDto(companySummary));
         }
 
+        [HttpGet]
+        [Route("expenses/{companyId}")]
+        public async Task<IHttpActionResult> RetrieveExpensesSummary(int companyId)
+        {
+            var expensesSummary = SummaryService.RetrieveExpensesSummary(companyId);
+
+            return Ok(new ExpensesSummaryDto(expensesSummary));
+        }
+
         private ISummaryService SummaryService
         {
             get

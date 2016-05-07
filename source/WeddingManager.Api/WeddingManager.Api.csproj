@@ -114,6 +114,7 @@
     <Compile Include="Models\CompanySummaryDto.cs" />
     <Compile Include="Models\CustomerDto.cs" />
     <Compile Include="Models\ExpenseDto.cs" />
+    <Compile Include="Models\ExpensesSummaryDto.cs" />
     <Compile Include="Models\InvoiceDto.cs" />
     <Compile Include="Models\PaymentDto.cs" />
     <Compile Include="Models\ServiceDto.cs" />

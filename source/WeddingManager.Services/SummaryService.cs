@@ -16,6 +16,11 @@ namespace WeddingManager.Services
             return _summaryRepository.RetrieveCompanySummary(companyId);
         }
 
+        public ExpensesSummary RetrieveExpensesSummary(int companyId)
+        {
+            return _summaryRepository.RetrieveExpensesSummary(companyId);
+        }
+
         private readonly ISummaryRepository _summaryRepository;
     }
 }

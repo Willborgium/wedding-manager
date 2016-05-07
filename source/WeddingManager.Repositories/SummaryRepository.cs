@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using WeddingManager.Core.Data;
 using WeddingManager.Core.Repositories;
@@ -47,6 +48,29 @@ namespace WeddingManager.Repositories
             }
 
             return output;
+        }
+
+        public ExpensesSummary RetrieveExpensesSummary(int companyId)
+        {
+            var totalExpenses = new Dictionary<int, decimal>();
+
+            using (var entity = new DB.WeddingManagerEntities())
+            {
+                foreach(var expense in entity.Expenses)
+                {
+                    if (!totalExpenses.ContainsKey(expense.CreatedDate.Year))
+                    {
+                        totalExpenses.Add(expense.CreatedDate.Year, 0);
+                    }
+
+                    totalExpenses[expense.CreatedDate.Year] += expense.Amount;
+                }
+            }
+
+            return new ExpensesSummary
+            {
+                TotalExpenses = totalExpenses
+            };
         }
     }
 }
