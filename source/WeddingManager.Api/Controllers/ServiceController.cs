@@ -43,9 +43,9 @@ namespace WeddingManager.Api.Controllers
 
         [HttpPut]
         [Route("")]
-        public async Task<IHttpActionResult> UpdateService([FromBody]ServiceDto service)
+        public async Task<IHttpActionResult> UpdateService([FromBody]ServiceDto serviceDto)
         {
-            ServiceService.UpdateService(service.ToService());
+            ServiceService.UpdateService(serviceDto.ToService());
 
             return Ok();
         }

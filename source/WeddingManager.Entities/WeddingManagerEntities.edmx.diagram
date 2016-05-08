@@ -5,19 +5,21 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="b1969108a86349eabe041bef1db3ca44" Name="Diagram1">
-        <EntityTypeShape EntityType="WeddingManagerModel.Company" Width="1.5" PointX="0.875" PointY="1.25" />
-        <EntityTypeShape EntityType="WeddingManagerModel.Customer" Width="1.5" PointX="3" PointY="1.25" />
-        <EntityTypeShape EntityType="WeddingManagerModel.Expense" Width="1.5" PointX="0.875" PointY="4.5" />
-        <EntityTypeShape EntityType="WeddingManagerModel.Invoice" Width="1.5" PointX="7.5" PointY="1.25" />
-        <EntityTypeShape EntityType="WeddingManagerModel.Service" Width="1.5" PointX="5.25" PointY="1.125" />
+        <EntityTypeShape EntityType="WeddingManagerModel.Company" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="WeddingManagerModel.Customer" Width="1.5" PointX="3" PointY="7.875" />
+        <EntityTypeShape EntityType="WeddingManagerModel.Expense" Width="1.5" PointX="3" PointY="3.25" />
+        <EntityTypeShape EntityType="WeddingManagerModel.Invoice" Width="1.5" PointX="7.5" PointY="6.375" />
+        <EntityTypeShape EntityType="WeddingManagerModel.Payment" Width="1.5" PointX="10.5" PointY="7.875" />
+        <EntityTypeShape EntityType="WeddingManagerModel.PaymentMethod" Width="1.5" PointX="8.25" PointY="10.5" />
+        <EntityTypeShape EntityType="WeddingManagerModel.Service" Width="1.5" PointX="5.25" PointY="8" />
+        <EntityTypeShape EntityType="WeddingManagerModel.ServiceDetail" Width="1.5" PointX="7.5" PointY="13.125" />
         <AssociationConnector Association="WeddingManagerModel.FK_Customer_CompanyId" />
         <AssociationConnector Association="WeddingManagerModel.FK_Expense_CompanyId" />
         <AssociationConnector Association="WeddingManagerModel.FK_Service_CustomerId" />
         <AssociationConnector Association="WeddingManagerModel.FK_Invoice_ServiceId" />
-        <EntityTypeShape EntityType="WeddingManagerModel.Payment" Width="1.5" PointX="5.25" PointY="4.5" />
-        <EntityTypeShape EntityType="WeddingManagerModel.PaymentMethod" Width="1.5" PointX="7.5" PointY="4.5" />
         <AssociationConnector Association="WeddingManagerModel.FK_Payment_PaymentMethodId" />
         <AssociationConnector Association="WeddingManagerModel.FK_Payment_ServiceId" />
+        <AssociationConnector Association="WeddingManagerModel.FK_ServiceDetail_ServiceId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -13,10 +13,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbService = entity.Services.FirstOrDefault(s => s.Id == serviceId &&
-                                                                    s.DateSuppressed == null &&
-                                                                    s.Customer.DateSuppressed == null &&
-                                                                    s.Customer.Company.DateSuppressed == null);
+                var dbService = DbHelpers.GetService(entity, serviceId);
 
                 var dbPayment = new DB.Payment
                 {
@@ -60,13 +57,9 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbPayment = entity.Payments.FirstOrDefault(p => p.Id == payment.Id &&
-                                                                    p.DateSuppressed == null &&
-                                                                    p.Service.DateSuppressed == null &&
-                                                                    p.Service.Customer.DateSuppressed == null &&
-                                                                    p.Service.Customer.Company.DateSuppressed == null);
+                var dbPayment = DbHelpers.GetPayment(entity, payment.Id);
 
-                if(dbPayment != null)
+                if (dbPayment != null)
                 {
                     dbPayment.Amount = payment.Amount;
 
@@ -75,9 +68,9 @@ namespace WeddingManager.Repositories
                     dbPayment.DateReceived = payment.DateReceived;
 
                     dbPayment.Notes = payment.Notes;
-                }
 
-                entity.SaveChanges();
+                    entity.SaveChanges();
+                }
             }
         }
 
@@ -85,15 +78,14 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbPayment = entity.Payments.FirstOrDefault(p => p.Id == paymentId &&
-                                                                    p.DateSuppressed == null &&
-                                                                    p.Service.DateSuppressed == null &&
-                                                                    p.Service.Customer.DateSuppressed == null &&
-                                                                    p.Service.Customer.Company.DateSuppressed == null);
+                var dbPayment = DbHelpers.GetPayment(entity, paymentId);
 
-                dbPayment.DateSuppressed = DateTime.Now;
+                if (dbPayment != null)
+                {
+                    dbPayment.DateSuppressed = DateTime.Now;
 
-                entity.SaveChanges();
+                    entity.SaveChanges();
+                }
             }
         }
     }

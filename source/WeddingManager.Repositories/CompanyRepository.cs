@@ -9,7 +9,7 @@ namespace WeddingManager.Repositories
 {
     public class CompanyRepository : ICompanyRepository
     {
-        public int CreateCompanies(Company company)
+        public int CreateCompany(Company company)
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
@@ -47,8 +47,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbCompany = entity.Companies.FirstOrDefault(c => c.DateSuppressed == null &&
-                                                                c.Id == company.Id);
+                var dbCompany = DbHelpers.GetCompany(entity, company.Id);
 
                 if(dbCompany != null)
                 {
@@ -63,8 +62,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbCompany = entity.Companies.FirstOrDefault(c => c.Id == companyId &&
-                                                                     c.DateSuppressed == null);
+                var dbCompany = DbHelpers.GetCompany(entity, companyId);
 
                 dbCompany.DateSuppressed = DateTime.Now;
 

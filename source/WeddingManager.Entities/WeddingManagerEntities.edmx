@@ -23,7 +23,7 @@
           <Property Name="FirstName" Type="nvarchar" MaxLength="64" Nullable="false" />
           <Property Name="LastName" Type="nvarchar" MaxLength="64" Nullable="false" />
           <Property Name="PhoneNumber" Type="nvarchar" MaxLength="32" Nullable="false" />
-          <Property Name="Notes" Type="nvarchar" MaxLength="2048" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="2048" />
         </EntityType>
         <EntityType Name="Expense">
           <Key>
@@ -75,6 +75,15 @@
           <Property Name="CustomerId" Type="int" Nullable="false" />
           <Property Name="DateSuppressed" Type="date" />
           <Property Name="Description" Type="nvarchar" MaxLength="512" />
+        </EntityType>
+        <EntityType Name="ServiceDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceId" Type="int" Nullable="false" />
+          <Property Name="DateSuppressed" Type="date" />
+          <Property Name="Details" Type="nvarchar" MaxLength="512" />
           <Property Name="Location" Type="nvarchar" MaxLength="512" />
           <Property Name="StartTime" Type="datetime" Nullable="false" />
           <Property Name="EndTime" Type="datetime" />
@@ -151,6 +160,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ServiceDetail_ServiceId">
+          <End Role="Service" Type="Self.Service" Multiplicity="1" />
+          <End Role="ServiceDetail" Type="Self.ServiceDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceDetail">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="WeddingManagerModelStoreContainer">
           <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
@@ -159,6 +180,7 @@
           <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaymentMethod" EntityType="Self.PaymentMethod" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Service" EntityType="Self.Service" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceDetail" EntityType="Self.ServiceDetail" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Customer_CompanyId" Association="Self.FK_Customer_CompanyId">
             <End Role="Company" EntitySet="Company" />
             <End Role="Customer" EntitySet="Customer" />
@@ -183,6 +205,10 @@
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Service" EntitySet="Service" />
           </AssociationSet>
+          <AssociationSet Name="FK_ServiceDetail_ServiceId" Association="Self.FK_ServiceDetail_ServiceId">
+            <End Role="Service" EntitySet="Service" />
+            <End Role="ServiceDetail" EntitySet="ServiceDetail" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -193,7 +219,10 @@
           <EntitySet Name="Customers" EntityType="WeddingManagerModel.Customer" />
           <EntitySet Name="Expenses" EntityType="WeddingManagerModel.Expense" />
           <EntitySet Name="Invoices" EntityType="WeddingManagerModel.Invoice" />
+          <EntitySet Name="Payments" EntityType="WeddingManagerModel.Payment" />
+          <EntitySet Name="PaymentMethods" EntityType="WeddingManagerModel.PaymentMethod" />
           <EntitySet Name="Services" EntityType="WeddingManagerModel.Service" />
+          <EntitySet Name="ServiceDetails" EntityType="WeddingManagerModel.ServiceDetail" />
           <AssociationSet Name="FK_Customer_CompanyId" Association="WeddingManagerModel.FK_Customer_CompanyId">
             <End Role="Company" EntitySet="Companies" />
             <End Role="Customer" EntitySet="Customers" />
@@ -210,8 +239,6 @@
             <End Role="Service" EntitySet="Services" />
             <End Role="Invoice" EntitySet="Invoices" />
           </AssociationSet>
-          <EntitySet Name="Payments" EntityType="WeddingManagerModel.Payment" />
-          <EntitySet Name="PaymentMethods" EntityType="WeddingManagerModel.PaymentMethod" />
           <AssociationSet Name="FK_Payment_PaymentMethodId" Association="WeddingManagerModel.FK_Payment_PaymentMethodId">
             <End Role="PaymentMethod" EntitySet="PaymentMethods" />
             <End Role="Payment" EntitySet="Payments" />
@@ -220,16 +247,20 @@
             <End Role="Service" EntitySet="Services" />
             <End Role="Payment" EntitySet="Payments" />
           </AssociationSet>
+          <AssociationSet Name="FK_ServiceDetail_ServiceId" Association="WeddingManagerModel.FK_ServiceDetail_ServiceId">
+            <End Role="Service" EntitySet="Services" />
+            <End Role="ServiceDetail" EntitySet="ServiceDetails" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Company">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateSuppressed" Type="DateTime" Precision="0" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Customers" Relationship="WeddingManagerModel.FK_Customer_CompanyId" FromRole="Company" ToRole="Customer" />
           <NavigationProperty Name="Expenses" Relationship="WeddingManagerModel.FK_Expense_CompanyId" FromRole="Company" ToRole="Expense" />
-          <Property Name="DateSuppressed" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -237,13 +268,13 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="DateSuppressed" Type="DateTime" Precision="0" />
           <Property Name="FirstName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Notes" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Company" Relationship="WeddingManagerModel.FK_Customer_CompanyId" FromRole="Customer" ToRole="Company" />
           <NavigationProperty Name="Services" Relationship="WeddingManagerModel.FK_Service_CustomerId" FromRole="Customer" ToRole="Service" />
-          <Property Name="DateSuppressed" Type="DateTime" Precision="0" />
-          <Property Name="Notes" Type="String" Nullable="false" MaxLength="2048" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Expense">
           <Key>
@@ -251,11 +282,11 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="DateSuppressed" Type="DateTime" Precision="0" />
           <Property Name="Amount" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Description" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Company" Relationship="WeddingManagerModel.FK_Expense_CompanyId" FromRole="Expense" ToRole="Company" />
-          <Property Name="DateSuppressed" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="Invoice">
           <Key>
@@ -263,12 +294,34 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ServiceId" Type="Int32" Nullable="false" />
+          <Property Name="DateSuppressed" Type="DateTime" Precision="0" />
           <Property Name="Amount" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
           <Property Name="Description" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="DueDate" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Service" Relationship="WeddingManagerModel.FK_Invoice_ServiceId" FromRole="Invoice" ToRole="Service" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceId" Type="Int32" Nullable="false" />
           <Property Name="DateSuppressed" Type="DateTime" Precision="0" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
+          <Property Name="PaymentMethodId" Type="Int32" Nullable="false" />
+          <Property Name="DateReceived" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Notes" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PaymentMethod" Relationship="WeddingManagerModel.FK_Payment_PaymentMethodId" FromRole="Payment" ToRole="PaymentMethod" />
+          <NavigationProperty Name="Service" Relationship="WeddingManagerModel.FK_Payment_ServiceId" FromRole="Payment" ToRole="Service" />
+        </EntityType>
+        <EntityType Name="PaymentMethod">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Payments" Relationship="WeddingManagerModel.FK_Payment_PaymentMethodId" FromRole="PaymentMethod" ToRole="Payment" />
         </EntityType>
         <EntityType Name="Service">
           <Key>
@@ -276,14 +329,25 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="DateSuppressed" Type="DateTime" Precision="0" />
           <Property Name="Description" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
-          <Property Name="Location" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
-          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EndTime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Customer" Relationship="WeddingManagerModel.FK_Service_CustomerId" FromRole="Service" ToRole="Customer" />
           <NavigationProperty Name="Invoices" Relationship="WeddingManagerModel.FK_Invoice_ServiceId" FromRole="Service" ToRole="Invoice" />
           <NavigationProperty Name="Payments" Relationship="WeddingManagerModel.FK_Payment_ServiceId" FromRole="Service" ToRole="Payment" />
+          <NavigationProperty Name="ServiceDetails" Relationship="WeddingManagerModel.FK_ServiceDetail_ServiceId" FromRole="Service" ToRole="ServiceDetail" />
+        </EntityType>
+        <EntityType Name="ServiceDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceId" Type="Int32" Nullable="false" />
           <Property Name="DateSuppressed" Type="DateTime" Precision="0" />
+          <Property Name="Details" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="Location" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Service" Relationship="WeddingManagerModel.FK_ServiceDetail_ServiceId" FromRole="ServiceDetail" ToRole="Service" />
         </EntityType>
         <Association Name="FK_Customer_CompanyId">
           <End Type="WeddingManagerModel.Company" Role="Company" Multiplicity="1" />
@@ -333,28 +397,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Payment">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceId" Type="Int32" Nullable="false" />
-          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
-          <Property Name="PaymentMethodId" Type="Int32" Nullable="false" />
-          <Property Name="DateReceived" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Notes" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="PaymentMethod" Relationship="WeddingManagerModel.FK_Payment_PaymentMethodId" FromRole="Payment" ToRole="PaymentMethod" />
-          <NavigationProperty Name="Service" Relationship="WeddingManagerModel.FK_Payment_ServiceId" FromRole="Payment" ToRole="Service" />
-          <Property Name="DateSuppressed" Type="DateTime" Precision="0" />
-        </EntityType>
-        <EntityType Name="PaymentMethod">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Payments" Relationship="WeddingManagerModel.FK_Payment_PaymentMethodId" FromRole="PaymentMethod" ToRole="Payment" />
-        </EntityType>
         <Association Name="FK_Payment_PaymentMethodId">
           <End Type="WeddingManagerModel.PaymentMethod" Role="PaymentMethod" Multiplicity="1" />
           <End Type="WeddingManagerModel.Payment" Role="Payment" Multiplicity="*" />
@@ -379,6 +421,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ServiceDetail_ServiceId">
+          <End Type="WeddingManagerModel.Service" Role="Service" Multiplicity="1" />
+          <End Type="WeddingManagerModel.ServiceDetail" Role="ServiceDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ServiceDetail">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -388,8 +442,8 @@
           <EntitySetMapping Name="Companies">
             <EntityTypeMapping TypeName="WeddingManagerModel.Company">
               <MappingFragment StoreEntitySet="Company">
-                <ScalarProperty Name="DateSuppressed" ColumnName="DateSuppressed" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DateSuppressed" ColumnName="DateSuppressed" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -398,10 +452,10 @@
             <EntityTypeMapping TypeName="WeddingManagerModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="DateSuppressed" ColumnName="DateSuppressed" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="DateSuppressed" ColumnName="DateSuppressed" />
                 <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -410,10 +464,10 @@
           <EntitySetMapping Name="Expenses">
             <EntityTypeMapping TypeName="WeddingManagerModel.Expense">
               <MappingFragment StoreEntitySet="Expense">
-                <ScalarProperty Name="DateSuppressed" ColumnName="DateSuppressed" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="DateSuppressed" ColumnName="DateSuppressed" />
                 <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -422,25 +476,12 @@
           <EntitySetMapping Name="Invoices">
             <EntityTypeMapping TypeName="WeddingManagerModel.Invoice">
               <MappingFragment StoreEntitySet="Invoice">
-                <ScalarProperty Name="DateSuppressed" ColumnName="DateSuppressed" />
                 <ScalarProperty Name="DueDate" ColumnName="DueDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Services">
-            <EntityTypeMapping TypeName="WeddingManagerModel.Service">
-              <MappingFragment StoreEntitySet="Service">
                 <ScalarProperty Name="DateSuppressed" ColumnName="DateSuppressed" />
-                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
-                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -448,11 +489,11 @@
           <EntitySetMapping Name="Payments">
             <EntityTypeMapping TypeName="WeddingManagerModel.Payment">
               <MappingFragment StoreEntitySet="Payment">
-                <ScalarProperty Name="DateSuppressed" ColumnName="DateSuppressed" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="DateReceived" ColumnName="DateReceived" />
                 <ScalarProperty Name="PaymentMethodId" ColumnName="PaymentMethodId" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="DateSuppressed" ColumnName="DateSuppressed" />
                 <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -462,6 +503,29 @@
             <EntityTypeMapping TypeName="WeddingManagerModel.PaymentMethod">
               <MappingFragment StoreEntitySet="PaymentMethod">
                 <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Services">
+            <EntityTypeMapping TypeName="WeddingManagerModel.Service">
+              <MappingFragment StoreEntitySet="Service">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DateSuppressed" ColumnName="DateSuppressed" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceDetails">
+            <EntityTypeMapping TypeName="WeddingManagerModel.ServiceDetail">
+              <MappingFragment StoreEntitySet="ServiceDetail">
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="DateSuppressed" ColumnName="DateSuppressed" />
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

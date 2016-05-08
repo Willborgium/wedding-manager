@@ -16,10 +16,10 @@ namespace WeddingManager.Entities
     {
         public int Id { get; set; }
         public int CompanyId { get; set; }
+        public Nullable<System.DateTime> DateSuppressed { get; set; }
         public decimal Amount { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string Description { get; set; }
-        public Nullable<System.DateTime> DateSuppressed { get; set; }
     
         public virtual Company Company { get; set; }
     }

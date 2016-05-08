@@ -13,8 +13,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbCompany = entity.Companies.FirstOrDefault(c => c.Id == companyId &&
-                                                                   c.DateSuppressed == null);
+                var dbCompany = DbHelpers.GetCompany(entity, companyId);
 
                 var dbExpense = new DB.Expense
                 {
@@ -55,9 +54,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbExpense = entity.Expenses.FirstOrDefault(e => e.Id == expense.Id &&
-                                                                    e.DateSuppressed == null &&
-                                                                    e.Company.DateSuppressed == null);
+                var dbExpense = DbHelpers.GetExpense(entity, expense.Id);
                 
                 if(dbExpense != null)
                 {
@@ -66,9 +63,9 @@ namespace WeddingManager.Repositories
                     dbExpense.CreatedDate = expense.CreatedDate;
 
                     dbExpense.Description = expense.Description;
-                }
 
-                entity.SaveChanges();
+                    entity.SaveChanges();
+                }
             }
         }
 
@@ -76,13 +73,14 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbExpense = entity.Expenses.FirstOrDefault(e => e.Id == expenseId &&
-                                                                    e.DateSuppressed == null &&
-                                                                    e.Company.DateSuppressed == null);
+                var dbExpense = DbHelpers.GetExpense(entity, expenseId);
 
-                dbExpense.DateSuppressed = DateTime.Now;
+                if(dbExpense != null)
+                {
+                    dbExpense.DateSuppressed = DateTime.Now;
 
-                entity.SaveChanges();
+                    entity.SaveChanges();
+                }
             }
         }
     }

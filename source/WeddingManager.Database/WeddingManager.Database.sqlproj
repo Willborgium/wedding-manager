@@ -69,6 +69,7 @@
     <Build Include="Tables\PaymentMethod.sql" />
     <PostDeploy Include="PostDeployment\PaymentMethod.sql" />
     <Build Include="Tables\Payment.sql" />
+    <Build Include="Tables\ServiceDetail.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="WeddingManager.Database.Local.publish.xml" />

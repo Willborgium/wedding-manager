@@ -5,7 +5,7 @@ namespace WeddingManager.Core.Repositories
 {
     public interface ICompanyRepository
     {
-        int CreateCompanies(Company company);
+        int CreateCompany(Company company);
 
         IEnumerable<Company> RetrieveCompanies();
 

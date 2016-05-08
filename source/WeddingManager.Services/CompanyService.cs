@@ -19,7 +19,7 @@ namespace WeddingManager.Services
 
         public int CreateCompany(Company company)
         {
-            return _companyRepository.CreateCompanies(company);
+            return _companyRepository.CreateCompany(company);
         }
 
         public void UpdateCompany(Company company)

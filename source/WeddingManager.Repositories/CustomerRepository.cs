@@ -13,8 +13,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbCompany = entity.Companies.FirstOrDefault(c => c.Id == companyId &&
-                                                                   c.DateSuppressed == null);
+                var dbCompany = DbHelpers.GetCompany(entity, companyId);
 
                 var dbCustomer = new DB.Customer
                 {
@@ -56,9 +55,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbCustomer = entity.Customers.FirstOrDefault(c => c.Id == customer.Id &&
-                                                                      c.DateSuppressed == null &&
-                                                                      c.Company.DateSuppressed == null);
+                var dbCustomer = DbHelpers.GetCustomer(entity, customer.Id);
 
                 if(dbCustomer != null)
                 {
@@ -69,9 +66,9 @@ namespace WeddingManager.Repositories
                     dbCustomer.PhoneNumber = customer.PhoneNumber;
 
                     dbCustomer.Notes = customer.Notes;
-                }
 
-                entity.SaveChanges();
+                    entity.SaveChanges();
+                }
             }
         }
 
@@ -79,11 +76,14 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbCustomer = entity.Customers.FirstOrDefault(c => c.Id == customerId &&
-                                                                      c.DateSuppressed == null);
-                dbCustomer.DateSuppressed = DateTime.Now;
+                var dbCustomer = DbHelpers.GetCustomer(entity, customerId);
 
-                entity.SaveChanges();
+                if(dbCustomer != null)
+                {
+                    dbCustomer.DateSuppressed = DateTime.Now;
+
+                    entity.SaveChanges();
+                }
             }
         }
     }

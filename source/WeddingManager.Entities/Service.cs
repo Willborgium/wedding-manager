@@ -19,20 +19,20 @@ namespace WeddingManager.Entities
         {
             this.Invoices = new HashSet<Invoice>();
             this.Payments = new HashSet<Payment>();
+            this.ServiceDetails = new HashSet<ServiceDetail>();
         }
     
         public int Id { get; set; }
         public int CustomerId { get; set; }
-        public string Description { get; set; }
-        public string Location { get; set; }
-        public System.DateTime StartTime { get; set; }
-        public Nullable<System.DateTime> EndTime { get; set; }
         public Nullable<System.DateTime> DateSuppressed { get; set; }
+        public string Description { get; set; }
     
         public virtual Customer Customer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Invoice> Invoices { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Payment> Payments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ServiceDetail> ServiceDetails { get; set; }
     }
 }

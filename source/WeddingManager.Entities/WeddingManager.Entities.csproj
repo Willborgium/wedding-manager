@@ -73,6 +73,9 @@
     <Compile Include="Service.cs">
       <DependentUpon>WeddingManagerEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="ServiceDetail.cs">
+      <DependentUpon>WeddingManagerEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="WeddingManagerEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

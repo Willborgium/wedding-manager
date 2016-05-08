@@ -13,10 +13,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbService = entity.Services.FirstOrDefault(s => s.Id == serviceId &&
-                                                                  s.DateSuppressed == null &&
-                                                                  s.Customer.DateSuppressed == null &&
-                                                                  s.Customer.Company.DateSuppressed == null);
+                var dbService = DbHelpers.GetService(entity, serviceId);
 
                 var dbInvoice = new DB.Invoice
                 {
@@ -60,11 +57,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbInvoice = entity.Invoices.FirstOrDefault(i => i.Id == invoice.Id &&
-                                                                    i.DateSuppressed == null &&
-                                                                    i.Service.DateSuppressed == null &&
-                                                                    i.Service.Customer.DateSuppressed == null &&
-                                                                    i.Service.Customer.Company.DateSuppressed == null);
+                var dbInvoice = DbHelpers.GetInvoice(entity, invoice.Id);
                                                                      
                 if(dbInvoice != null)
                 {
@@ -75,9 +68,9 @@ namespace WeddingManager.Repositories
                     dbInvoice.CreatedDate = invoice.CreatedDate;
 
                     dbInvoice.DueDate = invoice.DueDate;
-                }
 
-                entity.SaveChanges();
+                    entity.SaveChanges();
+                }
             }
         }
 
@@ -85,15 +78,14 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbInvoice = entity.Invoices.FirstOrDefault(i => i.Id == invoiceId &&
-                                                                    i.DateSuppressed == null &&
-                                                                    i.Service.DateSuppressed == null &&
-                                                                    i.Service.Customer.DateSuppressed == null &&
-                                                                    i.Service.Customer.Company.DateSuppressed == null);
+                var dbInvoice = DbHelpers.GetInvoice(entity, invoiceId);
 
-                dbInvoice.DateSuppressed = DateTime.Now;
+                if(dbInvoice != null)
+                {
+                    dbInvoice.DateSuppressed = DateTime.Now;
 
-                entity.SaveChanges();
+                    entity.SaveChanges();
+                }
             }
         }
     }

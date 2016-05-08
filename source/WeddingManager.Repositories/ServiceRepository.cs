@@ -13,17 +13,12 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbCustomer = entity.Customers.FirstOrDefault(c => c.Id == customerId &&
-                                                                      c.DateSuppressed == null &&
-                                                                      c.Company.DateSuppressed == null);
+                var dbCustomer = DbHelpers.GetCustomer(entity, customerId);
 
                 var dbService = new DB.Service
                 {
                     Customer = dbCustomer,
-                    Description = service.Description,
-                    Location = service.Location,
-                    StartTime = service.StartTime,
-                    EndTime = service.EndTime
+                    Description = service.Description
                 };
 
                 entity.Services.Add(dbService);
@@ -47,7 +42,7 @@ namespace WeddingManager.Repositories
 
                 foreach (var dbService in dbServices)
                 {
-                    output.Add(new Service(dbService.Id, dbService.Description, dbService.Location, dbService.StartTime, dbService.EndTime));
+                    output.Add(new Service(dbService.Id, dbService.Description));
                 }
             }
 
@@ -58,23 +53,14 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbService = entity.Services.FirstOrDefault(s => s.Id == service.Id &&
-                                                                    s.DateSuppressed == null &&
-                                                                    s.Customer.DateSuppressed == null &&
-                                                                    s.Customer.Company.DateSuppressed == null);
+                var dbService = DbHelpers.GetService(entity, service.Id);
 
                 if (dbService != null)
                 {
                     dbService.Description = service.Description;
 
-                    dbService.Location = service.Location;
-
-                    dbService.StartTime = service.StartTime;
-
-                    dbService.EndTime = service.EndTime;
+                    entity.SaveChanges();
                 }
-
-                entity.SaveChanges();
             }
         }
 
@@ -82,14 +68,14 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbService = entity.Services.FirstOrDefault(s => s.Id == serviceId &&
-                                                                    s.DateSuppressed == null &&
-                                                                    s.Customer.DateSuppressed == null &&
-                                                                    s.Customer.Company.DateSuppressed == null);
+                var dbService = DbHelpers.GetService(entity, serviceId);
 
-                dbService.DateSuppressed = DateTime.Now;
+                if (dbService != null)
+                {
+                    dbService.DateSuppressed = DateTime.Now;
 
-                entity.SaveChanges();
+                    entity.SaveChanges();
+                }
             }
         }
     }

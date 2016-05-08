@@ -29,8 +29,9 @@ namespace WeddingManager.Entities
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Expense> Expenses { get; set; }
         public virtual DbSet<Invoice> Invoices { get; set; }
-        public virtual DbSet<Service> Services { get; set; }
         public virtual DbSet<Payment> Payments { get; set; }
         public virtual DbSet<PaymentMethod> PaymentMethods { get; set; }
+        public virtual DbSet<Service> Services { get; set; }
+        public virtual DbSet<ServiceDetail> ServiceDetails { get; set; }
     }
 }

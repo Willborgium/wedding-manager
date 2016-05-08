@@ -106,6 +106,7 @@
     <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
+    <Compile Include="Controllers\ServiceDetailController.cs" />
     <Compile Include="Controllers\SummaryController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -117,6 +118,7 @@
     <Compile Include="Models\ExpensesSummaryDto.cs" />
     <Compile Include="Models\InvoiceDto.cs" />
     <Compile Include="Models\PaymentDto.cs" />
+    <Compile Include="Models\ServiceDetailDto.cs" />
     <Compile Include="Models\ServiceDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
