@@ -40,6 +40,10 @@ namespace WeddingManager.Api
             Hub.CreateResolverStatic<ISummaryRepository, SummaryRepository>();
 
             Hub.CreateResolverStatic<ISummaryService, SummaryService>();
+
+            Hub.CreateResolverStatic<IServiceDetailRepository, ServiceDetailRepository>();
+
+            Hub.CreateResolverStatic<IServiceDetailService, ServiceDetailService>();
         }
     }
 }

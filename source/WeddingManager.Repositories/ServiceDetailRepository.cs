@@ -13,7 +13,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbService = DbHelpers.GetService(entity, serviceDetail.Id);
+                var dbService = DbHelpers.GetService(entity, serviceId);
 
                 var dbServiceDetail = new DB.ServiceDetail
                 {
@@ -83,6 +83,8 @@ namespace WeddingManager.Repositories
                 if(dbServiceDetail != null)
                 {
                     dbServiceDetail.DateSuppressed = DateTime.Now;
+
+                    entity.SaveChanges();
                 }
             }
         }

@@ -33,7 +33,7 @@ namespace WeddingManager.Api.Controllers
         }
 
         [HttpGet]
-        [Route("{customerId}")]
+        [Route("{serviceId}")]
         public async Task<IHttpActionResult> RetrieveServiceDetails(int serviceId)
         {
             var serviceDetails = ServiceDetailService.RetrieveServiceDetails(serviceId).Select(sd => new ServiceDetailDto(sd));
@@ -51,7 +51,7 @@ namespace WeddingManager.Api.Controllers
         }
 
         [HttpDelete]
-        [Route("{serviceId}")]
+        [Route("{serviceDetailId}")]
         public async Task<IHttpActionResult> DeleteServiceDetail(int serviceDetailId)
         {
             ServiceDetailService.DeleteServiceDetail(serviceDetailId);
