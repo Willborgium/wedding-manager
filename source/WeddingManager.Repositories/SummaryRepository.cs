@@ -44,17 +44,17 @@ namespace WeddingManager.Repositories
 
                 output.AmountReceivedYearToDate = actual;
 
-                //var start = DateTime.Today;
+                var start = DateTime.Today;
 
-                //var end = start.AddMonths(1);
+                var end = start.AddMonths(1);
 
-                //var upcoming = entity.Services.Count(s => s.DateSuppressed == null &&
-                //                                          s.Customer.DateSuppressed == null &&
-                //                                          s.Customer.Company.DateSuppressed == null &&
-                //                                          s.Customer.Company.Id == companyId &&
-                //                                          s.StartTime >= start && s.StartTime <= end);
+                var upcoming = entity.Services.Count(s => s.DateSuppressed == null &&
+                                                          s.Customer.DateSuppressed == null &&
+                                                          s.Customer.Company.DateSuppressed == null &&
+                                                          s.Customer.Company.Id == companyId &&
+                                                          s.ServiceDetails.Any(sd => start <= sd.StartTime && sd.StartTime <= end));
 
-                //output.UpcomingAppointmentCount = upcoming;
+                output.UpcomingAppointmentCount = upcoming;
             }
 
             return output;

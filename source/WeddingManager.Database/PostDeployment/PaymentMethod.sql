@@ -23,6 +23,12 @@ IF (SELECT COUNT(1) FROM [dbo].[Service]) = 0
 		(1, 'Event Photography')
 	END
 
+IF (SELECT COUNT(1) FROM [dbo].[ServiceDetail]) = 0
+	BEGIN
+		INSERT INTO [dbo].[ServiceDetail] ([ServiceId], [Details], [Location], [StartTime], [EndTime] ) VALUES
+		(1, 'Reception', '1 Main Street', DATEADD(DAY, 30, GETDATE()), DATEADD(DAY, 31, GETDATE()))
+	END
+
 IF (SELECT COUNT(1) FROM [dbo].[Invoice]) = 0
 	BEGIN
 		INSERT INTO [dbo].[Invoice] ([ServiceId], [Amount], [CreatedDate], [Description], [DueDate]) VALUES

@@ -1,11 +1,12 @@
 (function(){
     angular.module('weddingManager')
-    .controller('serviceController', function($scope, $location, appStateService, serviceService, invoiceService, paymentService){
+    .controller('serviceController', function($scope, $location, appStateService, serviceService, invoiceService, paymentService, serviceDetailService){
         $scope.service = null;
         $scope.invoiceFilter = "";
         $scope.paymentFilter = "";
         $scope.invoices = [];
         $scope.payments = [];
+        $scope.serviceDetails = [];
         $scope.isSaveDisabled = true;
         
         function initialize(){
@@ -20,6 +21,12 @@
             }, function(){
                $location.path('error'); 
             });
+            serviceDetailService.refreshServiceDetails($scope.service.Id, function(serviceDetails){
+                $scope.serviceDetails = serviceDetails;
+                appStateService.setServiceDetails(serviceDetails);
+            }, function(){
+               $location.path('error'); 
+            });
         }
         
         function isDirty(){
@@ -30,6 +37,10 @@
         }
         
         $scope.onFieldChanged = function(){
+            $scope.isSaveDisabled = !isDirty();
+        }
+        
+        $scope.onServiceDetailFieldChanged = function(serviceDetailId){
             $scope.isSaveDisabled = !isDirty();
         }
         

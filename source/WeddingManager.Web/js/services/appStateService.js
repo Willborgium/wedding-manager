@@ -8,6 +8,7 @@
         var _service = null;
         var _invoice = null;
         var _payment = null;
+        var _serviceDetails = null;
         
         function copy(target){
             return JSON.parse(JSON.stringify(target));
@@ -20,6 +21,11 @@
         service.clearState = function(){
             _company = null;
             _customer = null;
+            _expense = null;
+            _service = null;
+            _invoice = null;
+            _payment = null;
+            _serviceDetails = null;
         }
         
         service.getCompany = function(){
@@ -96,6 +102,31 @@
         
         service.setPayment = function(payment){
             _payment = copy(payment);
+        }
+        
+        service.setServiceDetails = function(serviceDetails){
+            _serviceDetails = copy(serviceDetails);
+        }
+        
+        service.getServiceDetail = function(serviceDetailId){
+            if(!_serviceDetails){
+                $location.path('error');
+            }
+            var serviceDetailCount = _serviceDetails.length;
+            var serviceDetail = null;
+            for(var index = 0; index < serviceDetailCount; index++){
+                serviceDetail = _serviceDetails[index];
+                if(serviceDetail.Id == serviceDetailId){
+                    break;
+                }
+            }
+            if(!serviceDetail){
+                $location.path('error');
+            }
+            var output = copy(serviceDetail);
+            output.StartTime = getDate(output.StartTime);
+            output.EndTime = getDate(output.EndTime);
+            return output;
         }
         
         return service;

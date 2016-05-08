@@ -7,8 +7,6 @@
         output.createService = function(customerId, onSuccess, onError){
             var service = {
                 Description : "New service",
-                Location : "",
-                StartTime : new Date()
             };
             serviceFactory.createService(customerId, service, function(serviceId){
                 service.Id = serviceId;
@@ -18,16 +16,6 @@
         
         output.refreshServices = function(customerId, onSuccess, onError){
             serviceFactory.retrieveServices(customerId, function(services){
-                var serviceCount = services.length;
-                for(var index = 0; index < serviceCount; index++){
-                    var service = services[index];
-                    service.StartTime = new Date(service.StartTime);
-                    if(service.EndTime){
-                        service.EndTime = new Date(service.EndTime);
-                    }else{
-                        service.EndTime = null;
-                    }
-                }
                 _services = services;
                 onSuccess(_services);
             }, onError);

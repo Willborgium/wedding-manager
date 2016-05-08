@@ -9,7 +9,7 @@
             <h2>{{service.Description}}</h2>
         </div>
         <div class="panel-body">
-            <div class="col-md-4">
+            <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4>Basic Info</h4>
@@ -23,19 +23,17 @@
                             <label>Description</label>
                             <input class="form-control" type="text" maxlength="128" ng-model="service.Description" ng-change="onFieldChanged()"/>
                         </div>
-                        <div class="form-group">
-                            <label>Location</label>
-                            <input class="form-control" type="text" maxlength="128" ng-model="service.Location" ng-change="onFieldChanged()"/>
-                        </div>
-                        <div class="form-group">
-                            <label>Start Date/Time</label>
-                            <input class="form-control" type="date" ng-model="service.StartTime" ng-change="onFieldChanged()"/>
-                            <input class="form-control" type="time" ng-model="service.StartTime" ng-change="onFieldChanged()"/>
-                        </div>
-                        <div class="form-group">
-                            <label>End Date/Time</label>
-                            <input class="form-control" type="date" ng-model="service.EndTime" ng-change="onFieldChanged()"/>
-                            <input class="form-control" type="time" ng-model="service.EndTime" ng-change="onFieldChanged()"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Service Details <span class="badge">{{serviceDetails.length}}</span></h4>
+                    </div>
+                    <div>
+                        <div ng-repeat="serviceDetail in serviceDetails" ng-controller="serviceDetailController" ng-init="data = serviceDetail;">
+                            <div>{{data.Id}}</div>                            
                         </div>
                     </div>
                 </div>
