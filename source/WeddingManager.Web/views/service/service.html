@@ -32,8 +32,8 @@
                         <h4>Service Details <span class="badge">{{serviceDetails.length}}</span></h4>
                     </div>
                     <div>
-                        <div ng-repeat="serviceDetail in serviceDetails" ng-controller="serviceDetailController" ng-init="data = serviceDetail;">
-                            <div>{{data.Id}}</div>                            
+                        <div ng-repeat="serviceDetail in serviceDetails" ng-controller="serviceDetailController">
+                            <wm-service-detail serviceDetail="serviceDetail" />                     
                         </div>
                     </div>
                 </div>

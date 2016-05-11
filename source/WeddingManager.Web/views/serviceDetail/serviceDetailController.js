@@ -6,6 +6,7 @@
         $scope.test = "POO OO O P";
         
         function initialize(){
+            console.dir($scope.serviceDetail);
         }
         
         function isDirty(){
@@ -20,5 +21,12 @@
         }
         
         initialize();     
+    })
+    .component('wmServiceDetail', {
+        templateUrl : 'views/serviceDetail/serviceDetail.html',
+        controller : angular.module('serviceDetailController'),
+        bindings : {
+            serviceDetail : '='
+        }        
     });
 })();
