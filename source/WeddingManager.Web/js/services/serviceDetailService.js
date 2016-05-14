@@ -34,7 +34,7 @@
         }
         
         output.updateServiceDetail = function(serviceDetail, onSuccess, onError){
-            serviceDetailFactory.updateServiceDetails(serviceDetail, function(){
+            serviceDetailFactory.updateServiceDetail(serviceDetail, function(){
                 onSuccess();
             }, onError);
         }

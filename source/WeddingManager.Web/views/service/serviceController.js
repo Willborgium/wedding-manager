@@ -9,19 +9,40 @@
         $scope.serviceDetails = [];
         $scope.isSaveDisabled = true;
         
+        $scope.isServiceDetailSaveDisabled = {};
+        
         function initialize(){
             $scope.service = appStateService.getService();
+            initializeInvoices();
+            initializePayments();
+            initializeServiceDetails();
+        }
+        
+        function initializeInvoices(){
             invoiceService.refreshInvoices($scope.service.Id, function(invoices){
                 $scope.invoices = invoices;
             }, function(){
                 $location.path('error');
-            });
+            });            
+        }
+        
+        function initializePayments(){
             paymentService.refreshPayments($scope.service.Id, function(payments){
                 $scope.payments = payments;
             }, function(){
                $location.path('error'); 
-            });
+            });            
+        }
+        
+        function initializeServiceDetails(){
             serviceDetailService.refreshServiceDetails($scope.service.Id, function(serviceDetails){
+                $scope.isServiceDetailSaveDisabled = {};
+                $scope.isEditingServiceDetailDetails = {};
+                var length = serviceDetails.length;
+                for(var index = 0; index < length; index++){
+                    var serviceDetail = serviceDetails[index];
+                    $scope.isServiceDetailSaveDisabled[serviceDetail.Id] = true;
+                }
                 $scope.serviceDetails = serviceDetails;
                 appStateService.setServiceDetails(serviceDetails);
             }, function(){
@@ -36,11 +57,27 @@
             return serviceString != serviceChanges;
         }
         
-        $scope.onFieldChanged = function(){
-            $scope.isSaveDisabled = !isDirty();
+        function getServiceDetail(serviceDetailId){
+            var length = $scope.serviceDetails.length;
+            for(var index = 0; index < length; index++){
+                var serviceDetail = $scope.serviceDetails[index];
+                if(serviceDetail.Id == serviceDetailId){
+                    return serviceDetail;
+                }
+            }
+            return null;
+        } 
+        
+        function isServiceDetailDirty(serviceDetailId){
+            var changedServiceDetail = getServiceDetail(serviceDetailId);            
+            var serviceDetailChanges = JSON.stringify(changedServiceDetail);
+            var serviceDetail = appStateService.getServiceDetail(serviceDetailId);
+            serviceDetail.$$hashKey = changedServiceDetail.$$hashKey;
+            var serviceDetailString = JSON.stringify(serviceDetail);
+            return serviceDetailString != serviceDetailChanges;
         }
         
-        $scope.onServiceDetailFieldChanged = function(serviceDetailId){
+        $scope.onFieldChanged = function(){
             $scope.isSaveDisabled = !isDirty();
         }
         
@@ -95,6 +132,33 @@
         $scope.viewInvoice = function(invoice){
             appStateService.setInvoice(invoice);
             $location.path('invoice');
+        }
+        
+        $scope.onServiceDetailFieldChanged = function(serviceDetailId){
+            $scope.isServiceDetailSaveDisabled[serviceDetailId] = !isServiceDetailDirty(serviceDetailId);
+        }
+        
+        $scope.deleteServiceDetail = function(serviceDetailId){
+            serviceDetailService.deleteServiceDetail(serviceDetailId, function(){
+                initializeServiceDetails();
+            }, function(){
+                $location.path('error');
+            });
+        }
+        
+        $scope.updateServiceDetail = function(serviceDetailId){
+            var serviceDetail = getServiceDetail(serviceDetailId);
+            serviceDetailService.updateServiceDetail(serviceDetail, function(){
+                initializeServiceDetails();               
+            }, function(){
+                $location.path('error');
+            })
+        }
+        
+        $scope.createServiceDetail = function(){
+            serviceDetailService.createServiceDetail($scope.service.Id, function(serviceDetail){
+                initializeServiceDetails(); 
+            });
         }
         
         initialize();     
