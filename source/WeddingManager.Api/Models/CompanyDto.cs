@@ -4,6 +4,10 @@ namespace WeddingManager.Api.Models
 {
     public class CompanyDto
     {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
         public CompanyDto()
         {
         }
@@ -19,9 +23,5 @@ namespace WeddingManager.Api.Models
         {
             return new Company(Id, Name);
         }
-
-        public int Id { get; set; }
-
-        public string Name { get; set; }
     }
 }

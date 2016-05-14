@@ -59,6 +59,15 @@ namespace WeddingManager.Api.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        [Route("search/{companyId}")]
+        public async Task<IHttpActionResult> CreateService(int companyId, [FromBody]ServiceSearchCriteriaDto searchCriteria)
+        {
+            var services = ServiceService.Search(companyId, searchCriteria.ToServiceSearchCriteria());
+
+            return Ok(services);
+        }
+
         protected IServiceService ServiceService
         {
             get

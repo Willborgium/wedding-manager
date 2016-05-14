@@ -25,12 +25,16 @@ namespace WeddingManager.Repositories
                                                         c.Company.DateSuppressed == null);
         }
 
+        public static IQueryable<DB.Service> GetServices(DB.WeddingManagerEntities entity)
+        {
+            return entity.Services.Where(s => s.DateSuppressed == null &&
+                                              s.Customer.DateSuppressed == null &&
+                                              s.Customer.Company.DateSuppressed == null);
+        }
+
         public static DB.Service GetService(DB.WeddingManagerEntities entity, int id)
         {
-            return entity.Services.FirstOrDefault(s => s.Id == id &&
-                                                       s.DateSuppressed == null &&
-                                                       s.Customer.DateSuppressed == null &&
-                                                       s.Customer.Company.DateSuppressed == null);
+            return GetServices(entity).FirstOrDefault(s => s.Id == id);
         }
 
         public static DB.ServiceDetail GetServiceDetail(DB.WeddingManagerEntities entity, int id)

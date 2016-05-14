@@ -78,5 +78,39 @@ namespace WeddingManager.Repositories
                 }
             }
         }
+
+        public IEnumerable<Service> Search(int companyId, ServiceSearchCriteria searchCriteria)
+        {
+            var output = new List<Service>();
+
+            using (var entity = new DB.WeddingManagerEntities())
+            {
+                var dbServices = DbHelpers.GetServices(entity)
+                                          .Where(s => s.Customer.CompanyId == companyId);
+
+                if(searchCriteria.StartDate.HasValue)
+                {
+                    if(searchCriteria.EndDate.HasValue)
+                    {
+                        dbServices = dbServices.Where(s => s.ServiceDetails.Any(sd => sd.StartTime >= searchCriteria.StartDate.Value && sd.EndTime <= searchCriteria.EndDate.Value));
+                    }
+                    else
+                    {
+                        dbServices = dbServices.Where(s => s.ServiceDetails.Any(sd => sd.StartTime >= searchCriteria.StartDate.Value));
+                    }
+                }
+                else if (searchCriteria.EndDate.HasValue)
+                {
+                    dbServices = dbServices.Where(s => s.ServiceDetails.Any(sd => sd.EndTime <= searchCriteria.EndDate.Value));
+                }
+
+                foreach (var dbService in dbServices)
+                {
+                    output.Add(new Service(dbService.Id, dbService.Description));
+                }
+            }
+
+            return output;
+        }
     }
 }

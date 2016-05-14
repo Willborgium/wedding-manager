@@ -120,6 +120,7 @@
     <Compile Include="Models\PaymentDto.cs" />
     <Compile Include="Models\ServiceDetailDto.cs" />
     <Compile Include="Models\ServiceDto.cs" />
+    <Compile Include="Models\ServiceSearchCriteriaDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
