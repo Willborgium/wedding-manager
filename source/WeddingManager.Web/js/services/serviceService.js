@@ -3,7 +3,6 @@
     .service('serviceService', function(serviceFactory, appStateService){
         var output = {};
         var _services = [];
-        var _searchResults = [];
         
         output.createService = function(customerId, onSuccess, onError){
             var service = {
@@ -39,17 +38,6 @@
                 appStateService.setService(null);
                 onSuccess();
             }, onError);
-        }
-        
-        output.search = function(companyId, searchCriteria, onSuccess, onError){
-            serviceFactory.search(companyId, searchCriteria, function(searchResults){
-                _searchResults = searchResults;
-                onSuccess(searchResults);
-            }, onError);
-        }
-        
-        output.getSearchResults = function(){
-            return _searchResults;
         }
         
         return output;

@@ -32,11 +32,11 @@ namespace WeddingManager.Repositories
 
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var companies = entity.Companies.Where(c => c.DateSuppressed == null);
+                var dbCompanies = entity.Companies.Where(c => c.DateSuppressed == null);
 
-                foreach(var company in companies)
+                foreach(var dbCompany in dbCompanies)
                 {
-                    output.Add(new Company(company.Id, company.Name));
+                    output.Add(DbHelpers.Companies.FromDb(dbCompany));
                 }
             }
 
@@ -47,7 +47,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbCompany = DbHelpers.GetCompany(entity, company.Id);
+                var dbCompany = DbHelpers.Companies.GetCompany(entity, company.Id);
 
                 if(dbCompany != null)
                 {
@@ -62,7 +62,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbCompany = DbHelpers.GetCompany(entity, companyId);
+                var dbCompany = DbHelpers.Companies.GetCompany(entity, companyId);
 
                 dbCompany.DateSuppressed = DateTime.Now;
 

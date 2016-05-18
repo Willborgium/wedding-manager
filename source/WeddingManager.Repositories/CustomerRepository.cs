@@ -13,7 +13,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbCompany = DbHelpers.GetCompany(entity, companyId);
+                var dbCompany = DbHelpers.Companies.GetCompany(entity, companyId);
 
                 var dbCustomer = new DB.Customer
                 {
@@ -44,7 +44,7 @@ namespace WeddingManager.Repositories
 
                 foreach(var dbCustomer in dbCustomers)
                 {
-                    output.Add(new Customer(dbCustomer.Id, dbCustomer.FirstName, dbCustomer.LastName, dbCustomer.PhoneNumber, dbCustomer.Notes));
+                    output.Add(DbHelpers.Customers.FromDb(dbCustomer));
                 }
             }
 
@@ -55,7 +55,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbCustomer = DbHelpers.GetCustomer(entity, customer.Id);
+                var dbCustomer = DbHelpers.Customers.GetCustomer(entity, customer.Id);
 
                 if(dbCustomer != null)
                 {
@@ -76,7 +76,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbCustomer = DbHelpers.GetCustomer(entity, customerId);
+                var dbCustomer = DbHelpers.Customers.GetCustomer(entity, customerId);
 
                 if(dbCustomer != null)
                 {

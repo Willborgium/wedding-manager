@@ -41,15 +41,6 @@
                url : [urlBase, serviceId].join('/'),
            }).then(onSuccess, onError);
        }
-       factory.search = function(companyId, searchCriteria, onSuccess, onError){
-           $http({
-               method : 'POST',
-               url : [urlBase, 'search', companyId].join('/'),
-               data : JSON.stringify(searchCriteria)
-           }).then(function(response){
-               onSuccess(response.data);
-           }, onError);           
-       }
        return factory; 
     });
 })();

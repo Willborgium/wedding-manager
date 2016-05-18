@@ -13,7 +13,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbCompany = DbHelpers.GetCompany(entity, companyId);
+                var dbCompany = DbHelpers.Companies.GetCompany(entity, companyId);
 
                 var dbExpense = new DB.Expense
                 {
@@ -43,7 +43,7 @@ namespace WeddingManager.Repositories
 
                 foreach(var dbExpense in dbExpenses)
                 {
-                    output.Add(new Expense(dbExpense.Id, dbExpense.Amount, dbExpense.CreatedDate, dbExpense.Description));
+                    output.Add(DbHelpers.Expenses.FromDb(dbExpense));
                 }
             }
 
@@ -54,7 +54,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbExpense = DbHelpers.GetExpense(entity, expense.Id);
+                var dbExpense = DbHelpers.Expenses.GetExpense(entity, expense.Id);
                 
                 if(dbExpense != null)
                 {
@@ -73,7 +73,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbExpense = DbHelpers.GetExpense(entity, expenseId);
+                var dbExpense = DbHelpers.Expenses.GetExpense(entity, expenseId);
 
                 if(dbExpense != null)
                 {

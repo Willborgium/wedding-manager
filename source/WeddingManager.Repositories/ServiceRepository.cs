@@ -13,7 +13,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbCustomer = DbHelpers.GetCustomer(entity, customerId);
+                var dbCustomer = DbHelpers.Customers.GetCustomer(entity, customerId);
 
                 var dbService = new DB.Service
                 {
@@ -35,14 +35,12 @@ namespace WeddingManager.Repositories
 
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbServices = entity.Services.Where(s => s.CustomerId == customerId &&
-                                                            s.DateSuppressed == null &&
-                                                            s.Customer.DateSuppressed == null &&
-                                                            s.Customer.Company.DateSuppressed == null);
+                var dbServices = DbHelpers.Services.GetServices(entity)
+                                                   .Where(s => s.CustomerId == customerId);
 
                 foreach (var dbService in dbServices)
                 {
-                    output.Add(new Service(dbService.Id, dbService.Description));
+                    output.Add(DbHelpers.Services.FromDb(dbService));
                 }
             }
 
@@ -55,12 +53,13 @@ namespace WeddingManager.Repositories
 
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbService = DbHelpers.GetServices(entity)
-                                         .SingleOrDefault(s => s.Customer.CompanyId == companyId && s.Id == serviceId);
+                var dbService = DbHelpers.Services.GetServices(entity)
+                                                  .SingleOrDefault(s => s.Customer.CompanyId == companyId &&
+                                                                        s.Id == serviceId);
 
                 if(dbService != null)
                 {
-                    output = new Service(dbService.Id, dbService.Description);
+                    output = DbHelpers.Services.FromDb(dbService);
                 }
             }
 
@@ -71,7 +70,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbService = DbHelpers.GetService(entity, service.Id);
+                var dbService = DbHelpers.Services.GetService(entity, service.Id);
 
                 if (dbService != null)
                 {
@@ -86,7 +85,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbService = DbHelpers.GetService(entity, serviceId);
+                var dbService = DbHelpers.Services.GetService(entity, serviceId);
 
                 if (dbService != null)
                 {
@@ -95,40 +94,6 @@ namespace WeddingManager.Repositories
                     entity.SaveChanges();
                 }
             }
-        }
-
-        public IEnumerable<Service> Search(int companyId, ServiceSearchCriteria searchCriteria)
-        {
-            var output = new List<Service>();
-
-            using (var entity = new DB.WeddingManagerEntities())
-            {
-                var dbServices = DbHelpers.GetServices(entity)
-                                          .Where(s => s.Customer.CompanyId == companyId);
-
-                if(searchCriteria.StartDate.HasValue)
-                {
-                    if(searchCriteria.EndDate.HasValue)
-                    {
-                        dbServices = dbServices.Where(s => s.ServiceDetails.Any(sd => sd.StartTime >= searchCriteria.StartDate.Value && sd.EndTime <= searchCriteria.EndDate.Value));
-                    }
-                    else
-                    {
-                        dbServices = dbServices.Where(s => s.ServiceDetails.Any(sd => sd.StartTime >= searchCriteria.StartDate.Value));
-                    }
-                }
-                else if (searchCriteria.EndDate.HasValue)
-                {
-                    dbServices = dbServices.Where(s => s.ServiceDetails.Any(sd => sd.EndTime <= searchCriteria.EndDate.Value));
-                }
-
-                foreach (var dbService in dbServices)
-                {
-                    output.Add(new Service(dbService.Id, dbService.Description));
-                }
-            }
-
-            return output;
         }
     }
 }

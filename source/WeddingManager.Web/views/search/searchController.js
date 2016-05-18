@@ -1,9 +1,9 @@
 (function(){
     angular.module('weddingManager')
-    .controller('searchController', function($scope, $location, appStateService, serviceService){
+    .controller('searchController', function($scope, $location, appStateService, serviceService, serviceDetailService){
         $scope.company = null;
-        $scope.services = [];
-        $scope.service = {
+        $scope.serviceDetails = [];
+        $scope.serviceDetailSearchCriteria = {
             StartDate : null,
             EndDate : null
         }
@@ -32,9 +32,9 @@
             return _visibilities[panelName];
         }
         
-        $scope.searchServices = function(){
-            serviceService.search($scope.company.Id, $scope.service, function(searchResults){
-                $scope.services = searchResults;
+        $scope.searchServiceDetails = function(){
+            serviceDetailService.search($scope.company.Id, $scope.serviceDetailSearchCriteria, function(searchResults){
+                $scope.serviceDetails = searchResults;
             }, function(){
                $location.path('error'); 
             });

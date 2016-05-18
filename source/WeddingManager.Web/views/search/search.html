@@ -4,31 +4,44 @@
     <li ng-class="{ active : getVisibility('invoices') }"><a href="" ng-click="switchTo('invoices')">Invoices/Payments</a></li>    
 </ul>
 <div class="col-md-12" ng-hide="!getVisibility('services')">
-    <div class="col-md-4">
-        <label>Start Date</label>
-        <input class="form-control" type="date" step="7" ng-model="service.StartDate" />
-    </div>
-    <div class="col-md-4">
-        <label>End Date</label>
-        <input class="form-control" type="date" step="7" ng-model="service.EndDate" />
-    </div>
-    <div class="col-md-4">
-        <div class="btn btn-success" ng-click="searchServices()">Search</div>
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2>Search Criteria<h2>
+            </div>
+            <div class="panel-body">
+                <div class="col-md-4">
+                    <label>Start Date</label>
+                    <input class="form-control" type="date" step="7" ng-model="serviceDetailSearchCriteria.StartDate" />
+                    <label>End Date</label>
+                    <input class="form-control" type="date" step="7" ng-model="serviceDetailSearchCriteria.EndDate" />
+                </div>
+                <div class="btn btn-success" ng-click="searchServiceDetails()">Search</div>
+            </div>
+        </div>
     </div>
     <div class="col-md-12">
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Service ID</th>
+                    <th>Detail ID</th>
+                    <th>Name</th>
                     <th>Description</th>
+                    <th>Details</th>
+                    <th>Start Date</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="service in services" ng-click="navigateToService(service.Id)">
-                    <td>{{service.Id}}</td>
-                    <td>{{service.Description}}</td>
+                <tr ng-repeat="searchResult in serviceDetails" ng-click="navigateToService(searchResult.Service.Id)">
+                    <td>{{searchResult.Service.Id}}</td>
+                    <td>{{searchResult.ServiceDetail.Id}}</td>
+                    <td>{{searchResult.Customer.FirstName}}  {{searchResult.Customer.LastName}}</td>
+                    <td>{{searchResult.Service.Description}}</td>
+                    <td>{{searchResult.ServiceDetail.Details}}</td>
+                    <td>{{searchResult.ServiceDetail.StartTime | date:'short'}}</td>
                 </tr>
-                <tr ng-hide="services.length > 0">
+                <tr ng-hide="serviceDetails.length > 0">
                     <td colspan="2">No results found...</td>
                 </tr>
             </tbody>

@@ -45,6 +45,12 @@
             }, onError);
         }
         
+        output.search = function(companyId, searchCriteria, onSuccess, onError){
+            serviceDetailFactory.search(companyId, searchCriteria, function(searchResults){
+                onSuccess(searchResults);
+            }, onError);
+        }
+        
         return output;
     });
 })();

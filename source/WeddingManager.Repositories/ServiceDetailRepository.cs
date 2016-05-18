@@ -13,7 +13,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbService = DbHelpers.GetService(entity, serviceId);
+                var dbService = DbHelpers.Services.GetService(entity, serviceId);
 
                 var dbServiceDetail = new DB.ServiceDetail
                 {
@@ -46,7 +46,7 @@ namespace WeddingManager.Repositories
 
                 foreach(var dbServiceDetail in dbServiceDetails)
                 {
-                    output.Add(new ServiceDetail(dbServiceDetail.Id, dbServiceDetail.Details, dbServiceDetail.Location, dbServiceDetail.StartTime, dbServiceDetail.EndTime));
+                    output.Add(DbHelpers.ServiceDetails.FromDb(dbServiceDetail));
                 }
             }
 
@@ -57,7 +57,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbServiceDetail = DbHelpers.GetServiceDetail(entity, serviceDetail.Id);
+                var dbServiceDetail = DbHelpers.ServiceDetails.GetServiceDetail(entity, serviceDetail.Id);
 
                 if (dbServiceDetail != null)
                 {
@@ -78,7 +78,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbServiceDetail = DbHelpers.GetServiceDetail(entity, serviceDetailId);
+                var dbServiceDetail = DbHelpers.ServiceDetails.GetServiceDetail(entity, serviceDetailId);
 
                 if(dbServiceDetail != null)
                 {
@@ -87,6 +87,35 @@ namespace WeddingManager.Repositories
                     entity.SaveChanges();
                 }
             }
+        }
+
+        public IEnumerable<ServiceDetailSearchResult> Search(int companyId, ServiceDetailSearchCriteria searchCriteria)
+        {
+            var output = new List<ServiceDetailSearchResult>();
+
+            using (var entity = new DB.WeddingManagerEntities())
+            {
+                var dbServiceDetails = DbHelpers.Services.GetServices(entity)
+                                                .Where(s => s.Customer.CompanyId == companyId)
+                                                .SelectMany(s => s.ServiceDetails);
+
+                if (searchCriteria.StartDate.HasValue)
+                {
+                    dbServiceDetails = dbServiceDetails.Where(sd => sd.StartTime >= searchCriteria.StartDate.Value);
+                }
+
+                if (searchCriteria.EndDate.HasValue)
+                {
+                    dbServiceDetails = dbServiceDetails.Where(sd => sd.EndTime <= searchCriteria.EndDate.Value);
+                }
+
+                foreach (var dbServiceDetail in dbServiceDetails)
+                {
+                    output.Add(DbHelpers.ServiceDetails.ToSearchResult(dbServiceDetail));
+                }
+            }
+
+            return output;
         }
     }
 }

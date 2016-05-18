@@ -14,7 +14,5 @@ namespace WeddingManager.Core.Repositories
         void UpdateService(Service service);
 
         void DeleteService(int serviceId);
-
-        IEnumerable<Service> Search(int companyId, ServiceSearchCriteria searchCriteria);
     }
 }

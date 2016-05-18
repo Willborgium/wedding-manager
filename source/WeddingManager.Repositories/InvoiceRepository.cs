@@ -13,7 +13,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbService = DbHelpers.GetService(entity, serviceId);
+                var dbService = DbHelpers.Services.GetService(entity, serviceId);
 
                 var dbInvoice = new DB.Invoice
                 {
@@ -38,15 +38,15 @@ namespace WeddingManager.Repositories
 
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var invoices = entity.Invoices.Where(i => i.ServiceId == serviceId &&
-                                                          i.DateSuppressed == null &&
-                                                          i.Service.DateSuppressed == null &&
-                                                          i.Service.Customer.DateSuppressed == null &&
-                                                          i.Service.Customer.Company.DateSuppressed == null);
+                var dbInvoices = entity.Invoices.Where(i => i.ServiceId == serviceId &&
+                                                            i.DateSuppressed == null &&
+                                                            i.Service.DateSuppressed == null &&
+                                                            i.Service.Customer.DateSuppressed == null &&
+                                                            i.Service.Customer.Company.DateSuppressed == null);
 
-                foreach(var invoice in invoices)
+                foreach(var dbInvoice in dbInvoices)
                 {
-                    output.Add(new Invoice(invoice.Id, invoice.Amount, invoice.Description, invoice.CreatedDate, invoice.DueDate));
+                    output.Add(DbHelpers.Invoices.FromDb(dbInvoice));
                 }
             }
 
@@ -57,7 +57,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbInvoice = DbHelpers.GetInvoice(entity, invoice.Id);
+                var dbInvoice = DbHelpers.Invoices.GetInvoice(entity, invoice.Id);
                                                                      
                 if(dbInvoice != null)
                 {
@@ -78,7 +78,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbInvoice = DbHelpers.GetInvoice(entity, invoiceId);
+                var dbInvoice = DbHelpers.Invoices.GetInvoice(entity, invoiceId);
 
                 if(dbInvoice != null)
                 {

@@ -2,7 +2,7 @@
 
 namespace WeddingManager.Core.Data
 {
-    public class ServiceSearchCriteria
+    public class ServiceDetailSearchCriteria
     {
         public DateTime? StartDate { get; set; }
 

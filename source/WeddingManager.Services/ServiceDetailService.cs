@@ -32,6 +32,11 @@ namespace WeddingManager.Services
             _serviceDetailRepository.DeleteServiceDetail(serviceDetailId);
         }
 
+        public IEnumerable<ServiceDetailSearchResult> Search(int companyId, ServiceDetailSearchCriteria searchCriteria)
+        {
+            return _serviceDetailRepository.Search(companyId, searchCriteria);
+        }
+
         private readonly IServiceDetailRepository _serviceDetailRepository;
     }
 }

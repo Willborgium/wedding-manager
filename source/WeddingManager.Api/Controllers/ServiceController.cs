@@ -23,13 +23,6 @@ namespace WeddingManager.Api.Controllers
             return Ok();
         }
 
-        [HttpOptions]
-        [Route("search/{companyId}")]
-        public async Task<IHttpActionResult> Options3(int companyId)
-        {
-            return Ok();
-        }
-
         [HttpPost]
         [Route("{customerId}")]
         public async Task<IHttpActionResult> CreateService(int customerId, [FromBody]ServiceDto serviceDto)
@@ -80,15 +73,6 @@ namespace WeddingManager.Api.Controllers
             ServiceService.DeleteService(serviceId);
 
             return Ok();
-        }
-
-        [HttpPost]
-        [Route("search/{companyId}")]
-        public async Task<IHttpActionResult> Search(int companyId, [FromBody]ServiceSearchCriteriaDto searchCriteria)
-        {
-            var services = ServiceService.Search(companyId, searchCriteria.ToServiceSearchCriteria()).Select(s => new ServiceDto(s));
-
-            return Ok(services);
         }
 
         protected IServiceService ServiceService

@@ -13,7 +13,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbService = DbHelpers.GetService(entity, serviceId);
+                var dbService = DbHelpers.Services.GetService(entity, serviceId);
 
                 var dbPayment = new DB.Payment
                 {
@@ -39,14 +39,14 @@ namespace WeddingManager.Repositories
             using (var entity = new DB.WeddingManagerEntities())
             {
                 var dbPayments = entity.Payments.Where(p => p.ServiceId == serviceId &&
-                                                          p.DateSuppressed == null &&
-                                                          p.Service.DateSuppressed == null &&
-                                                          p.Service.Customer.DateSuppressed == null &&
-                                                          p.Service.Customer.Company.DateSuppressed == null);
+                                                            p.DateSuppressed == null &&
+                                                            p.Service.DateSuppressed == null &&
+                                                            p.Service.Customer.DateSuppressed == null &&
+                                                            p.Service.Customer.Company.DateSuppressed == null);
 
                 foreach(var dbPayment in dbPayments)
                 {
-                    output.Add(new Payment(dbPayment.Id, dbPayment.Amount, (PaymentMethod)dbPayment.PaymentMethodId, dbPayment.DateReceived, dbPayment.Notes));
+                    output.Add(DbHelpers.Payments.FromDb(dbPayment));
                 }
             }
 
@@ -57,7 +57,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbPayment = DbHelpers.GetPayment(entity, payment.Id);
+                var dbPayment = DbHelpers.Payments.GetPayment(entity, payment.Id);
 
                 if (dbPayment != null)
                 {
@@ -78,7 +78,7 @@ namespace WeddingManager.Repositories
         {
             using (var entity = new DB.WeddingManagerEntities())
             {
-                var dbPayment = DbHelpers.GetPayment(entity, paymentId);
+                var dbPayment = DbHelpers.Payments.GetPayment(entity, paymentId);
 
                 if (dbPayment != null)
                 {

@@ -9,9 +9,9 @@ namespace WeddingManager.Api.Models
 
         public DateTime? EndDate { get; set; }
 
-        public ServiceSearchCriteria ToServiceSearchCriteria()
+        public ServiceDetailSearchCriteria ToServiceSearchCriteria()
         {
-            return new ServiceSearchCriteria
+            return new ServiceDetailSearchCriteria
             {
                 StartDate = StartDate,
                 EndDate = EndDate
