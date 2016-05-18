@@ -48,6 +48,22 @@ namespace WeddingManager.Api.Controllers
             return Ok(services);
         }
 
+        [HttpGet]
+        [Route("{companyId}/{serviceId}")]
+        public async Task<IHttpActionResult> RetrieveService(int companyId, int serviceId)
+        {
+            var service = ServiceService.RetrieveService(companyId, serviceId);
+
+            if(service == null)
+            {
+                return NotFound();
+            }
+
+            var serviceDto = new ServiceDto(service);
+
+            return Ok(serviceDto);
+        }
+
         [HttpPut]
         [Route("")]
         public async Task<IHttpActionResult> UpdateService([FromBody]ServiceDto serviceDto)

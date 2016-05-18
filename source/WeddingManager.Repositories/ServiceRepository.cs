@@ -49,6 +49,24 @@ namespace WeddingManager.Repositories
             return output;
         }
 
+        public Service RetrieveService(int companyId, int serviceId)
+        {
+            Service output = null;
+
+            using (var entity = new DB.WeddingManagerEntities())
+            {
+                var dbService = DbHelpers.GetServices(entity)
+                                         .SingleOrDefault(s => s.Customer.CompanyId == companyId && s.Id == serviceId);
+
+                if(dbService != null)
+                {
+                    output = new Service(dbService.Id, dbService.Description);
+                }
+            }
+
+            return output;
+        }
+
         public void UpdateService(Service service)
         {
             using (var entity = new DB.WeddingManagerEntities())

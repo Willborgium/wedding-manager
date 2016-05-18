@@ -26,15 +26,18 @@
             }, function(error){
                 $location.path('error');
             });
+            appStateService.clearHistory();
         }
         
         $scope.viewCustomer = function(customer){
             appStateService.setCustomer(customer);
+            appStateService.pushHistory('home');
             $location.path('customer');
         }
         
         $scope.viewExpense = function(expense){
             appStateService.setExpense(expense);
+            appStateService.pushHistory('home');
             $location.path('expense');
         }
         

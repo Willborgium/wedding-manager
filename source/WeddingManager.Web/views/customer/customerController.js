@@ -22,6 +22,11 @@
             return customerString != customerChanges;
         }
         
+        function goBack(){
+            var previousRoute = appStateService.popHistory();
+            $location.path(previousRoute);
+        }
+        
         $scope.onFieldChanged = function(){
             $scope.isSaveDisabled = !isDirty();
         }
@@ -43,7 +48,7 @@
             $('#myModal')
             .on('hidden.bs.modal', function(){
                 customerService.deleteCustomer($scope.customer.Id, function(){
-                    $location.path('home');
+                    goBack();
                 }, function(){
                     $location.path('error');
                 });
@@ -53,6 +58,7 @@
         
         $scope.viewService = function(service){
             appStateService.setService(service);
+            appStateService.pushHistory('customer');
             $location.path('service');
         }
         
@@ -64,7 +70,7 @@
         
         $scope.return = function(){
             appStateService.setCustomer(null);
-            $location.path('home');            
+            goBack();       
         }
         
         initialize();     

@@ -19,11 +19,7 @@
             if(!$scope.company){
                 $location.path('error');
             }
-        }
-        
-        $scope.return = function(){
-            appStateService.setCustomer(null);
-            $location.path('home');
+            appStateService.clearHistory();
         }
         
         $scope.switchTo = function(panelName){
@@ -36,9 +32,19 @@
             return _visibilities[panelName];
         }
         
-        $scope.serviceSearch = function(){
+        $scope.searchServices = function(){
             serviceService.search($scope.company.Id, $scope.service, function(searchResults){
                 $scope.services = searchResults;
+            }, function(){
+               $location.path('error'); 
+            });
+        }
+        
+        $scope.navigateToService = function(serviceId){
+            serviceService.retrieveService($scope.company.Id, serviceId, function(service){
+                appStateService.setService(service);
+                appStateService.pushHistory('search');
+                $location.path('service');
             }, function(){
                $location.path('error'); 
             });

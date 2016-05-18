@@ -20,6 +20,14 @@
                onSuccess(response.data);
            }, onError);
        }    
+       factory.retrieveService = function(companyId, serviceId, onSuccess, onError){
+           $http({
+               method : 'GET',
+               url : [urlBase, companyId, serviceId].join('/')
+           }).then(function(response){
+               onSuccess(response.data);
+           }, onError);
+       }    
        factory.updateService = function(service, onSuccess, onError){
            $http({
                method : 'PUT',

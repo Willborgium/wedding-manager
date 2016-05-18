@@ -9,6 +9,8 @@ namespace WeddingManager.Core.Repositories
 
         IEnumerable<Service> RetrieveServices(int customerId);
 
+        Service RetrieveService(int companyId, int serviceId);
+
         void UpdateService(Service service);
 
         void DeleteService(int serviceId);

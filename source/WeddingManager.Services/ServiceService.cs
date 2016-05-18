@@ -22,6 +22,11 @@ namespace WeddingManager.Services
             return _serviceRepository.RetrieveServices(customerId);
         }
 
+        public Service RetrieveService(int companyId, int serviceId)
+        {
+            return _serviceRepository.RetrieveService(companyId, serviceId);
+        }
+
         public void UpdateService(Service service)
         {
             _serviceRepository.UpdateService(service);

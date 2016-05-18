@@ -13,7 +13,7 @@
         <input class="form-control" type="date" step="7" ng-model="service.EndDate" />
     </div>
     <div class="col-md-4">
-        <div class="btn btn-success" ng-click="serviceSearch()">Search</div>
+        <div class="btn btn-success" ng-click="searchServices()">Search</div>
     </div>
     <div class="col-md-12">
         <table class="table table-hover">
@@ -24,9 +24,12 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="service in services">
+                <tr ng-repeat="service in services" ng-click="navigateToService(service.Id)">
                     <td>{{service.Id}}</td>
                     <td>{{service.Description}}</td>
+                </tr>
+                <tr ng-hide="services.length > 0">
+                    <td colspan="2">No results found...</td>
                 </tr>
             </tbody>
         </table>

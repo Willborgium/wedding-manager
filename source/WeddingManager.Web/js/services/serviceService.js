@@ -22,10 +22,16 @@
             }, onError);
         }
         
+        output.getServices = function(){
+            return _services;
+        }
+        
+        output.retrieveService = function(companyId, serviceId, onSuccess, onError){
+            serviceFactory.retrieveService(companyId, serviceId, onSuccess, onError);
+        }
+        
         output.updateService = function(service, onSuccess, onError){
-            serviceFactory.updateService(service, function(){
-                onSuccess();
-            }, onError);
+            serviceFactory.updateService(service, onSuccess, onError);
         }
         
         output.deleteService = function(serviceId, onSuccess, onError){

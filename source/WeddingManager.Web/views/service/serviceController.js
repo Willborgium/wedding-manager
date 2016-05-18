@@ -108,29 +108,34 @@
         
         $scope.return = function(){
             appStateService.setService(null);
-            $location.path('customer');
+            var previousRoute = appStateService.popHistory();
+            $location.path(previousRoute);
         }
         
         $scope.createInvoice = function(){
             invoiceService.createInvoice($scope.service.Id, function(invoice){
                appStateService.setInvoice(invoice);
+               appStateService.pushHistory('service');
                $location.path('invoice'); 
             });
         }
         
         $scope.viewPayment = function(payment){
             appStateService.setPayment(payment);
+            appStateService.pushHistory('service');
             $location.path('payment');
         }
         
         $scope.createPayment = function(){
             paymentService.createPayment($scope.service.Id, function(payment){
+               appStateService.pushHistory('service');
                $scope.viewPayment(payment); 
             });
         }
         
         $scope.viewInvoice = function(invoice){
             appStateService.setInvoice(invoice);
+            appStateService.pushHistory('service');
             $location.path('invoice');
         }
         

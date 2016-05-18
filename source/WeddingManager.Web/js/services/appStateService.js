@@ -10,6 +10,8 @@
         var _payment = null;
         var _serviceDetails = null;
         
+        var _history = [];
+        
         function copy(target){
             return JSON.parse(JSON.stringify(target));
         }
@@ -26,6 +28,19 @@
             _invoice = null;
             _payment = null;
             _serviceDetails = null;
+            _history = [];
+        }
+        
+        service.pushHistory = function(route){
+            _history.push(route);
+        }
+        
+        service.popHistory = function(){
+            return _history.pop();
+        }
+        
+        service.clearHistory = function(){
+            _history = [];
         }
         
         service.getCompany = function(){

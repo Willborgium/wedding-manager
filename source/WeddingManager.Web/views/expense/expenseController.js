@@ -15,6 +15,11 @@
             return expenseString != expenseChanges;
         }
         
+        function goBack(){
+            var previousRoute = appStateService.popHistory();
+            $location.path(previousRoute);
+        }
+        
         $scope.onFieldChanged = function(){
             $scope.isSaveDisabled = !isDirty();
         }
@@ -36,7 +41,7 @@
             $('#myModal')
             .on('hidden.bs.modal', function(){
                 expenseService.deleteExpense($scope.expense.Id, function(){
-                    $location.path('home');
+                    goBack();
                 }, function(){
                     $location.path('error');
                 });
@@ -46,7 +51,7 @@
         
         $scope.return = function(){
             appStateService.setExpense(null);
-            $location.path('home');
+            goBack();
         }
         
         initialize();     
