@@ -11,14 +11,21 @@ namespace WeddingManager.Api.Controllers
     {
         [HttpOptions]
         [Route("")]
-        public async Task<IHttpActionResult> Options()
+        public async Task<IHttpActionResult> Options1()
         {
             return Ok();
         }
 
         [HttpOptions]
         [Route("{companyId}")]
-        public async Task<IHttpActionResult> Options(int companyId)
+        public async Task<IHttpActionResult> Options2(int companyId)
+        {
+            return Ok();
+        }
+
+        [HttpOptions]
+        [Route("search/{companyId}")]
+        public async Task<IHttpActionResult> Options3(int companyId)
         {
             return Ok();
         }
@@ -61,9 +68,9 @@ namespace WeddingManager.Api.Controllers
 
         [HttpPost]
         [Route("search/{companyId}")]
-        public async Task<IHttpActionResult> CreateService(int companyId, [FromBody]ServiceSearchCriteriaDto searchCriteria)
+        public async Task<IHttpActionResult> Search(int companyId, [FromBody]ServiceSearchCriteriaDto searchCriteria)
         {
-            var services = ServiceService.Search(companyId, searchCriteria.ToServiceSearchCriteria());
+            var services = ServiceService.Search(companyId, searchCriteria.ToServiceSearchCriteria()).Select(s => new ServiceDto(s));
 
             return Ok(services);
         }

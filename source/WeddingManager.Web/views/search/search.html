@@ -1,0 +1,36 @@
+<ul class="nav nav-tabs">
+    <li ng-class="{ active : getVisibility('services') }"><a href="" ng-click="switchTo('services')">Services</a></li>
+    <li ng-class="{ active : getVisibility('customers') }"><a href="" ng-click="switchTo('customers')">Customers</a></li>
+    <li ng-class="{ active : getVisibility('invoices') }"><a href="" ng-click="switchTo('invoices')">Invoices/Payments</a></li>    
+</ul>
+<div class="col-md-12" ng-hide="!getVisibility('services')">
+    <div class="col-md-4">
+        <label>Start Date</label>
+        <input class="form-control" type="date" step="7" ng-model="service.StartDate" />
+    </div>
+    <div class="col-md-4">
+        <label>End Date</label>
+        <input class="form-control" type="date" step="7" ng-model="service.EndDate" />
+    </div>
+    <div class="col-md-4">
+        <div class="btn btn-success" ng-click="serviceSearch()">Search</div>
+    </div>
+    <div class="col-md-12">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="service in services">
+                    <td>{{service.Id}}</td>
+                    <td>{{service.Description}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="col-md-12" ng-hide="!getVisibility('customers')">Not implemented</div>
+<div class="col-md-12" ng-hide="!getVisibility('invoices')">Not implemented</div>

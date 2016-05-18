@@ -33,6 +33,10 @@
 	       templateUrl : 'views/payment/payment.html',
 	       controller : 'paymentController'
 	   })
+	   .when('/search', {
+		   templateUrl : 'views/search/search.html',
+		   controller : 'searchController'
+	   })
 	   .otherwise({
 		   redirectTo : '/error'
 	   });

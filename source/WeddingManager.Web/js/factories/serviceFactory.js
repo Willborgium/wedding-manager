@@ -10,7 +10,7 @@
                data : JSON.stringify(service)
            }).then(function(response){
                onSuccess(response.data);
-           }, onError);           
+           }, onError);
        }
        factory.retrieveServices = function(customerId, onSuccess, onError){
            $http({
@@ -31,7 +31,16 @@
            $http({
                method : 'DELETE',
                url : [urlBase, serviceId].join('/'),
-           }).then(onSuccess, onError);           
+           }).then(onSuccess, onError);
+       }
+       factory.search = function(companyId, searchCriteria, onSuccess, onError){
+           $http({
+               method : 'POST',
+               url : [urlBase, 'search', companyId].join('/'),
+               data : JSON.stringify(searchCriteria)
+           }).then(function(response){
+               onSuccess(response.data);
+           }, onError);           
        }
        return factory; 
     });

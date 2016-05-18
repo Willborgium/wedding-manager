@@ -50,6 +50,10 @@
             })
         }
         
+        $scope.navigateToAdvancedCustomerSearch = function(){
+            $location.path('search');
+        }
+        
         initialize();
     });
 })();
