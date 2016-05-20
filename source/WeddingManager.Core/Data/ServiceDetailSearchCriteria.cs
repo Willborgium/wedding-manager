@@ -7,5 +7,9 @@ namespace WeddingManager.Core.Data
         public DateTime? StartDate { get; set; }
 
         public DateTime? EndDate { get; set; }
+        
+        public string ServiceDescription { get; set; }
+
+        public string ServiceDetailDetails { get; set; }
     }
 }

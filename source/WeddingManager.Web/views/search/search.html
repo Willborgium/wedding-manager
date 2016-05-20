@@ -7,21 +7,34 @@
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h2>Search Criteria<h2>
+                <strong>Search Criteria</strong>
+                <div class="glyphicon glyphicon-chevron-down" data-toggle="collapse" data-target="#searchCriteria" />
             </div>
-            <div class="panel-body">
-                <div class="col-md-4">
+            <div id="searchCriteria" class="panel-body collapse">
+                <div class="col-md-3">
                     <label>Start Date</label>
                     <input class="form-control" type="date" step="7" ng-model="serviceDetailSearchCriteria.StartDate" />
+                </div>
+                <div class="col-md-3">
                     <label>End Date</label>
                     <input class="form-control" type="date" step="7" ng-model="serviceDetailSearchCriteria.EndDate" />
                 </div>
-                <div class="btn btn-success" ng-click="searchServiceDetails()">Search</div>
+                <div class="col-md-3">
+                    <label>Description</label>
+                    <input class="form-control" type="text" ng-model="serviceDetailSearchCriteria.ServiceDescription" />
+                </div>
+                <div class="col-md-3">
+                    <label>Details</label>
+                    <input class="form-control" type="text" ng-model="serviceDetailSearchCriteria.ServiceDetailDetails" />
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="btn btn-success btn-block" ng-click="searchServiceDetails()">Search</div>
             </div>
         </div>
     </div>
     <div class="col-md-12">
-        <table class="table table-hover">
+        <table class="table table-hover table-striped table-responsive">
             <thead>
                 <tr>
                     <th>Service ID</th>
@@ -42,7 +55,9 @@
                     <td>{{searchResult.ServiceDetail.StartTime | date:'short'}}</td>
                 </tr>
                 <tr ng-hide="serviceDetails.length > 0">
-                    <td colspan="2">No results found...</td>
+                    <td colspan="6">
+                        <div class="text-center"><strong>No results found...</strong>   </div>
+                    </td>
                 </tr>
             </tbody>
         </table>

@@ -97,7 +97,8 @@ namespace WeddingManager.Repositories
             {
                 var dbServiceDetails = DbHelpers.Services.GetServices(entity)
                                                 .Where(s => s.Customer.CompanyId == companyId)
-                                                .SelectMany(s => s.ServiceDetails);
+                                                .SelectMany(s => s.ServiceDetails)
+                                                .Where(sd => sd.DateSuppressed == null);
 
                 if (searchCriteria.StartDate.HasValue)
                 {
@@ -107,6 +108,16 @@ namespace WeddingManager.Repositories
                 if (searchCriteria.EndDate.HasValue)
                 {
                     dbServiceDetails = dbServiceDetails.Where(sd => sd.EndTime <= searchCriteria.EndDate.Value);
+                }
+
+                if(!string.IsNullOrWhiteSpace(searchCriteria.ServiceDescription))
+                {
+                    dbServiceDetails = dbServiceDetails.Where(sd => sd.Service.Description.ToLower().Contains(searchCriteria.ServiceDescription));
+                }
+
+                if (!string.IsNullOrWhiteSpace(searchCriteria.ServiceDetailDetails))
+                {
+                    dbServiceDetails = dbServiceDetails.Where(sd => sd.Details.ToLower().Contains(searchCriteria.ServiceDetailDetails));
                 }
 
                 foreach (var dbServiceDetail in dbServiceDetails)
