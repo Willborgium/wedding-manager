@@ -47,6 +47,8 @@
     <Compile Include="Data\Company.cs" />
     <Compile Include="Data\CompanySummary.cs" />
     <Compile Include="Data\Customer.cs" />
+    <Compile Include="Data\CustomerInteraction.cs" />
+    <Compile Include="Data\CustomerInteractionType.cs" />
     <Compile Include="Data\Expense.cs" />
     <Compile Include="Data\ExpensesSummary.cs" />
     <Compile Include="Data\Invoice.cs" />

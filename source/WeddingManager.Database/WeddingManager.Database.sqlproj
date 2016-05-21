@@ -70,6 +70,8 @@
     <PostDeploy Include="PostDeployment\PaymentMethod.sql" />
     <Build Include="Tables\Payment.sql" />
     <Build Include="Tables\ServiceDetail.sql" />
+    <Build Include="Tables\CustomerInteractionType.sql" />
+    <Build Include="Tables\CustomerInteraction.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="WeddingManager.Database.Local.publish.xml" />

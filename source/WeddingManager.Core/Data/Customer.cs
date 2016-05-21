@@ -15,24 +15,16 @@ namespace WeddingManager.Core.Data
             PhoneNumber = phoneNumber;
 
             Notes = notes;
-
-            Connections = new List<Customer>();
-
-            Services = new List<Service>();
         }
 
-        public int Id { get; private set; }
+        public int Id { get; }
 
-        public string FirstName { get; private set; }
+        public string FirstName { get; }
 
-        public string LastName { get; private set; }
+        public string LastName { get; }
 
-        public string PhoneNumber { get; private set; }
+        public string PhoneNumber { get; }
 
-        public string Notes { get; private set; }
-
-        public List<Customer> Connections { get; private set; }
-
-        public List<Service> Services { get; private set; }
+        public string Notes { get; }
     }
 }

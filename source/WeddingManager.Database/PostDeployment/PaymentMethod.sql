@@ -46,3 +46,22 @@ IF (SELECT COUNT(1) FROM [dbo].[Expense]) = 0
 		INSERT INTO [dbo].[Expense] ([CompanyId], [Amount], [CreatedDate], [Description]) VALUES
 		(1, 225.50, GETDATE(), 'Business cards')
 	END
+
+IF (SELECT COUNT(1) FROM [dbo].[CustomerInteractionType]) = 0
+	BEGIN
+		INSERT INTO [dbo].[CustomerInteractionType] ([Description]) VALUES
+		('Email'),
+		('Phone'),
+		('Facebook'),
+		('Text message'),
+		('In-person'),
+		('Mail'),
+		('Event')
+	END
+
+IF (SELECT COUNT(1) FROM [dbo].[CustomerInteraction]) = 0
+	BEGIN
+		INSERT INTO [dbo].[CustomerInteraction] ([CustomerId], [InteractionType], [Date], [Notes]) VALUES
+		(1, 1, DATEADD(DAY, -1, GETDATE()), 'The customer had a change in plans'),
+		(1, 2, DATEADD(DAY, -5, GETDATE()), 'First contact!')
+	END
