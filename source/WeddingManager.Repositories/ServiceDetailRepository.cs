@@ -100,17 +100,27 @@ namespace WeddingManager.Repositories
                                                 .SelectMany(s => s.ServiceDetails)
                                                 .Where(sd => sd.DateSuppressed == null);
 
-                if (searchCriteria.StartDate.HasValue)
+                if (searchCriteria.StartDateFrom.HasValue)
                 {
-                    dbServiceDetails = dbServiceDetails.Where(sd => sd.StartTime >= searchCriteria.StartDate.Value);
+                    dbServiceDetails = dbServiceDetails.Where(sd => sd.StartTime >= searchCriteria.StartDateFrom.Value);
                 }
 
-                if (searchCriteria.EndDate.HasValue)
+                if (searchCriteria.StartDateTo.HasValue)
                 {
-                    dbServiceDetails = dbServiceDetails.Where(sd => sd.EndTime <= searchCriteria.EndDate.Value);
+                    dbServiceDetails = dbServiceDetails.Where(sd => sd.StartTime <= searchCriteria.StartDateTo.Value);
                 }
 
-                if(!string.IsNullOrWhiteSpace(searchCriteria.ServiceDescription))
+                if (searchCriteria.EndDateFrom.HasValue)
+                {
+                    dbServiceDetails = dbServiceDetails.Where(sd => sd.EndTime >= searchCriteria.EndDateFrom.Value);
+                }
+
+                if (searchCriteria.EndDateTo.HasValue)
+                {
+                    dbServiceDetails = dbServiceDetails.Where(sd => sd.EndTime <= searchCriteria.EndDateTo.Value);
+                }
+
+                if (!string.IsNullOrWhiteSpace(searchCriteria.ServiceDescription))
                 {
                     dbServiceDetails = dbServiceDetails.Where(sd => sd.Service.Description.ToLower().Contains(searchCriteria.ServiceDescription));
                 }

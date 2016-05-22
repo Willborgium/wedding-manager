@@ -12,12 +12,14 @@
             </div>
             <div id="searchCriteria" class="panel-body collapse">
                 <div class="col-md-3">
-                    <label>Start Date</label>
-                    <input class="form-control" type="date" step="7" ng-model="serviceDetailSearchCriteria.StartDate" />
+                    <label>Start Date (From/To)</label>
+                    <input class="form-control" type="date" step="7" ng-model="serviceDetailSearchCriteria.StartDateFrom" />
+                    <input class="form-control" type="date" step="7" ng-model="serviceDetailSearchCriteria.StartDateTo" />
                 </div>
                 <div class="col-md-3">
-                    <label>End Date</label>
-                    <input class="form-control" type="date" step="7" ng-model="serviceDetailSearchCriteria.EndDate" />
+                    <label>End Date (From/To)</label>
+                    <input class="form-control" type="date" step="7" ng-model="serviceDetailSearchCriteria.EndDateFrom" />
+                    <input class="form-control" type="date" step="7" ng-model="serviceDetailSearchCriteria.EndDateTo" />
                 </div>
                 <div class="col-md-3">
                     <label>Description</label>
@@ -53,6 +55,7 @@
                     <td>{{searchResult.Service.Description}}</td>
                     <td>{{searchResult.ServiceDetail.Details}}</td>
                     <td>{{searchResult.ServiceDetail.StartTime | date:'short'}}</td>
+                    <td>{{searchResult.ServiceDetail.EndTime | date:'short'}}</td>
                 </tr>
                 <tr ng-hide="serviceDetails.length > 0">
                     <td colspan="6">

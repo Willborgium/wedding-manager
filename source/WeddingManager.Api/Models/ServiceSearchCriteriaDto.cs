@@ -5,9 +5,13 @@ namespace WeddingManager.Api.Models
 {
     public class ServiceSearchCriteriaDto
     {
-        public DateTimeOffset? StartDate { get; set; }
+        public DateTimeOffset? StartDateFrom { get; set; }
 
-        public DateTimeOffset? EndDate { get; set; }
+        public DateTimeOffset? StartDateTo { get; set; }
+
+        public DateTimeOffset? EndDateFrom { get; set; }
+
+        public DateTimeOffset? EndDateTo { get; set; }
 
         public string ServiceDescription { get; set; }
 
@@ -17,8 +21,10 @@ namespace WeddingManager.Api.Models
         {
             return new ServiceDetailSearchCriteria
             {
-                StartDate = StartDate,
-                EndDate = EndDate,
+                StartDateFrom = StartDateFrom,
+                StartDateTo = StartDateTo,
+                EndDateFrom = EndDateFrom,
+                EndDateTo = EndDateTo,
                 ServiceDescription = ServiceDescription?.ToLower(),
                 ServiceDetailDetails = ServiceDetailDetails?.ToLower()
             };
