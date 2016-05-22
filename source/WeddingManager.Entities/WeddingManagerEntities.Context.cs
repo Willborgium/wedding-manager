@@ -33,5 +33,7 @@ namespace WeddingManager.Entities
         public virtual DbSet<PaymentMethod> PaymentMethods { get; set; }
         public virtual DbSet<Service> Services { get; set; }
         public virtual DbSet<ServiceDetail> ServiceDetails { get; set; }
+        public virtual DbSet<CustomerInteraction> CustomerInteractions { get; set; }
+        public virtual DbSet<CustomerInteractionType> CustomerInteractionTypes { get; set; }
     }
 }

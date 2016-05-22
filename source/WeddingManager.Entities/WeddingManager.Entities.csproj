@@ -57,6 +57,12 @@
     <Compile Include="Customer.cs">
       <DependentUpon>WeddingManagerEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="CustomerInteraction.cs">
+      <DependentUpon>WeddingManagerEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerInteractionType.cs">
+      <DependentUpon>WeddingManagerEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Expense.cs">
       <DependentUpon>WeddingManagerEntities.tt</DependentUpon>
     </Compile>

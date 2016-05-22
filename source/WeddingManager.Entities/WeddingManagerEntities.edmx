@@ -25,6 +25,24 @@
           <Property Name="PhoneNumber" Type="nvarchar" MaxLength="32" Nullable="false" />
           <Property Name="Notes" Type="nvarchar" MaxLength="2048" />
         </EntityType>
+        <EntityType Name="CustomerInteraction">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="DateSuppressed" Type="datetime" />
+          <Property Name="InteractionType" Type="int" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="2048" />
+        </EntityType>
+        <EntityType Name="CustomerInteractionType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="64" Nullable="false" />
+        </EntityType>
         <EntityType Name="Expense">
           <Key>
             <PropertyRef Name="Id" />
@@ -97,6 +115,30 @@
             </Principal>
             <Dependent Role="Customer">
               <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerInteraction_CustomerId">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="CustomerInteraction" Type="Self.CustomerInteraction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CustomerInteraction">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerInteraction_InteractionType">
+          <End Role="CustomerInteractionType" Type="Self.CustomerInteractionType" Multiplicity="1" />
+          <End Role="CustomerInteraction" Type="Self.CustomerInteraction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerInteractionType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CustomerInteraction">
+              <PropertyRef Name="InteractionType" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -175,6 +217,8 @@
         <EntityContainer Name="WeddingManagerModelStoreContainer">
           <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomerInteraction" EntityType="Self.CustomerInteraction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomerInteractionType" EntityType="Self.CustomerInteractionType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Expense" EntityType="Self.Expense" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
@@ -184,6 +228,14 @@
           <AssociationSet Name="FK_Customer_CompanyId" Association="Self.FK_Customer_CompanyId">
             <End Role="Company" EntitySet="Company" />
             <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerInteraction_CustomerId" Association="Self.FK_CustomerInteraction_CustomerId">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="CustomerInteraction" EntitySet="CustomerInteraction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerInteraction_InteractionType" Association="Self.FK_CustomerInteraction_InteractionType">
+            <End Role="CustomerInteractionType" EntitySet="CustomerInteractionType" />
+            <End Role="CustomerInteraction" EntitySet="CustomerInteraction" />
           </AssociationSet>
           <AssociationSet Name="FK_Expense_CompanyId" Association="Self.FK_Expense_CompanyId">
             <End Role="Company" EntitySet="Company" />
@@ -251,6 +303,16 @@
             <End Role="Service" EntitySet="Services" />
             <End Role="ServiceDetail" EntitySet="ServiceDetails" />
           </AssociationSet>
+          <EntitySet Name="CustomerInteractions" EntityType="WeddingManagerModel.CustomerInteraction" />
+          <EntitySet Name="CustomerInteractionTypes" EntityType="WeddingManagerModel.CustomerInteractionType" />
+          <AssociationSet Name="FK_CustomerInteraction_CustomerId" Association="WeddingManagerModel.FK_CustomerInteraction_CustomerId">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="CustomerInteraction" EntitySet="CustomerInteractions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerInteraction_InteractionType" Association="WeddingManagerModel.FK_CustomerInteraction_InteractionType">
+            <End Role="CustomerInteractionType" EntitySet="CustomerInteractionTypes" />
+            <End Role="CustomerInteraction" EntitySet="CustomerInteractions" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Company">
           <Key>
@@ -275,6 +337,7 @@
           <Property Name="Notes" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Company" Relationship="WeddingManagerModel.FK_Customer_CompanyId" FromRole="Customer" ToRole="Company" />
           <NavigationProperty Name="Services" Relationship="WeddingManagerModel.FK_Service_CustomerId" FromRole="Customer" ToRole="Service" />
+          <NavigationProperty Name="CustomerInteractions" Relationship="WeddingManagerModel.FK_CustomerInteraction_CustomerId" FromRole="Customer" ToRole="CustomerInteraction" />
         </EntityType>
         <EntityType Name="Expense">
           <Key>
@@ -433,6 +496,51 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="CustomerInteraction">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="DateSuppressed" Type="DateTime" Precision="3" />
+          <Property Name="InteractionType" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Notes" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Customer" Relationship="WeddingManagerModel.FK_CustomerInteraction_CustomerId" FromRole="CustomerInteraction" ToRole="Customer" />
+          <NavigationProperty Name="CustomerInteractionType" Relationship="WeddingManagerModel.FK_CustomerInteraction_InteractionType" FromRole="CustomerInteraction" ToRole="CustomerInteractionType" />
+        </EntityType>
+        <EntityType Name="CustomerInteractionType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CustomerInteractions" Relationship="WeddingManagerModel.FK_CustomerInteraction_InteractionType" FromRole="CustomerInteractionType" ToRole="CustomerInteraction" />
+        </EntityType>
+        <Association Name="FK_CustomerInteraction_CustomerId">
+          <End Type="WeddingManagerModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="WeddingManagerModel.CustomerInteraction" Role="CustomerInteraction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CustomerInteraction">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerInteraction_InteractionType">
+          <End Type="WeddingManagerModel.CustomerInteractionType" Role="CustomerInteractionType" Multiplicity="1" />
+          <End Type="WeddingManagerModel.CustomerInteraction" Role="CustomerInteraction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerInteractionType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CustomerInteraction">
+              <PropertyRef Name="InteractionType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -526,6 +634,26 @@
                 <ScalarProperty Name="Details" ColumnName="Details" />
                 <ScalarProperty Name="DateSuppressed" ColumnName="DateSuppressed" />
                 <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerInteractions">
+            <EntityTypeMapping TypeName="WeddingManagerModel.CustomerInteraction">
+              <MappingFragment StoreEntitySet="CustomerInteraction">
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="InteractionType" ColumnName="InteractionType" />
+                <ScalarProperty Name="DateSuppressed" ColumnName="DateSuppressed" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerInteractionTypes">
+            <EntityTypeMapping TypeName="WeddingManagerModel.CustomerInteractionType">
+              <MappingFragment StoreEntitySet="CustomerInteractionType">
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

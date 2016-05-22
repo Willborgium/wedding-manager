@@ -44,6 +44,10 @@ namespace WeddingManager.Api
             Hub.CreateResolverStatic<IServiceDetailRepository, ServiceDetailRepository>();
 
             Hub.CreateResolverStatic<IServiceDetailService, ServiceDetailService>();
+
+            Hub.CreateResolverStatic<ICustomerInteractionRepository, CustomerInteractionRepository>();
+
+            Hub.CreateResolverStatic<ICustomerInteractionService, CustomerInteractionService>();
         }
     }
 }

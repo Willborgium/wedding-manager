@@ -60,6 +60,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Service.cs" />
     <Compile Include="Repositories\ICompanyRepository.cs" />
+    <Compile Include="Repositories\ICustomerInteractionRepository.cs" />
     <Compile Include="Repositories\ICustomerRepository.cs" />
     <Compile Include="Repositories\IExpenseRepository.cs" />
     <Compile Include="Repositories\IInvoiceRepository.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Repositories\IServiceRepository.cs" />
     <Compile Include="Repositories\ISummaryRepository.cs" />
     <Compile Include="Services\ICompanyService.cs" />
+    <Compile Include="Services\ICustomerInteractionService.cs" />
     <Compile Include="Services\ICustomerService.cs" />
     <Compile Include="Services\IExpenseService.cs" />
     <Compile Include="Services\IInvoiceService.cs" />

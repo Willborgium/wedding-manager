@@ -102,6 +102,7 @@
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\CustomerInteractionController.cs" />
     <Compile Include="Controllers\ExpenseController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
@@ -114,6 +115,8 @@
     <Compile Include="Models\CompanyDto.cs" />
     <Compile Include="Models\CompanySummaryDto.cs" />
     <Compile Include="Models\CustomerDto.cs" />
+    <Compile Include="Models\CustomerInteractionDto.cs" />
+    <Compile Include="Models\CustomerInteractionTypeDto.cs" />
     <Compile Include="Models\ExpenseDto.cs" />
     <Compile Include="Models\ExpensesSummaryDto.cs" />
     <Compile Include="Models\InvoiceDto.cs" />

@@ -12,26 +12,17 @@ namespace WeddingManager.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Customer
+    public partial class CustomerInteractionType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Customer()
+        public CustomerInteractionType()
         {
-            this.Services = new HashSet<Service>();
             this.CustomerInteractions = new HashSet<CustomerInteraction>();
         }
     
         public int Id { get; set; }
-        public int CompanyId { get; set; }
-        public Nullable<System.DateTime> DateSuppressed { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Notes { get; set; }
+        public string Description { get; set; }
     
-        public virtual Company Company { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Service> Services { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomerInteraction> CustomerInteractions { get; set; }
     }

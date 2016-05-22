@@ -4,6 +4,16 @@ namespace WeddingManager.Api.Models
 {
     public class CustomerDto
     {
+        public int Id { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string PhoneNumber { get; set; }
+
+        public string Notes { get; set; }
+
         public CustomerDto()
         {
         }
@@ -20,16 +30,6 @@ namespace WeddingManager.Api.Models
 
             Notes = customer.Notes;
         }
-
-        public int Id { get; set; }
-
-        public string FirstName { get; set; }
-
-        public string LastName { get; set; }
-
-        public string PhoneNumber { get; set; }
-
-        public string Notes { get; set; }
 
         public Customer ToCustomer()
         {

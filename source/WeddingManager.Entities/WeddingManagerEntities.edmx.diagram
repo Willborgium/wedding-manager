@@ -20,6 +20,10 @@
         <AssociationConnector Association="WeddingManagerModel.FK_Payment_PaymentMethodId" />
         <AssociationConnector Association="WeddingManagerModel.FK_Payment_ServiceId" />
         <AssociationConnector Association="WeddingManagerModel.FK_ServiceDetail_ServiceId" />
+        <EntityTypeShape EntityType="WeddingManagerModel.CustomerInteraction" Width="1.5" PointX="5.25" PointY="4.25" />
+        <EntityTypeShape EntityType="WeddingManagerModel.CustomerInteractionType" Width="1.5" PointX="3" PointY="0.75" />
+        <AssociationConnector Association="WeddingManagerModel.FK_CustomerInteraction_CustomerId" />
+        <AssociationConnector Association="WeddingManagerModel.FK_CustomerInteraction_InteractionType" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

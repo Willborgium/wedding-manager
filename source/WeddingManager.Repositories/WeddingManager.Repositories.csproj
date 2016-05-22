@@ -58,8 +58,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompanyRepository.cs" />
+    <Compile Include="CustomerInteractionRepository.cs" />
     <Compile Include="CustomerRepository.cs" />
     <Compile Include="DbHelpers\Companies.cs" />
+    <Compile Include="DbHelpers\CustomerInteractions.cs" />
     <Compile Include="DbHelpers\Customers.cs" />
     <Compile Include="DbHelpers\Expenses.cs" />
     <Compile Include="DbHelpers\Invoices.cs" />
