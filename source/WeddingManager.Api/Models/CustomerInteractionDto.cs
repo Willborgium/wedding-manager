@@ -30,7 +30,7 @@ namespace WeddingManager.Api.Models
 
         public CustomerInteraction ToCustomerInteraction()
         {
-            return new CustomerInteraction(Id, (CustomerInteractionType)InteractionType, Date, Notes);
+            return new CustomerInteraction(Id, (CustomerInteractionType)InteractionType, Date.Date, Notes);
         }
     }
 }

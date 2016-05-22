@@ -33,7 +33,7 @@
           <Property Name="CustomerId" Type="int" Nullable="false" />
           <Property Name="DateSuppressed" Type="datetime" />
           <Property Name="InteractionType" Type="int" Nullable="false" />
-          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
           <Property Name="Notes" Type="nvarchar" MaxLength="2048" />
         </EntityType>
         <EntityType Name="CustomerInteractionType">
@@ -504,7 +504,7 @@
           <Property Name="CustomerId" Type="Int32" Nullable="false" />
           <Property Name="DateSuppressed" Type="DateTime" Precision="3" />
           <Property Name="InteractionType" Type="Int32" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Notes" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Customer" Relationship="WeddingManagerModel.FK_CustomerInteraction_CustomerId" FromRole="CustomerInteraction" ToRole="Customer" />
           <NavigationProperty Name="CustomerInteractionType" Relationship="WeddingManagerModel.FK_CustomerInteraction_InteractionType" FromRole="CustomerInteraction" ToRole="CustomerInteractionType" />

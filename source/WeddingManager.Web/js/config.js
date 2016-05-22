@@ -37,6 +37,10 @@
 		   templateUrl : 'views/search/search.html',
 		   controller : 'searchController'
 	   })
+	   .when('/customerInteraction', {
+		   templateUrl : 'views/customerInteraction/customerInteraction.html',
+		   controller : 'customerInteractionController'
+	   })
 	   .otherwise({
 		   redirectTo : '/error'
 	   });

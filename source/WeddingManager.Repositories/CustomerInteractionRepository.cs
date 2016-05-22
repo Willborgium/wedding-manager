@@ -83,15 +83,15 @@ namespace WeddingManager.Repositories
             }
         }
 
-        public IDictionary<string, int> RetrieveCustomerInteractionTypes()
+        public IDictionary<int, string> RetrieveCustomerInteractionTypes()
         {
-            var output = new Dictionary<string, int>();
+            var output = new Dictionary<int, string>();
 
             using (var entity = new DB.WeddingManagerEntities())
             {
                 foreach(var dbCustomerInteractionType in entity.CustomerInteractionTypes)
                 {
-                    output.Add(dbCustomerInteractionType.Description, dbCustomerInteractionType.Id);
+                    output.Add(dbCustomerInteractionType.Id, dbCustomerInteractionType.Description);
                 }
             }
 

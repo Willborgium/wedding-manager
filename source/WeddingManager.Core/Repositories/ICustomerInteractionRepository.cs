@@ -13,6 +13,6 @@ namespace WeddingManager.Core.Repositories
 
         void DeleteCustomerInteraction(int customerInteractionId);
 
-        IDictionary<string, int> RetrieveCustomerInteractionTypes();
+        IDictionary<int, string> RetrieveCustomerInteractionTypes();
     }
 }

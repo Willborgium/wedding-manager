@@ -32,7 +32,7 @@ namespace WeddingManager.Services
             _customerInteractionRepository.DeleteCustomerInteraction(customerInteractionId);
         }
 
-        public IDictionary<string, int> RetrieveCustomerInteractionTypes()
+        public IDictionary<int, string> RetrieveCustomerInteractionTypes()
         {
             return _customerInteractionRepository.RetrieveCustomerInteractionTypes();
         }

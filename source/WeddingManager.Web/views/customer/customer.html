@@ -9,7 +9,7 @@
             <h2>{{customer.FirstName}} {{customer.LastName}}</h2>
         </div>
         <div class="panel-body">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4>Basic Info</h4>
@@ -38,7 +38,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4>Services <span class="badge">{{services.length}}</span></h4>
@@ -64,6 +64,40 @@
                                 <tr ng-repeat="service in services | filter:serviceFilter" ng-click="viewService(service)">
                                     <td>{{service.Id}}</td>
                                     <td>{{service.Description}}</td>
+                                </tr>
+                            </tbody>
+                        </table>            
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Interactions <span class="badge">{{customerInteractions.length}}</span></h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="input-group">
+                            <label class="input-group-addon">Search</label>
+                            <input class="form-control" type="text" maxlength="30" ng-model="interactionFilter" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-success glyphicon glyphicon-plus" type="button" ng-click="createInteraction()" />
+                            </span>        
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="customerInteraction in customerInteractions | filter:interactionFilter" ng-click="viewCustomerInteraction(customerInteraction)">
+                                    <td>{{customerInteraction.Id}}</td>
+                                    <td>{{customerInteraction.Date | date:'shortDate'}}</td>
+                                    <td>{{customerInteractionTypes[customerInteraction.InteractionType]}}</td>
                                 </tr>
                             </tbody>
                         </table>            

@@ -4,7 +4,7 @@
 	[CustomerId] INT NOT NULL,
 	[DateSuppressed] DATETIME,
 	[InteractionType] INT NOT NULL,
-	[Date] DATE NOT NULL,
+	[Date] DATETIME NOT NULL,
 	[Notes] NVARCHAR(2048),
 	CONSTRAINT [PK_CustomerInteraction_Id]
 		PRIMARY KEY CLUSTERED ([Id]),

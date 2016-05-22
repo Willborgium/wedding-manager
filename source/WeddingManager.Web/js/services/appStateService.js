@@ -9,6 +9,7 @@
         var _invoice = null;
         var _payment = null;
         var _serviceDetails = null;
+        var _customerInteraction = null;
         
         var _history = [];
         
@@ -119,10 +120,6 @@
             _payment = copy(payment);
         }
         
-        service.setServiceDetails = function(serviceDetails){
-            _serviceDetails = copy(serviceDetails);
-        }
-        
         service.getServiceDetail = function(serviceDetailId){
             if(!_serviceDetails){
                 $location.path('error');
@@ -142,6 +139,23 @@
             output.StartTime = getDate(output.StartTime);
             output.EndTime = getDate(output.EndTime);
             return output;
+        }
+        
+        service.setServiceDetails = function(serviceDetails){
+            _serviceDetails = copy(serviceDetails);
+        }
+        
+        service.getCustomerInteraction = function(){
+            if(!_customerInteraction){
+                $location.path('error');
+            }
+            var output = copy(_customerInteraction);
+            output.Date = getDate(output.Date);
+            return output;
+        }
+        
+        service.setCustomerInteraction = function(customerInteraction){
+            _customerInteraction = copy(customerInteraction);
         }
         
         return service;

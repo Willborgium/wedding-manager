@@ -1,15 +1,28 @@
 (function(){
     angular.module('weddingManager')
-    .controller('customerController', function($scope, $location, appStateService, customerService, serviceService){
+    .controller('customerController', function($scope, $location, appStateService, customerService, serviceService, customerInteractionService){
         $scope.customer = null;
         $scope.serviceFilter = "";
         $scope.services = [];
+        $scope.customerInteractions = [];
+        $scope.customerInteractionTypes = [];
+        $scope.interactionFilter = "";
         $scope.isSaveDisabled = true;
         
         function initialize(){
             $scope.customer = appStateService.getCustomer();
             serviceService.refreshServices($scope.customer.Id, function(services){
                 $scope.services = services;
+            }, function(){
+               $location.path('error'); 
+            });
+            customerInteractionService.refreshCustomerInteractions($scope.customer.Id, function(customerInteractions){
+                $scope.customerInteractions = customerInteractions;
+            }, function(){
+                $location.path('error');
+            });
+            customerInteractionService.getCustomerInteractionTypes(function(customerInteractionTypes){
+                $scope.customerInteractionTypes = customerInteractionTypes;
             }, function(){
                $location.path('error'); 
             });
@@ -65,6 +78,18 @@
         $scope.createService = function(){
             serviceService.createService($scope.customer.Id, function(service){
                 $scope.viewService(service);                                
+            });
+        }
+        
+        $scope.viewCustomerInteraction = function(customerInteraction){
+            appStateService.setCustomerInteraction(customerInteraction);
+            appStateService.pushHistory('customer');
+            $location.path('customerInteraction');
+        }
+        
+        $scope.createInteraction = function(){
+            customerInteractionService.createCustomerInteraction($scope.customer.Id, function(customerInteraction){
+               $scope.viewCustomerInteraction(customerInteraction); 
             });
         }
         
