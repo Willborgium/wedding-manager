@@ -10,11 +10,11 @@ namespace WeddingManager.Core.Data
 
         public string Location { get; private set; }
 
-        public DateTime StartTime { get; private set; }
+        public DateTimeOffset StartTime { get; private set; }
 
-        public DateTime? EndTime { get; private set; }
+        public DateTimeOffset? EndTime { get; private set; }
 
-        public ServiceDetail(int id, string details, string location, DateTime startTime, DateTime? endTime)
+        public ServiceDetail(int id, string details, string location, DateTimeOffset startTime, DateTimeOffset? endTime)
         {
             Id = id;
 

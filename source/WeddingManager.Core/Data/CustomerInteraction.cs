@@ -8,11 +8,11 @@ namespace WeddingManager.Core.Data
 
         public CustomerInteractionType InteractionType { get; }
 
-        public DateTime Date { get; }
+        public DateTimeOffset Date { get; }
 
         public string Notes { get; }
 
-        public CustomerInteraction(int id, CustomerInteractionType interactionType, DateTime date, string notes)
+        public CustomerInteraction(int id, CustomerInteractionType interactionType, DateTimeOffset date, string notes)
         {
             Id = id;
 

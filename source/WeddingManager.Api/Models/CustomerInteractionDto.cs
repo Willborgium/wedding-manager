@@ -9,7 +9,7 @@ namespace WeddingManager.Api.Models
 
         public CustomerInteractionTypeDto InteractionType { get; set; }
 
-        public DateTime Date { get; set; }
+        public DateTimeOffset Date { get; set; }
 
         public string Notes { get; set; }
 

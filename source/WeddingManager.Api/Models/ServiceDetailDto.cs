@@ -28,9 +28,9 @@ namespace WeddingManager.Api.Models
 
         public string Location { get; set; }
 
-        public DateTime StartTime { get; set; }
+        public DateTimeOffset StartTime { get; set; }
 
-        public DateTime? EndTime { get; set; }
+        public DateTimeOffset? EndTime { get; set; }
 
         public ServiceDetail ToServiceDetail()
         {

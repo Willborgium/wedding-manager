@@ -2,7 +2,7 @@
 (
 	[Id] INT NOT NULL IDENTITY,
 	[CustomerId] INT NOT NULL,
-	[DateSuppressed] DATE,
+	[DateSuppressed] DATETIMEOFFSET,
 	[Description] NVARCHAR(512),
 	CONSTRAINT [PK_Service_Id]
 		PRIMARY KEY CLUSTERED ([Id]),

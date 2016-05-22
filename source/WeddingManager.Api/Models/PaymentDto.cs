@@ -28,7 +28,7 @@ namespace WeddingManager.Api.Models
 
         public PaymentMethod Method { get; set; }
 
-        public DateTime DateReceived { get; set; }
+        public DateTimeOffset DateReceived { get; set; }
 
         public string Notes { get; set; }
 

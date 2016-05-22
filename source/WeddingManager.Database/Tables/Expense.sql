@@ -2,9 +2,9 @@
 (
 	[Id] INT NOT NULL IDENTITY,
 	[CompanyId] INT NOT NULL,
-	[DateSuppressed] DATE,
+	[DateSuppressed] DATETIMEOFFSET,
 	[Amount] DECIMAL(8, 2) NOT NULL,
-	[CreatedDate] DATE NOT NULL,
+	[CreatedDate] DATETIMEOFFSET NOT NULL,
 	[Description] NVARCHAR(512),
 	CONSTRAINT [PK_Expense]
 		PRIMARY KEY CLUSTERED ([Id]),

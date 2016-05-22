@@ -16,11 +16,11 @@ namespace WeddingManager.Entities
     {
         public int Id { get; set; }
         public int ServiceId { get; set; }
-        public Nullable<System.DateTime> DateSuppressed { get; set; }
+        public Nullable<System.DateTimeOffset> DateSuppressed { get; set; }
         public decimal Amount { get; set; }
         public string Description { get; set; }
-        public System.DateTime CreatedDate { get; set; }
-        public System.DateTime DueDate { get; set; }
+        public System.DateTimeOffset CreatedDate { get; set; }
+        public System.DateTimeOffset DueDate { get; set; }
     
         public virtual Service Service { get; set; }
     }

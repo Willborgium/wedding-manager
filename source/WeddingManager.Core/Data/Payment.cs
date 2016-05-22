@@ -4,7 +4,7 @@ namespace WeddingManager.Core.Data
 {
     public class Payment
     {
-        public Payment(int id, decimal amount, PaymentMethod method, DateTime dateReceived, string notes)
+        public Payment(int id, decimal amount, PaymentMethod method, DateTimeOffset dateReceived, string notes)
         {
             Id = id;
 
@@ -23,7 +23,7 @@ namespace WeddingManager.Core.Data
 
         public PaymentMethod Method { get; set; }
 
-        public DateTime DateReceived { get; set; }
+        public DateTimeOffset DateReceived { get; set; }
 
         public string Notes { get; set; }
     }

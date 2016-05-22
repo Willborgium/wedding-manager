@@ -17,13 +17,13 @@ namespace WeddingManager.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Customer()
         {
-            this.Services = new HashSet<Service>();
             this.CustomerInteractions = new HashSet<CustomerInteraction>();
+            this.Services = new HashSet<Service>();
         }
     
         public int Id { get; set; }
         public int CompanyId { get; set; }
-        public Nullable<System.DateTime> DateSuppressed { get; set; }
+        public Nullable<System.DateTimeOffset> DateSuppressed { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
@@ -31,8 +31,8 @@ namespace WeddingManager.Entities
     
         public virtual Company Company { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Service> Services { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomerInteraction> CustomerInteractions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Service> Services { get; set; }
     }
 }

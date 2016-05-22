@@ -2,11 +2,11 @@
 (
 	[Id] INT NOT NULL IDENTITY,
 	[ServiceId] INT NOT NULL,
-	[DateSuppressed] DATE,
+	[DateSuppressed] DATETIMEOFFSET,
 	[Details] NVARCHAR(512),
 	[Location] NVARCHAR(512),
-	[StartTime] DATETIME NOT NULL,
-	[EndTime] DATETIME,
+	[StartTime] DATETIMEOFFSET NOT NULL,
+	[EndTime] DATETIMEOFFSET,
 	CONSTRAINT [PK_ServiceDetail_Id]
 		PRIMARY KEY CLUSTERED ([Id]),
 	CONSTRAINT [FK_ServiceDetail_ServiceId]

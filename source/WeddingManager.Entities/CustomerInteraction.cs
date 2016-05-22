@@ -16,9 +16,9 @@ namespace WeddingManager.Entities
     {
         public int Id { get; set; }
         public int CustomerId { get; set; }
-        public Nullable<System.DateTime> DateSuppressed { get; set; }
+        public Nullable<System.DateTimeOffset> DateSuppressed { get; set; }
         public int InteractionType { get; set; }
-        public System.DateTime Date { get; set; }
+        public System.DateTimeOffset Date { get; set; }
         public string Notes { get; set; }
     
         public virtual Customer Customer { get; set; }

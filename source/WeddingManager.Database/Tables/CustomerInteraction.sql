@@ -2,9 +2,9 @@
 (
 	[Id] INT NOT NULL IDENTITY,
 	[CustomerId] INT NOT NULL,
-	[DateSuppressed] DATETIME,
+	[DateSuppressed] DATETIMEOFFSET,
 	[InteractionType] INT NOT NULL,
-	[Date] DATETIME NOT NULL,
+	[Date] DATETIMEOFFSET NOT NULL,
 	[Notes] NVARCHAR(2048),
 	CONSTRAINT [PK_CustomerInteraction_Id]
 		PRIMARY KEY CLUSTERED ([Id]),

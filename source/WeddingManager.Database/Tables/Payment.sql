@@ -2,10 +2,10 @@
 (
 	[Id] INT NOT NULL IDENTITY,
 	[ServiceId] INT NOT NULL,
-	[DateSuppressed] DATE,
+	[DateSuppressed] DATETIMEOFFSET,
 	[Amount] DECIMAL(8, 2) NOT NULL,
 	[PaymentMethodId] INT NOT NULL,
-	[DateReceived] DATE NOT NULL,
+	[DateReceived] DATETIMEOFFSET NOT NULL,
 	[Notes] NVARCHAR(512),
 	CONSTRAINT [PK_Payment_Id]
 		PRIMARY KEY CLUSTERED ([Id]),

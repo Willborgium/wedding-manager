@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[Company]
 (
 	[Id] INT NOT NULL IDENTITY,
-	[DateSuppressed] DATE,
+	[DateSuppressed] DATETIMEOFFSET,
 	[Name] NVARCHAR(255) NOT NULL,
 	CONSTRAINT [PK_Company]
 		PRIMARY KEY CLUSTERED ([Id])

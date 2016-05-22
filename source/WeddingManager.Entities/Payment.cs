@@ -16,10 +16,10 @@ namespace WeddingManager.Entities
     {
         public int Id { get; set; }
         public int ServiceId { get; set; }
-        public Nullable<System.DateTime> DateSuppressed { get; set; }
+        public Nullable<System.DateTimeOffset> DateSuppressed { get; set; }
         public decimal Amount { get; set; }
         public int PaymentMethodId { get; set; }
-        public System.DateTime DateReceived { get; set; }
+        public System.DateTimeOffset DateReceived { get; set; }
         public string Notes { get; set; }
     
         public virtual PaymentMethod PaymentMethod { get; set; }

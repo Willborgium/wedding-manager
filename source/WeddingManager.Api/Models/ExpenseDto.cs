@@ -24,7 +24,7 @@ namespace WeddingManager.Api.Models
 
         public decimal Amount { get; set; }
 
-        public DateTime CreatedDate { get; set; }
+        public DateTimeOffset CreatedDate { get; set; }
 
         public string Description { get; set; }
 

@@ -10,7 +10,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DateSuppressed" Type="date" />
+          <Property Name="DateSuppressed" Type="datetimeoffset" Precision="7" />
           <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="Customer">
@@ -19,7 +19,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CompanyId" Type="int" Nullable="false" />
-          <Property Name="DateSuppressed" Type="date" />
+          <Property Name="DateSuppressed" Type="datetimeoffset" Precision="7" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="64" Nullable="false" />
           <Property Name="LastName" Type="nvarchar" MaxLength="64" Nullable="false" />
           <Property Name="PhoneNumber" Type="nvarchar" MaxLength="32" Nullable="false" />
@@ -31,9 +31,9 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CustomerId" Type="int" Nullable="false" />
-          <Property Name="DateSuppressed" Type="datetime" />
+          <Property Name="DateSuppressed" Type="datetimeoffset" Precision="7" />
           <Property Name="InteractionType" Type="int" Nullable="false" />
-          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Date" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="Notes" Type="nvarchar" MaxLength="2048" />
         </EntityType>
         <EntityType Name="CustomerInteractionType">
@@ -49,9 +49,9 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CompanyId" Type="int" Nullable="false" />
-          <Property Name="DateSuppressed" Type="date" />
+          <Property Name="DateSuppressed" Type="datetimeoffset" Precision="7" />
           <Property Name="Amount" Type="decimal" Precision="8" Scale="2" Nullable="false" />
-          <Property Name="CreatedDate" Type="date" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="512" />
         </EntityType>
         <EntityType Name="Invoice">
@@ -60,11 +60,11 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ServiceId" Type="int" Nullable="false" />
-          <Property Name="DateSuppressed" Type="date" />
+          <Property Name="DateSuppressed" Type="datetimeoffset" Precision="7" />
           <Property Name="Amount" Type="decimal" Precision="8" Scale="2" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="64" />
-          <Property Name="CreatedDate" Type="date" Nullable="false" />
-          <Property Name="DueDate" Type="date" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="DueDate" Type="datetimeoffset" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="Payment">
           <Key>
@@ -72,10 +72,10 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ServiceId" Type="int" Nullable="false" />
-          <Property Name="DateSuppressed" Type="date" />
+          <Property Name="DateSuppressed" Type="datetimeoffset" Precision="7" />
           <Property Name="Amount" Type="decimal" Precision="8" Scale="2" Nullable="false" />
           <Property Name="PaymentMethodId" Type="int" Nullable="false" />
-          <Property Name="DateReceived" Type="date" Nullable="false" />
+          <Property Name="DateReceived" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="Notes" Type="nvarchar" MaxLength="512" />
         </EntityType>
         <EntityType Name="PaymentMethod">
@@ -91,7 +91,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CustomerId" Type="int" Nullable="false" />
-          <Property Name="DateSuppressed" Type="date" />
+          <Property Name="DateSuppressed" Type="datetimeoffset" Precision="7" />
           <Property Name="Description" Type="nvarchar" MaxLength="512" />
         </EntityType>
         <EntityType Name="ServiceDetail">
@@ -100,11 +100,11 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ServiceId" Type="int" Nullable="false" />
-          <Property Name="DateSuppressed" Type="date" />
+          <Property Name="DateSuppressed" Type="datetimeoffset" Precision="7" />
           <Property Name="Details" Type="nvarchar" MaxLength="512" />
           <Property Name="Location" Type="nvarchar" MaxLength="512" />
-          <Property Name="StartTime" Type="datetime" Nullable="false" />
-          <Property Name="EndTime" Type="datetime" />
+          <Property Name="StartTime" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="EndTime" Type="datetimeoffset" Precision="7" />
         </EntityType>
         <Association Name="FK_Customer_CompanyId">
           <End Role="Company" Type="Self.Company" Multiplicity="1" />
@@ -269,6 +269,8 @@
         <EntityContainer Name="WeddingManagerEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Companies" EntityType="WeddingManagerModel.Company" />
           <EntitySet Name="Customers" EntityType="WeddingManagerModel.Customer" />
+          <EntitySet Name="CustomerInteractions" EntityType="WeddingManagerModel.CustomerInteraction" />
+          <EntitySet Name="CustomerInteractionTypes" EntityType="WeddingManagerModel.CustomerInteractionType" />
           <EntitySet Name="Expenses" EntityType="WeddingManagerModel.Expense" />
           <EntitySet Name="Invoices" EntityType="WeddingManagerModel.Invoice" />
           <EntitySet Name="Payments" EntityType="WeddingManagerModel.Payment" />
@@ -283,9 +285,17 @@
             <End Role="Company" EntitySet="Companies" />
             <End Role="Expense" EntitySet="Expenses" />
           </AssociationSet>
+          <AssociationSet Name="FK_CustomerInteraction_CustomerId" Association="WeddingManagerModel.FK_CustomerInteraction_CustomerId">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="CustomerInteraction" EntitySet="CustomerInteractions" />
+          </AssociationSet>
           <AssociationSet Name="FK_Service_CustomerId" Association="WeddingManagerModel.FK_Service_CustomerId">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Service" EntitySet="Services" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerInteraction_InteractionType" Association="WeddingManagerModel.FK_CustomerInteraction_InteractionType">
+            <End Role="CustomerInteractionType" EntitySet="CustomerInteractionTypes" />
+            <End Role="CustomerInteraction" EntitySet="CustomerInteractions" />
           </AssociationSet>
           <AssociationSet Name="FK_Invoice_ServiceId" Association="WeddingManagerModel.FK_Invoice_ServiceId">
             <End Role="Service" EntitySet="Services" />
@@ -303,23 +313,13 @@
             <End Role="Service" EntitySet="Services" />
             <End Role="ServiceDetail" EntitySet="ServiceDetails" />
           </AssociationSet>
-          <EntitySet Name="CustomerInteractions" EntityType="WeddingManagerModel.CustomerInteraction" />
-          <EntitySet Name="CustomerInteractionTypes" EntityType="WeddingManagerModel.CustomerInteractionType" />
-          <AssociationSet Name="FK_CustomerInteraction_CustomerId" Association="WeddingManagerModel.FK_CustomerInteraction_CustomerId">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="CustomerInteraction" EntitySet="CustomerInteractions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CustomerInteraction_InteractionType" Association="WeddingManagerModel.FK_CustomerInteraction_InteractionType">
-            <End Role="CustomerInteractionType" EntitySet="CustomerInteractionTypes" />
-            <End Role="CustomerInteraction" EntitySet="CustomerInteractions" />
-          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Company">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DateSuppressed" Type="DateTime" Precision="0" />
+          <Property Name="DateSuppressed" Type="DateTimeOffset" Precision="7" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Customers" Relationship="WeddingManagerModel.FK_Customer_CompanyId" FromRole="Company" ToRole="Customer" />
           <NavigationProperty Name="Expenses" Relationship="WeddingManagerModel.FK_Expense_CompanyId" FromRole="Company" ToRole="Expense" />
@@ -330,14 +330,35 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CompanyId" Type="Int32" Nullable="false" />
-          <Property Name="DateSuppressed" Type="DateTime" Precision="0" />
+          <Property Name="DateSuppressed" Type="DateTimeOffset" Precision="7" />
           <Property Name="FirstName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
           <Property Name="Notes" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Company" Relationship="WeddingManagerModel.FK_Customer_CompanyId" FromRole="Customer" ToRole="Company" />
-          <NavigationProperty Name="Services" Relationship="WeddingManagerModel.FK_Service_CustomerId" FromRole="Customer" ToRole="Service" />
           <NavigationProperty Name="CustomerInteractions" Relationship="WeddingManagerModel.FK_CustomerInteraction_CustomerId" FromRole="Customer" ToRole="CustomerInteraction" />
+          <NavigationProperty Name="Services" Relationship="WeddingManagerModel.FK_Service_CustomerId" FromRole="Customer" ToRole="Service" />
+        </EntityType>
+        <EntityType Name="CustomerInteraction">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="DateSuppressed" Type="DateTimeOffset" Precision="7" />
+          <Property Name="InteractionType" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="Notes" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Customer" Relationship="WeddingManagerModel.FK_CustomerInteraction_CustomerId" FromRole="CustomerInteraction" ToRole="Customer" />
+          <NavigationProperty Name="CustomerInteractionType" Relationship="WeddingManagerModel.FK_CustomerInteraction_InteractionType" FromRole="CustomerInteraction" ToRole="CustomerInteractionType" />
+        </EntityType>
+        <EntityType Name="CustomerInteractionType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CustomerInteractions" Relationship="WeddingManagerModel.FK_CustomerInteraction_InteractionType" FromRole="CustomerInteractionType" ToRole="CustomerInteraction" />
         </EntityType>
         <EntityType Name="Expense">
           <Key>
@@ -345,9 +366,9 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CompanyId" Type="Int32" Nullable="false" />
-          <Property Name="DateSuppressed" Type="DateTime" Precision="0" />
+          <Property Name="DateSuppressed" Type="DateTimeOffset" Precision="7" />
           <Property Name="Amount" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CreatedDate" Type="DateTimeOffset" Nullable="false" Precision="7" />
           <Property Name="Description" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Company" Relationship="WeddingManagerModel.FK_Expense_CompanyId" FromRole="Expense" ToRole="Company" />
         </EntityType>
@@ -357,11 +378,11 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ServiceId" Type="Int32" Nullable="false" />
-          <Property Name="DateSuppressed" Type="DateTime" Precision="0" />
+          <Property Name="DateSuppressed" Type="DateTimeOffset" Precision="7" />
           <Property Name="Amount" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
           <Property Name="Description" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="DueDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CreatedDate" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="DueDate" Type="DateTimeOffset" Nullable="false" Precision="7" />
           <NavigationProperty Name="Service" Relationship="WeddingManagerModel.FK_Invoice_ServiceId" FromRole="Invoice" ToRole="Service" />
         </EntityType>
         <EntityType Name="Payment">
@@ -370,10 +391,10 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ServiceId" Type="Int32" Nullable="false" />
-          <Property Name="DateSuppressed" Type="DateTime" Precision="0" />
+          <Property Name="DateSuppressed" Type="DateTimeOffset" Precision="7" />
           <Property Name="Amount" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
           <Property Name="PaymentMethodId" Type="Int32" Nullable="false" />
-          <Property Name="DateReceived" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateReceived" Type="DateTimeOffset" Nullable="false" Precision="7" />
           <Property Name="Notes" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="PaymentMethod" Relationship="WeddingManagerModel.FK_Payment_PaymentMethodId" FromRole="Payment" ToRole="PaymentMethod" />
           <NavigationProperty Name="Service" Relationship="WeddingManagerModel.FK_Payment_ServiceId" FromRole="Payment" ToRole="Service" />
@@ -392,7 +413,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CustomerId" Type="Int32" Nullable="false" />
-          <Property Name="DateSuppressed" Type="DateTime" Precision="0" />
+          <Property Name="DateSuppressed" Type="DateTimeOffset" Precision="7" />
           <Property Name="Description" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Customer" Relationship="WeddingManagerModel.FK_Service_CustomerId" FromRole="Service" ToRole="Customer" />
           <NavigationProperty Name="Invoices" Relationship="WeddingManagerModel.FK_Invoice_ServiceId" FromRole="Service" ToRole="Invoice" />
@@ -405,11 +426,11 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ServiceId" Type="Int32" Nullable="false" />
-          <Property Name="DateSuppressed" Type="DateTime" Precision="0" />
+          <Property Name="DateSuppressed" Type="DateTimeOffset" Precision="7" />
           <Property Name="Details" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
           <Property Name="Location" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
-          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EndTime" Type="DateTime" Precision="3" />
+          <Property Name="StartTime" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="EndTime" Type="DateTimeOffset" Precision="7" />
           <NavigationProperty Name="Service" Relationship="WeddingManagerModel.FK_ServiceDetail_ServiceId" FromRole="ServiceDetail" ToRole="Service" />
         </EntityType>
         <Association Name="FK_Customer_CompanyId">
@@ -436,6 +457,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CustomerInteraction_CustomerId">
+          <End Type="WeddingManagerModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="WeddingManagerModel.CustomerInteraction" Role="CustomerInteraction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CustomerInteraction">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Service_CustomerId">
           <End Type="WeddingManagerModel.Customer" Role="Customer" Multiplicity="1" />
           <End Type="WeddingManagerModel.Service" Role="Service" Multiplicity="*" />
@@ -445,6 +478,18 @@
             </Principal>
             <Dependent Role="Service">
               <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerInteraction_InteractionType">
+          <End Type="WeddingManagerModel.CustomerInteractionType" Role="CustomerInteractionType" Multiplicity="1" />
+          <End Type="WeddingManagerModel.CustomerInteraction" Role="CustomerInteraction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerInteractionType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CustomerInteraction">
+              <PropertyRef Name="InteractionType" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -496,51 +541,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="CustomerInteraction">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerId" Type="Int32" Nullable="false" />
-          <Property Name="DateSuppressed" Type="DateTime" Precision="3" />
-          <Property Name="InteractionType" Type="Int32" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Notes" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Customer" Relationship="WeddingManagerModel.FK_CustomerInteraction_CustomerId" FromRole="CustomerInteraction" ToRole="Customer" />
-          <NavigationProperty Name="CustomerInteractionType" Relationship="WeddingManagerModel.FK_CustomerInteraction_InteractionType" FromRole="CustomerInteraction" ToRole="CustomerInteractionType" />
-        </EntityType>
-        <EntityType Name="CustomerInteractionType">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="CustomerInteractions" Relationship="WeddingManagerModel.FK_CustomerInteraction_InteractionType" FromRole="CustomerInteractionType" ToRole="CustomerInteraction" />
-        </EntityType>
-        <Association Name="FK_CustomerInteraction_CustomerId">
-          <End Type="WeddingManagerModel.Customer" Role="Customer" Multiplicity="1" />
-          <End Type="WeddingManagerModel.CustomerInteraction" Role="CustomerInteraction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="CustomerInteraction">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CustomerInteraction_InteractionType">
-          <End Type="WeddingManagerModel.CustomerInteractionType" Role="CustomerInteractionType" Multiplicity="1" />
-          <End Type="WeddingManagerModel.CustomerInteraction" Role="CustomerInteraction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CustomerInteractionType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="CustomerInteraction">
-              <PropertyRef Name="InteractionType" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -565,6 +565,26 @@
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="DateSuppressed" ColumnName="DateSuppressed" />
                 <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerInteractions">
+            <EntityTypeMapping TypeName="WeddingManagerModel.CustomerInteraction">
+              <MappingFragment StoreEntitySet="CustomerInteraction">
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="InteractionType" ColumnName="InteractionType" />
+                <ScalarProperty Name="DateSuppressed" ColumnName="DateSuppressed" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerInteractionTypes">
+            <EntityTypeMapping TypeName="WeddingManagerModel.CustomerInteractionType">
+              <MappingFragment StoreEntitySet="CustomerInteractionType">
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -634,26 +654,6 @@
                 <ScalarProperty Name="Details" ColumnName="Details" />
                 <ScalarProperty Name="DateSuppressed" ColumnName="DateSuppressed" />
                 <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CustomerInteractions">
-            <EntityTypeMapping TypeName="WeddingManagerModel.CustomerInteraction">
-              <MappingFragment StoreEntitySet="CustomerInteraction">
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="InteractionType" ColumnName="InteractionType" />
-                <ScalarProperty Name="DateSuppressed" ColumnName="DateSuppressed" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CustomerInteractionTypes">
-            <EntityTypeMapping TypeName="WeddingManagerModel.CustomerInteractionType">
-              <MappingFragment StoreEntitySet="CustomerInteractionType">
-                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

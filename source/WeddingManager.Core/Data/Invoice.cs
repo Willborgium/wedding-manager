@@ -4,7 +4,7 @@ namespace WeddingManager.Core.Data
 {
     public class Invoice
     {
-        public Invoice(int id, decimal amount, string description, DateTime createdDate, DateTime dueDate)
+        public Invoice(int id, decimal amount, string description, DateTimeOffset createdDate, DateTimeOffset dueDate)
         {
             Id = id;
 
@@ -23,8 +23,8 @@ namespace WeddingManager.Core.Data
 
         public string Description { get; set; }
 
-        public DateTime CreatedDate { get; set; }
+        public DateTimeOffset CreatedDate { get; set; }
 
-        public DateTime DueDate { get; set; }
+        public DateTimeOffset DueDate { get; set; }
     }
 }
